@@ -1,10 +1,10 @@
-#E-LEARNING REACTJS APP - TYPESCRIPT
+# E-LEARNING REACTJS APP - TYPESCRIPT
 
-###Members:
+### Members:
 - Phan Nhut Quang
 - Huynh Nguyen Thi Luu
 ---
-#Timeline:
+# Timeline:
 - 11/Jan: (Quang)
   - Init app
   - Install depedencies:
