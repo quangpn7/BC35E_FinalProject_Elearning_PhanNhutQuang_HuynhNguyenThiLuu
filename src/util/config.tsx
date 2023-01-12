@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios, { HeadersDefaults } from "axios";
+import { Token } from "typescript";
 // import {history} from '../index';
 export const config = {
   setCookie: (name: string, value: string, days: number) => {
@@ -67,15 +68,15 @@ export const http = axios.create({
   timeout: 30000,
 });
 //Cấu hình request header
+
 http.interceptors.request.use(
-  (config) => {
+  (config: any) => {
     const token = getStore(ACCESS_TOKEN);
     config.headers = {
       ...config.headers,
       ["Authorization"]: `Bearer ${token}`,
       ["TokenCybersoft"]: TOKEN_CYBERSOFT,
     };
-    // config.headers['Content-Type'] = 'application/json';
     return config;
   },
   (error) => {
