@@ -1,0 +1,34 @@
+// FONT
+$font-family: "Roboto", sans-serif;
+$fs-1: 16px;
+$fs-2: 20px;
+$fs-3: 30px;
+$fs-3: 24px;
+$fs-4: 40px;
+
+$fw-1: 300;
+$fw-2: 400;
+$fw-3: 500;
+$fw-4: 700;
+
+// COLOR
+$color-primary-blue: #002147;
+$color-dark-blue: #011b39;
+$color-light-blue: #0061cf;
+$color-primary-yellow: #fec800;
+$color-dark-yellow: #b48d08;
+$color-light-yellow: #fac400;
+$color-white: #ffff;
+$color-black: #0000;
+
+//Breakpoint
+$breakpoints: (
+  "extra-large": 1200px,
+  "large": 992px,
+  "medium": 768px,
+  "small": 576px,
+  "extra-large-down": 1199.98px,
+  "large-down": 991.98px,
+  "medium-down": 767.98px,
+  "small-down": 575.98px,
+);

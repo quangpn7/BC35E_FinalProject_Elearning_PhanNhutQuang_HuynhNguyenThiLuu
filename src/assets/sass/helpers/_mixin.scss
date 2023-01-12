@@ -1,0 +1,48 @@
+// style text
+@mixin styleText($fs, $fw, $color) {
+  font-size: $fs;
+  font-weight: $fw;
+  color: $color;
+}
+// style button
+@mixin styleBtn($color, $bgColor, $px, $py, $radius, $borderColor) {
+  color: $color;
+  background-color: $bgColor;
+  padding: $py $px;
+  border-radius: $radius;
+  border: 1px solid $borderColor;
+  transition: all 0.3s linear;
+}
+@mixin hoverBtn($color, $bgColor, $borderColor) {
+  color: $color;
+  background-color: $bgColor;
+  border: 1px solid $borderColor;
+}
+.buttonExample {
+  @include styleBtn(white, red, 30px, 100px, 30px, white);
+  &:hover {
+    @include hoverBtn(red, white, red);
+  }
+}
+//responsive
+@mixin responsive($screen) {
+  @if (map-has-key($map: $breakpoints, $key: $screen)) {
+    $value: map-get(
+      $map: $breakpoints,
+      $key: $screen,
+    );
+    @media screen and (max-width: $value) {
+      @content;
+    }
+  } @else {
+    @warn "màn hình chưa khai báo";
+  }
+}
+//Example:
+/* 
+@include responsive("large-down"){
+    .phoneCarousel{
+        padding: $pd-8 0;
+    } 
+}
+*/

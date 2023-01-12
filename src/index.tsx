@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./assets/sass/main.scss";
 import {
   // eslint-disable-next-line
   BrowserRouter,
