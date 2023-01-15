@@ -7,7 +7,7 @@
 # Timeline:
 - 11/Jan: (Quang)
   - Init app
-  - Install depedencies:
+  - Install dependencies:
     - antd: 5.1.4
     - axios: 1.2.2
     - formik: 2.2.9
@@ -23,3 +23,13 @@
  - Setup router:
    - Setup Router DOM with path
    - Create `<NavLink/>` for testing
+- 15/Jan: (Quang)
+  - Build layout:
+    - Home
+    - Register/ Login
+    - Template heaer/footer
+  - Install dependencies:
+    - react-count-up -> Count up number animation
+    - node-sass
+    - sass-loader
+  - Re-assign NavLink 

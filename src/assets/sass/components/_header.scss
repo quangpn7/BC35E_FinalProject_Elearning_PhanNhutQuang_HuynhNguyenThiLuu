@@ -1,0 +1,108 @@
+header {
+  section.header-wrap {
+    // UPPER HEADER
+    .header__upper {
+      background-color: $color-primary-blue;
+      .header__upper-content {
+        .header__upper-left,
+        .header__upper-right {
+          a {
+            color: $color-white;
+            text-decoration: none;
+            margin-right: 20px;
+            transition: $trans-linear-fast;
+            &:hover {
+              color: $color-primary-yellow;
+            }
+          }
+        }
+        .header__upper-right {
+          a:nth-child(2) {
+            margin-left: 20px;
+            font-weight: bold;
+            height: 100%;
+            display: inline-block;
+            @include styleBtn(
+              $color-primary-blue,
+              $color-primary-yellow,
+              15px,
+              15px,
+              0,
+              ""
+            );
+            &:hover {
+              @include hoverBtn(
+                $color-primary-yellow,
+                $color-primary-blue,
+                "$color-primary-yellow"
+              );
+            }
+          }
+        }
+      }
+    }
+    // BOTTOM HEADER
+    .header__bottom {
+      background-color: $color-white;
+      nav.navbar {
+        a.navbar-brand {
+          @include styleText(32px, $fw-4, $color-primary-blue);
+        }
+        .navbar-collapse {
+          ul.navbar-nav {
+            li {
+              margin: 0 12px;
+              a {
+                @include styleText(18px, $fw-3, $color-primary-blue);
+                transition: $trans-linear-fast;
+              }
+              a.active {
+                color: $color-primary-yellow;
+                transition: $trans-linear-slow;
+              }
+
+              &:hover {
+                a {
+                  color: $color-primary-yellow;
+                }
+              }
+            }
+            li.nav-item.dropdown {
+              &:hover ul.dropdown-menu {
+                display: block;
+              }
+              ul.dropdown-menu {
+                background-color: $color-primary-blue;
+                transition: $trans-linear-fast;
+
+                a {
+                  font-weight: normal;
+                  color: $color-white;
+                }
+                li {
+                  margin: 0 0;
+                  background-color: $color-primary-blue;
+                  transition: all linear 0.5s;
+                  a {
+                    color: $color-white;
+                    transition: all linear 0.5s;
+                  }
+                  &:hover {
+                    background-color: $color-white;
+                    a {
+                      color: $color-primary-yellow;
+                    }
+                  }
+                }
+              }
+            }
+            li.nav-search {
+              border-left: 1px solid gray;
+              padding-left: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

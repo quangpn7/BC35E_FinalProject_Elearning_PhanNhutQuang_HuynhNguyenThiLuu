@@ -1,0 +1,26 @@
+section.login {
+  width: 70%;
+  margin: 200px auto;
+  border-radius: 30px;
+  background: rgba(115, 144, 255, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+
+  .container {
+    padding: 40px;
+    .navbar-brand {
+      @include styleText(32px, 700, $color-primary-blue);
+    }
+
+    form {
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+      label {
+        @include styleText($fs-2, $fw-2, $color-primary-blue);
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+main {
+  section.courses {
+    background-image: url("/assets/img/bg-coursesGrid.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    padding: 80px 0;
+    .courses__content {
+      h1 {
+        color: $color-white;
+      }
+      .courses__grid {
+        .card.courses__item {
+          overflow: hidden;
+          margin-bottom: 30px;
+          .card-img-top {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            img {
+              width: 100%;
+
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+.number {
+  padding: 150px 0;
+  position: relative;
+  background-image: url("/assets/img/bg-number.jpg");
+  &::before {
+    content: "";
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    position: absolute;
+    background-color: rgba(0, 33, 71, 0.9);
+  }
+  .number__content {
+    position: relative;
+    h2 {
+      @include styleText(60px, $fw-2, $color-white);
+      border-bottom: 2px solid $color-light-yellow;
+    }
+    p {
+      margin-left: 10px;
+      @include styleText($fs-3, $fw-2, $color-white);
+    }
+  }
+}
