@@ -40,8 +40,6 @@ root.render(
       <Routes>
         <Route path="" element={<HomeTemplate />}>
           <Route index element={<Home />} />
-          <Route path="register" element={<Register />} />
-          <Route path="login" element={<Login />} />
           <Route path="courses" element={<Courses />} />
           <Route path="search" element={<Search />} />
           <Route path="detail">
@@ -52,6 +50,9 @@ root.render(
           <Route path="page-not-found" element={<PageNotFound />} />
           <Route path="*" element={<Navigate to={"/page-not-found"} />} />
         </Route>
+        {/* FORM REGISTER-LOGIN UI */}
+        <Route path="register" element={<Login formType="register" />} />
+        <Route path="login" element={<Login formType="login" />} />
         {/* ADMIN UI */}
         <Route path="admin" element={<AdminTemplate />}>
           <Route index element={<UserManagement />} />

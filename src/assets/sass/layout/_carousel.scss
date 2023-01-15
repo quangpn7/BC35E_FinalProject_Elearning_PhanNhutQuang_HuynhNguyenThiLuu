@@ -1,0 +1,54 @@
+.carousel__content {
+  position: relative;
+  .carousel__img {
+    img {
+      filter: brightness(38%);
+      -webkit-filter: brightness(38%);
+      -moz-filter: brightness(38%);
+    }
+  }
+  .carousel__text {
+    color: $color-white;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    h1 {
+      max-width: 850px;
+    }
+    p {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+  }
+}
+// Custom arrow ANTD
+.ant-carousel .slick-next,
+.ant-carousel .slick-next:hover,
+.ant-carousel .slick-next:focus {
+  font-size: 30px;
+  right: 15px;
+  z-index: 1000;
+  color: $color-white;
+  svg {
+    background-color: rgba(0, 0, 0, 0.169);
+    border-radius: 50%;
+    padding: 5px;
+  }
+}
+.ant-carousel .slick-prev,
+.ant-carousel .slick-prev:hover,
+.ant-carousel .slick-prev:focus {
+  font-size: 30px;
+  left: 10px;
+  z-index: 2;
+  color: $color-white;
+  svg {
+    background-color: rgba(0, 0, 0, 0.169);
+    border-radius: 50%;
+    padding: 5px;
+  }
+}
+.slick-arrow::before {
+  display: none;
+}

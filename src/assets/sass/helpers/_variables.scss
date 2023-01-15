@@ -21,6 +21,11 @@ $color-light-yellow: #fac400;
 $color-white: #ffff;
 $color-black: #0000;
 
+// TRANSITION
+$trans-linear-fast: all linear 0.3s;
+$trans-linear-medi: all linear 0.6s;
+$trans-linear-slow: all linear 1s;
+
 //Breakpoint
 $breakpoints: (
   "extra-large": 1200px,

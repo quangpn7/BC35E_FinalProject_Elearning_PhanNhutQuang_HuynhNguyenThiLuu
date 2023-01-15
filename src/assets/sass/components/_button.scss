@@ -1,0 +1,67 @@
+.btn-viewAll {
+  @include styleBtn(
+    $color-white,
+    $color-primary-blue,
+    30px,
+    20px,
+    0,
+    $color-primary-yellow
+  );
+  border: 2px solid $color-primary-yellow;
+  cursor: pointer;
+  &:hover {
+    @include hoverBtn(
+      $color-primary-blue,
+      $color-primary-yellow,
+      $color-primary-yellow
+    );
+    border: 2px solid $color-primary-yellow;
+  }
+}
+.btn-viewDetail {
+  display: inline-block;
+  margin-top: 30px;
+  @include styleBtn(
+    $color-white,
+    $color-primary-blue,
+    30px,
+    10px,
+    0,
+    $color-primary-yellow
+  );
+  text-decoration: none;
+  border: 2px solid $color-primary-yellow;
+  cursor: pointer;
+  &:hover {
+    @include hoverBtn(
+      $color-primary-blue,
+      $color-primary-yellow,
+      $color-primary-yellow
+    );
+    border: 2px solid $color-primary-yellow;
+  }
+}
+.btn-register {
+  @include styleBtn(
+    $color-white,
+    $color-primary-blue,
+    20px,
+    10px,
+    0,
+    $color-primary-yellow
+  );
+  border: 2px solid $color-primary-yellow;
+  margin: 30px 0 0 auto;
+  display: block;
+  &:hover {
+    @include hoverBtn(
+      $color-primary-blue,
+      $color-primary-yellow,
+      $color-primary-yellow
+    );
+    border: 2px solid $color-primary-yellow;
+  }
+}
+.btn-login {
+  @extend .btn-register;
+}

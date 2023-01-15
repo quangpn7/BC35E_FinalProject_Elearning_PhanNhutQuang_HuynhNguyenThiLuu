@@ -1,0 +1,41 @@
+section.welcome {
+  padding: 80px 0;
+  .welcome__wrapper {
+    .welcome__title {
+      p {
+        max-width: 800px;
+        line-height: 1.5;
+        margin: 10px auto;
+      }
+    }
+    .welcome__row {
+      margin-top: 60px;
+      .welcome__item {
+        .welcome__icon {
+          background-color: #eeeeee;
+          padding: 30px;
+          border-radius: 50%;
+          display: inline-block;
+          transition: $trans-linear-medi;
+          &:hover {
+            background-color: $color-primary-yellow;
+          }
+
+          svg {
+            vertical-align: middle;
+            font-size: 30px;
+            color: $color-primary-blue;
+          }
+        }
+        h4 {
+          margin: 20px 0 10px 0;
+        }
+        p {
+          max-width: 300px;
+          margin: 0 auto;
+          line-height: 1.5;
+        }
+      }
+    }
+  }
+}
