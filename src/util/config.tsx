@@ -1,3 +1,4 @@
+import { withConfirm } from "antd/es/modal/confirm";
 import axios, { HeadersDefaults } from "axios";
 import { Token } from "typescript";
 // import {history} from '../index';
@@ -21,6 +22,10 @@ export const config = {
     }
     return null;
   },
+  delCookie: (name: string) => {
+    document.cookie =
+      name + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+  },
   getStore: (name: string) => {
     if (localStorage.getItem(name)) {
       return localStorage.getItem(name);
@@ -29,6 +34,9 @@ export const config = {
   },
   setStore: (name: string, value: any) => {
     localStorage.setItem(name, value);
+  },
+  delStore: (name: string) => {
+    localStorage.removeItem(name);
   },
   setStoreJson: (name: string, value: any) => {
     let json = JSON.stringify(value);
@@ -48,17 +56,19 @@ export const config = {
 export const {
   setCookie,
   getCookie,
+  delCookie,
   getStore,
   setStore,
+  delStore,
   setStoreJson,
   getStoreJson,
   ACCESS_TOKEN,
   USER_LOGIN,
 } = config;
 
-const DOMAIN = "https://shop.cyberlearn.vn/api";
+const DOMAIN = "https://elearningnew.cybersoft.edu.vn/api";
 const TOKEN_CYBERSOFT =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJKYXZhIDE3IiwiSGV0SGFuU3RyaW5nIjoiMTkvMTIvMjAyMiIsIkhldEhhblRpbWUiOiIxNjcxNDA4MDAwMDAwIiwibmJmIjoxNjQ4NjU5NjAwLCJleHAiOjE2NzE1NTU2MDB9.OhFEeK7ExgP3U24hEq7GxmL5VzAjzaEPPeOZpaWzZGE";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzNUUiLCJIZXRIYW5TdHJpbmciOiIwNy8wNi8yMDIzIiwiSGV0SGFuVGltZSI6IjE2ODYwOTYwMDAwMDAiLCJuYmYiOjE2NTczODYwMDAsImV4cCI6MTY4NjI0MzYwMH0.XsCcIZvawxcwye8KVYB2vJK4d3Gbr1XROtNyAL8nypA";
 
 /* Cấu hình request cho tất cả api - response cho tất cả kết quả từ api trả về */
 
@@ -84,14 +94,18 @@ http.interceptors.request.use(
   }
 );
 //Cấu hình kết quả trả về
+const currentPath = window.location.pathname;
 http.interceptors.response.use(
   (response) => {
     console.log(response);
+
     return response;
   },
   (err) => {
     // const originalRequest = error.config;
-    console.log(err.response.status);
+    if (err.response.status === 500) {
+      return Promise.reject(err);
+    }
     if (err.response.status === 400 || err.response.status === 404) {
       // history.push('/');
       return Promise.reject(err);
