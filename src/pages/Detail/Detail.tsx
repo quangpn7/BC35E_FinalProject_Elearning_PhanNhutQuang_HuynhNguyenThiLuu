@@ -2,6 +2,7 @@ import { Breadcrumb, Tabs, TabsProps } from "antd";
 import BreadcrumbItem from "antd/es/breadcrumb/BreadcrumbItem";
 import React from "react";
 import { NavLink } from "react-router-dom";
+import Course from "../../components/Course/Course";
 import Features from "./Componets/Features";
 import Lectures from "./Componets/Lectures";
 import Reviews from "./Componets/Reviews";
@@ -75,6 +76,13 @@ const Detail = (props: Props) => {
           </div>
           <div className="col-xl-3 col-lg-3 col-md-4 col-sm-12">
             <Sidebar />
+          </div>
+
+          <h3 className="title">Related courses</h3>
+          <div className="courses">
+            <div className="col-3">
+              <Course />
+            </div>
           </div>
         </div>
       </div>
