@@ -1,38 +1,112 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { createKeywordTypeNode } from "typescript";
+import { DispatchType } from "../../redux/configStore";
+import { userRegisterApi } from "../../redux/reducer/userReducer";
+import { ValidationRegisSchema } from "./ValidationSchema";
 
 type Props = {};
+// Set value in form
+type FormValues = {
+  taiKhoan: string;
+  matKhau: string;
+  confirmMatKhau: string;
+  hoTen: string;
+  soDT: string;
+  maNhom: string;
+  email: string;
+};
 
 const RegisterForm = (props: Props) => {
+  const dispatch: DispatchType = useDispatch();
+  // Setup useForm
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: yupResolver(ValidationRegisSchema),
+  });
+  // Setup onSubmit event
+  const onSubmit = (values: FormValues) => {
+    const { ["confirmMatKhau"]: remove, ...userData } = values; // remove in-needed data
+    // dispatch
+    const registerAsync = userRegisterApi(userData);
+    dispatch(registerAsync);
+  };
   return (
     <>
-      <form className="mx-auto">
+      <form className="mx-auto" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
           <label className="form-label">Username</label>
-          <input type="email" className="form-control" />
+          <input
+            type="text"
+            {...register("taiKhoan")}
+            className="form-control"
+          />
+          <div className="form-feedback mt-2 fst-italic text-danger">
+            {errors.taiKhoan?.message}
+          </div>
         </div>
         {/* PASSWORD */}
         <div className="mb-3">
           <label className="form-label">Password</label>
-          <input type="password" className="form-control" />
+          <input
+            type="password"
+            {...register("matKhau")}
+            className={`form-control ${
+              errors.matKhau ? "border border-danger" : ""
+            }`}
+          />
+          <div className="form-feedback mt-2 fst-italic text-danger">
+            {errors.matKhau?.message}
+          </div>
         </div>
         <div className="mb-3">
           <label className="form-label">Confirm your password</label>
-          <input type="password" className="form-control" />
+          <input
+            type="password"
+            {...register("confirmMatKhau")}
+            className="form-control"
+          />
+          <div className="form-feedback mt-2 fst-italic text-danger">
+            {errors.confirmMatKhau?.message}
+          </div>
+        </div>
+        {/* FULL NAME */}
+        <div className="mb-3">
+          <label className="form-label">Full name</label>
+          <input type="text" {...register("hoTen")} className="form-control" />
+          <div className="form-feedback mt-2 fst-italic text-danger">
+            {errors.hoTen?.message}
+          </div>
         </div>
         {/* FULL NAME */}
         <div className="mb-3">
           <label className="form-label">Phone number</label>
-          <input type="text" className="form-control" />
+          <input type="text" {...register("soDT")} className="form-control" />
+          <div className="form-feedback mt-2 fst-italic text-danger">
+            {errors.soDT?.message}
+          </div>
         </div>
         {/* EMAIL */}
         <div className="mb-3">
           <label className="form-label">Email</label>
-          <input type="email" className="form-control" />
+          <input type="email" {...register("email")} className="form-control" />
+          <div className="form-feedback mt-2 fst-italic text-danger">
+            {errors.email?.message}
+          </div>
         </div>
         {/* GROUP ID */}
         <div className="mb-3">
           <label className="form-label">Group</label>
-          <select className="form-select" defaultValue={""}>
+          <select
+            className="form-select"
+            defaultValue={""}
+            {...register("maNhom")}
+          >
             <option value="" disabled>
               Select your group
             </option>
@@ -47,6 +121,9 @@ const RegisterForm = (props: Props) => {
             <option value="GP09">GP09</option>
             <option value="GP10">GP10</option>
           </select>
+          <div className="form-feedback mt-2 fst-italic text-danger">
+            {errors.maNhom?.message}
+          </div>
         </div>
 
         <button type="submit" className="btn-register">
