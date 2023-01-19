@@ -17,7 +17,20 @@ header {
           }
         }
         .header__upper-right {
-          a:nth-child(2) {
+          .dropdown-menu {
+            margin-top: 10px !important;
+            background-color: $color-primary-blue;
+
+            li {
+              a {
+                @include styleText($fs-1, $fw-2, $color-white);
+                &:hover {
+                  color: $color-primary-yellow;
+                }
+              }
+            }
+          }
+          .applyBtn {
             margin-left: 20px;
             font-weight: bold;
             height: 100%;
