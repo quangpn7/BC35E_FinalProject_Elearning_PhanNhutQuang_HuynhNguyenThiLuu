@@ -30,6 +30,8 @@ function Sidebar() {
                         </ul>
                         <div className="skill-area">
                             <Progress />
+                            <Progress />
+                            <Progress />
                         </div>
                     </div>
                 </div>

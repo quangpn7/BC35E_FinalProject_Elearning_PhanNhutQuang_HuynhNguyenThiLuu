@@ -7,6 +7,9 @@ function Features(props: Props) {
     return (
         <ul>
             <Feature label='' content='' />
+            <Feature label='' content='' />
+            <Feature label='' content='' />
+            <Feature label='' content='' />
         </ul>
     )
 }

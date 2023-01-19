@@ -80,9 +80,12 @@ const Detail = (props: Props) => {
 
           <h3 className="title">Related courses</h3>
           <div className="courses">
-            <div className="col-3">
-              <Course />
+            <div className="row">
+              <div className="col-md-6 col-xl-3 col-lg-4 col-xs-12">
+                <Course />
+              </div>
             </div>
+
           </div>
         </div>
       </div>
