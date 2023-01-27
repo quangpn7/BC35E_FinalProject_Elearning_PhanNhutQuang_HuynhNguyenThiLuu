@@ -9,6 +9,7 @@
   -o-user-drag: none;
   // user-drag: none;
 }
+
 // body {
 //   overflow: hidden;
 // }
@@ -22,10 +23,233 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
+
 input[type="number"] {
-  -moz-appearance: textfield; /* Firefox */
+  -moz-appearance: textfield;
+  /* Firefox */
 }
 
 button:focus {
   box-shadow: none !important;
+}
+
+a {
+  text-decoration: none;
+
+}
+
+ul {
+  list-style: outside none none;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  line-height: 1.5;
+  margin: 0 0 20px 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+li {
+  list-style-type: none;
+}
+
+// chung
+
+.title {
+  text-transform: capitalize;
+  text-align: left;
+  font-weight: 500;
+  margin-bottom: 45px;
+  color: #002147;
+
+  position: relative;
+
+  &::before {
+    content: "";
+    height: 3px;
+    width: 40px;
+    background: #fdc800;
+    position: absolute;
+    left: 0;
+    bottom: -15px;
+    z-index: 9;
+    border-radius: 6px;
+  }
+}
+
+.banner {
+  background: url('https://www.radiustheme.com/demo/html/academics/academics/img/banner/5.jpg');
+  background-position: center;
+  background-size: cover;
+  min-height: 300px;
+  background-repeat: no-repeat;
+  position: relative;
+  display: block;
+
+  padding: 100px 0 115px;
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  .content {
+    padding-left: 10%;
+
+    .pagination-area {
+      position: relative;
+      z-index: 1;
+      color: white;
+
+      h1 {
+        font-size: 3rem;
+      }
+
+      .link {
+        color: #fec800;
+        text-decoration: none;
+        cursor: pointer;
+        z-index: 2;
+        font-size: 1rem;
+      }
+
+      .ant-breadcrumb-separator {
+        color: white;
+      }
+
+      .text {
+        color: white;
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+//sidebar
+.sidebar {
+  .sidebar-box {
+    margin-bottom: 30px;
+    background: #FFFFFF;
+    border: 1px solid #e0e0e0;
+
+    .sidebar-box-inner {
+      padding: 30px 25px;
+
+      .sidebar-course-price {
+        span {
+          font-size: 40px;
+          color: #002147;
+          margin-bottom: 20px;
+          display: block;
+        }
+
+        .enroll-btn {
+          color: #002147;
+          padding: 18px 0;
+          background: #fdc800;
+          text-transform: uppercase;
+          font-size: 14px;
+          font-weight: 700;
+          display: inline-block;
+          border: none;
+          width: 100%;
+          border: 2px solid #fdc800;
+          text-align: center;
+          margin-bottom: 30px;
+          transition: all .5s ease-out;
+
+          &:hover {
+            background: transparent;
+            color: #fdc800;
+          }
+        }
+
+        .download-btn {
+          position: relative;
+          color: #002147;
+          padding: 18px 0;
+          background: transparent;
+          text-transform: uppercase;
+          font-size: 14px;
+          font-weight: 700;
+          display: inline-block;
+          border: none;
+          width: 100%;
+          border: 1px solid #002147;
+          text-align: center;
+          transition: all .5s ease-out;
+
+          &:hover {
+            border: 1px solid #fdc800;
+            background: #fdc800;
+            color: #FFFFFF;
+          }
+        }
+      }
+
+      .sidebar-course-reviews {
+        h4 {
+          color: #002147;
+          font-size: 16px;
+          position: relative;
+          margin-bottom: 10px;
+
+          span {
+            position: absolute;
+            right: 0;
+            top: -15px;
+            z-index: 1;
+            font-size: 36px;
+            color: #002147;
+          }
+        }
+
+        li {
+          display: inline-block;
+          color: #fdc800;
+        }
+
+        .skill-area {
+          position: relative;
+          overflow: hidden;
+
+          // progress
+          .progress {
+            background-color: #f0f0f0;
+            border-radius: 0;
+            box-shadow: none;
+            height: 8px;
+            overflow: visible;
+            position: relative;
+            margin-top: 45px;
+
+            .lead {
+              color: #002147;
+              position: absolute;
+              top: -30px;
+              font-weight: 500;
+            }
+
+            span {
+              color: #002147;
+              position: absolute;
+              right: 0;
+              top: -30px;
+            }
+          }
+        }
+      }
+
+    }
+  }
 }
