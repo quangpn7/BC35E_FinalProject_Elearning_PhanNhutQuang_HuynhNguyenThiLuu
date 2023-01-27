@@ -65,3 +65,11 @@
 .btn-login {
   @extend .btn-register;
 }
+.btn-update {
+  @extend .btn-register;
+  margin-top: 0;
+}
+.btn-upload {
+  @extend .btn-register;
+  margin: 0 auto;
+}
