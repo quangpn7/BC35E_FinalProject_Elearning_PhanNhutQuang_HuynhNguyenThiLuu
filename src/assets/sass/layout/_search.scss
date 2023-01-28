@@ -42,7 +42,8 @@
             transition: all .5s ease-out;
             cursor: pointer;
 
-            &:hover {
+            &:hover,
+            &.active {
                 color: #fdc800;
             }
         }

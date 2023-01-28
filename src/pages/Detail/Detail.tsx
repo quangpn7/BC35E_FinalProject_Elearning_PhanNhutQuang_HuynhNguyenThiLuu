@@ -82,7 +82,7 @@ const Detail = (props: Props) => {
           <div className="courses">
             <div className="row">
               <div className="col-md-6 col-xl-3 col-lg-4 col-xs-12">
-                <Course />
+                {/* <Course /> */}
               </div>
             </div>
 

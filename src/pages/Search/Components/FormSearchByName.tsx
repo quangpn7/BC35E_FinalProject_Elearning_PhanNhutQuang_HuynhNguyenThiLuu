@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { setCourseNameAction } from '../../../redux/reducer/courseReducer';
 
 type Props = {}
 
@@ -7,11 +9,13 @@ function FormSearchByName({ }: Props) {
         courseName: string
     }
 
+    const dispatch = useDispatch();
+
     const [search, setSearch] = useState<ISearch>({ courseName: '' });
     const handleSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault()
-        console.log(search);
-
+        const action = setCourseNameAction(search.courseName);
+        dispatch(action);
     }
     const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
         setSearch({ courseName: e.currentTarget.value })
