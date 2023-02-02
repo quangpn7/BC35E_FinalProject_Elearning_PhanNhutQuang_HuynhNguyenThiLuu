@@ -22,6 +22,7 @@ export interface userInfoModal {
   maLoaiNguoiDung: string;
   hoTen: string;
   accessToken?: string;
+  chiTietKhoaHocGhiDanh?: courseAttendModal[];
 }
 export interface userLoginModal {
   taiKhoan: string;
@@ -39,7 +40,16 @@ export interface userState {
   userInfo: userInfoModal;
   isLogin: boolean;
 }
-
+export interface courseAttendModal {
+  maKhoaHoc: string;
+  tenKhoaHoc: string;
+  biDanh: string;
+  moTa: string;
+  luotXem: number;
+  hinhAnh: string;
+  ngayTao: string;
+  danhGia: number;
+}
 const initialState: userState = {
   userInfo: getStoreJson(USER_LOGIN)
     ? getStoreJson(USER_LOGIN)
@@ -128,7 +138,7 @@ export const userRegisterApi = (values: userRegisterModal) => {
         }
       })
       .catch(() => {
-        toast.error("Username or password was existed!");
+        toast.error("Username or Email was existed!");
       }); //API doesn't provide response for error?
   };
 };
@@ -143,6 +153,8 @@ export const userUpdateApi = (values: userInfoModal) => {
           let fixedRes = { ...res?.data, ["soDT"]: res?.data?.soDt };
           delete fixedRes?.soDt;
           setStoreJson(USER_LOGIN, fixedRes);
+          console.log(values);
+          console.log("received:", fixedRes);
         }
       })
       .catch((err) => {

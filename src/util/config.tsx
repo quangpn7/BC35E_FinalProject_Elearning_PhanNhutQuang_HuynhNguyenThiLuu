@@ -98,7 +98,7 @@ http.interceptors.request.use(
 const currentPath = window.location.pathname;
 http.interceptors.response.use(
   (response) => {
-    console.log(response);
+    // console.log(response);
 
     return response;
   },

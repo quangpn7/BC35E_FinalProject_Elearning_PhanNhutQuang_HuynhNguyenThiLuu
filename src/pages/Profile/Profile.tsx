@@ -42,7 +42,9 @@ const Profile = (props: Props) => {
         <hr className="w-75 mx-auto" />
         <div className="course__attend">
           <h1 className="text-center">Attended courses</h1>
-          <CourseAttend />
+          <div className="container">
+            <CourseAttend />
+          </div>
         </div>
       </section>
     </>
