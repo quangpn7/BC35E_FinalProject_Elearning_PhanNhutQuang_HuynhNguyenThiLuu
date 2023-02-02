@@ -1,3 +1,4 @@
+// Header User
 header {
   section.header-wrap {
     // UPPER HEADER
@@ -112,6 +113,40 @@ header {
             li.nav-search {
               border-left: 1px solid gray;
               padding-left: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+// Header Admin
+header.admin {
+  section.header-wrap {
+    .header__bottom {
+      background-color: $color-primary-blue;
+      nav.navbar {
+        a.navbar-brand {
+          @include styleText(32px, $fw-4, $color-primary-yellow);
+        }
+        .navbar-collapse {
+          ul.navbar-nav {
+            li {
+              margin: 0 12px;
+              a {
+                @include styleText(18px, $fw-3, $color-white);
+                transition: $trans-linear-fast;
+              }
+              a.active {
+                color: $color-primary-yellow;
+                transition: $trans-linear-slow;
+              }
+
+              &:hover {
+                a {
+                  color: $color-primary-yellow;
+                }
+              }
             }
           }
         }

@@ -21,7 +21,8 @@ export interface userInfoModal {
   maNhom: string;
   maLoaiNguoiDung: string;
   hoTen: string;
-  accessToken: string;
+  accessToken?: string;
+  chiTietKhoaHocGhiDanh?: courseAttendModal[];
 }
 export interface userLoginModal {
   taiKhoan: string;
@@ -39,7 +40,16 @@ export interface userState {
   userInfo: userInfoModal;
   isLogin: boolean;
 }
-
+export interface courseAttendModal {
+  maKhoaHoc: string;
+  tenKhoaHoc: string;
+  biDanh: string;
+  moTa: string;
+  luotXem: number;
+  hinhAnh: string;
+  ngayTao: string;
+  danhGia: number;
+}
 const initialState: userState = {
   userInfo: getStoreJson(USER_LOGIN)
     ? getStoreJson(USER_LOGIN)
@@ -63,13 +73,34 @@ const userReducer = createSlice({
       state.userInfo = action.payload;
       state.isLogin = true;
     },
+    getUserInfoAction: (state, action) => {
+      state.userInfo = action.payload;
+    },
+    updateUserAction: (state, action) => {
+      state.userInfo = action.payload;
+    },
   },
 });
 
-export const { userLoginAction } = userReducer.actions;
+export const { userLoginAction, getUserInfoAction, updateUserAction } =
+  userReducer.actions;
 
 export default userReducer.reducer;
 /* -----------ASYNC ACTION------------- */
+// Get user info
+export const getUserInfoApi = () => {
+  return async (dispatch: DispatchType) => {
+    await http
+      .post("/QuanLyNguoiDung/ThongTinTaiKhoan")
+      .then((res) => {
+        const action: PayloadAction<userInfoModal> = getUserInfoAction(
+          res?.data
+        );
+        dispatch(action);
+      })
+      .catch((err) => history.push("/login"));
+  };
+};
 // Login
 export const userLoginApi = (values: userLoginModal) => {
   return async (dispatch: DispatchType) => {
@@ -93,6 +124,7 @@ export const userLoginApi = (values: userLoginModal) => {
       });
   };
 };
+// Register
 export const userRegisterApi = (values: userRegisterModal) => {
   return async (dispatch: DispatchType) => {
     await http
@@ -106,7 +138,28 @@ export const userRegisterApi = (values: userRegisterModal) => {
         }
       })
       .catch(() => {
-        toast.error("Username or password was existed!");
+        toast.error("Username or Email was existed!");
       }); //API doesn't provide response for error?
+  };
+};
+//  Profile update
+export const userUpdateApi = (values: userInfoModal) => {
+  return async (dispatch: DispatchType) => {
+    await http
+      .put("/QuanLyNguoiDung/CapNhatThongTinNguoiDung", values)
+      .then((res) => {
+        if (res?.status === 200) {
+          toast.success("Updated successfully!");
+          let fixedRes = { ...res?.data, ["soDT"]: res?.data?.soDt };
+          delete fixedRes?.soDt;
+          setStoreJson(USER_LOGIN, fixedRes);
+          console.log(values);
+          console.log("received:", fixedRes);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Updated failed!");
+      });
   };
 };

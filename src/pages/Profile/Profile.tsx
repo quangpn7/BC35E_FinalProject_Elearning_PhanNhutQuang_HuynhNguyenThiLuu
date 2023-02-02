@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import CourseAttend from "../../components/CourseAttend/CourseAttend";
+import ProfileForm from "../../components/Form/ProfileForm";
+import { ValidationProfileSchema } from "../../components/Form/ValidationSchema";
+import { DispatchType, RootState } from "../../redux/configStore";
+import { getUserInfoApi, userUpdateApi } from "../../redux/reducer/userReducer";
+import { getStoreJson, USER_LOGIN } from "../../util/config";
 
 type Props = {};
 
 const Profile = (props: Props) => {
+  const dispatch: DispatchType = useDispatch();
+  // UseEffect
+  useEffect(() => {
+    const getUserInfoAsync = getUserInfoApi();
+    dispatch(getUserInfoAsync);
+  }, []);
   return (
     <>
       <section className="profile">
-        <h1 className="text-center">Profile</h1>
+        <div className="d-flex justify-content-center align-items-center">
+          <h1 className="me-2">Profile</h1>
+        </div>
         <div className="profile__container container mx-auto ">
           <div className="row">
             <div className="profile__left col-5">
@@ -19,45 +34,17 @@ const Profile = (props: Props) => {
                 </div>
               </div>
             </div>
-            <div className="profile__right col-7">
-              <div className="form-group bg-white p-3 shadow rounded">
-                <div className="mb-3">
-                  <label className="form-label">Username:</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    defaultValue={"Quang"}
-                    disabled
-                  />
-                </div>
-                <div className="mb-3">
-                  <label className="form-label">Name:</label>
-                  <input type="text" className="form-control" />
-                </div>
-                <div className="mb-3">
-                  <label className="form-label">Email</label>
-                  <input type="text" className="form-control" />
-                </div>
-                <div className="mb-3">
-                  <label className="form-label">Phone:</label>
-                  <input type="text" className="form-control" />
-                </div>
-                <div className="mb-3">
-                  <label className="form-label">User's type</label>
-                  <span className="badge badge-primary bg-primary">HV</span>
-                </div>
-                <div className="mb-3">
-                  <label className="form-label">User's group</label>
-                  <span className="badge badge-primary bg-primary">GP10</span>
-                </div>
-                <button className="btn-update">Update</button>
-              </div>
+            <div className="col-7 profile__right">
+              <ProfileForm />
             </div>
           </div>
         </div>
         <hr className="w-75 mx-auto" />
         <div className="course__attend">
           <h1 className="text-center">Attended courses</h1>
+          <div className="container">
+            <CourseAttend />
+          </div>
         </div>
       </section>
     </>

@@ -4,53 +4,53 @@ import { NavLink } from "react-router-dom";
 type Props = {};
 
 const AdminHeader = (props: Props) => {
+  document.title = "Admin";
   return (
     <>
-      <div className="bg-danger text-center text-white">AdminHeader</div>
-      <div className="d-flex container mx-auto justify-content-evenly">
-        <div>
-          <h1>User UI</h1>
-          <ul className="list-unstyled ">
-            <li>
-              <NavLink to={"Register"}>Register</NavLink>
-            </li>
-            <li>
-              <NavLink to={"login"}>Login</NavLink>
-            </li>
-            <li>
-              <NavLink to={"search"}>Search</NavLink>
-            </li>
-            <li>
-              <NavLink to={"Detail/1"}>Detail</NavLink>
-            </li>
-            <li>
-              <NavLink to={"profile"}>Profile</NavLink>
-            </li>
-            <li>
-              <NavLink to={"Detail/1"}>Detail/1</NavLink>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h1>AdminUI</h1>
-          <ul className="list-unstyled ">
-            <li>
-              <NavLink to={"admin"}>Admin Page</NavLink>
-            </li>
-            <li>
-              <NavLink to={"edit-user"}>EditUser</NavLink>
-            </li>
-            <li>
-              <NavLink to={"course-management"}>Course Management</NavLink>
-            </li>
-            <li>
-              <NavLink to={"course-management/edit-course"}>
-                Edit course
-              </NavLink>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <header className="admin">
+        <section className="header-wrap">
+          <div className="header__bottom">
+            <nav className="navbar navbar-expand-lg container">
+              <div className="container-fluid">
+                <NavLink className="navbar-brand" to={""}>
+                  ACADEMICS-ADMIN
+                </NavLink>
+                <button
+                  className="navbar-toggler"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
+                  <span className="navbar-toggler-icon" />
+                </button>
+                <div
+                  className="collapse navbar-collapse"
+                  id="navbarSupportedContent"
+                >
+                  <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li className="nav-item">
+                      <NavLink className="nav-link active" to={"/admin"}>
+                        USER MANAGEMENT
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink
+                        className="nav-link"
+                        to={"/admin/course-management"}
+                      >
+                        COURSE MANAGEMENT
+                      </NavLink>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </section>
+      </header>
     </>
   );
 };

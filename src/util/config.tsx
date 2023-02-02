@@ -1,6 +1,7 @@
 import { withConfirm } from "antd/es/modal/confirm";
 import axios, { HeadersDefaults } from "axios";
 import { Token } from "typescript";
+import { history } from "..";
 // import {history} from '../index';
 export const config = {
   setCookie: (name: string, value: string, days: number) => {
@@ -81,7 +82,7 @@ export const http = axios.create({
 
 http.interceptors.request.use(
   (config: any) => {
-    const token = getStore(ACCESS_TOKEN);
+    const token = getCookie(ACCESS_TOKEN);
     config.headers = {
       ...config.headers,
       ["Authorization"]: `Bearer ${token}`,
@@ -97,7 +98,7 @@ http.interceptors.request.use(
 const currentPath = window.location.pathname;
 http.interceptors.response.use(
   (response) => {
-    console.log(response);
+    // console.log(response);
 
     return response;
   },
@@ -111,8 +112,7 @@ http.interceptors.response.use(
       return Promise.reject(err);
     }
     if (err.response.status === 401 || err.response.status === 403) {
-      alert("Token không hợp lệ ! Vui lòng đăng nhập lại !");
-      // history.push('/login');
+      // history.push("/");
       return Promise.reject(err);
     }
   }

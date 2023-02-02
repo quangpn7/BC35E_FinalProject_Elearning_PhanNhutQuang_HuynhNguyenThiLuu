@@ -2,7 +2,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { createKeywordTypeNode } from "typescript";
 import { DispatchType } from "../../redux/configStore";
 import { userRegisterApi } from "../../redux/reducer/userReducer";
 import { ValidationRegisSchema } from "./ValidationSchema";
