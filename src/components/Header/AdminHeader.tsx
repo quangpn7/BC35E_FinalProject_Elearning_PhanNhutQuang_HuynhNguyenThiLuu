@@ -1,10 +1,77 @@
-import React from "react";
+import { Modal } from "antd";
+import React, { ReactElement } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { DispatchType, RootState } from "../../redux/configStore";
+import { openType, showModal } from "../../redux/reducer/modalReducer";
+import {
+  ACCESS_TOKEN,
+  delCookie,
+  delStore,
+  USER_LOGIN,
+} from "../../util/config";
+import LoginForm from "../Form/LoginForm";
 
 type Props = {};
 
 const AdminHeader = (props: Props) => {
   document.title = "Admin";
+  const dispatch: DispatchType = useDispatch();
+  const { isLogin, userInfo } = useSelector(
+    (state: RootState) => state.userReducer
+  );
+  // Logout method
+  const logOut = (): void => {
+    delStore(USER_LOGIN);
+    delCookie(ACCESS_TOKEN);
+    window.location.reload();
+  };
+  const renderUserLog = (): ReactElement => {
+    if (isLogin) {
+      return (
+        <li className="nav-item dropdown">
+          <a
+            type="button"
+            className="dropdown-toggle text-decoration-none"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {userInfo.taiKhoan}
+          </a>
+          <ul className="dropdown-menu">
+            <div className="dropdown-divider"></div>
+            <li></li>
+            <li>
+              <a
+                className="dropdown-item"
+                href="#"
+                type="button"
+                onClick={() => {
+                  logOut();
+                }}
+              >
+                Logout
+              </a>
+            </li>
+          </ul>
+        </li>
+      );
+    }
+    return (
+      <li className="nav-item">
+        <button
+          className="btn text-white"
+          onClick={() => {
+            dispatch(openType("LOGIN_FORM"));
+            dispatch(showModal());
+          }}
+        >
+          Login
+        </button>
+      </li>
+    );
+  };
+
   return (
     <>
       <header className="admin">
@@ -30,9 +97,9 @@ const AdminHeader = (props: Props) => {
                   className="collapse navbar-collapse"
                   id="navbarSupportedContent"
                 >
-                  <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                  <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
                     <li className="nav-item">
-                      <NavLink className="nav-link active" to={"/admin"}>
+                      <NavLink className="nav-link " to={"/admin"}>
                         USER MANAGEMENT
                       </NavLink>
                     </li>
@@ -44,6 +111,7 @@ const AdminHeader = (props: Props) => {
                         COURSE MANAGEMENT
                       </NavLink>
                     </li>
+                    {renderUserLog()}
                   </ul>
                 </div>
               </div>

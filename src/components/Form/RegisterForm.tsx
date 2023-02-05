@@ -2,21 +2,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { FormValuesRegister } from "../../interfaces/user/UserType";
 import { DispatchType } from "../../redux/configStore";
 import { userRegisterApi } from "../../redux/reducer/userReducer";
 import { ValidationRegisSchema } from "./ValidationSchema";
 
 type Props = {};
 // Set value in form
-type FormValues = {
-  taiKhoan: string;
-  matKhau: string;
-  confirmMatKhau: string;
-  hoTen: string;
-  soDT: string;
-  maNhom: string;
-  email: string;
-};
 
 const RegisterForm = (props: Props) => {
   const dispatch: DispatchType = useDispatch();
@@ -25,11 +17,11 @@ const RegisterForm = (props: Props) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<FormValuesRegister>({
     resolver: yupResolver(ValidationRegisSchema),
   });
   // Setup onSubmit event
-  const onSubmit = (values: FormValues) => {
+  const onSubmit = (values: FormValuesRegister) => {
     const { ["confirmMatKhau"]: remove, ...userData } = values; // remove in-needed data
     // dispatch
     const registerAsync = userRegisterApi(userData);

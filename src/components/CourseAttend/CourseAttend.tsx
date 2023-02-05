@@ -1,15 +1,15 @@
 import { Rate } from "antd";
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { JsxElement } from "typescript";
 import { number } from "yup";
+import { courseAttendModal } from "../../interfaces/course/CourseType";
 import { RootState } from "../../redux/configStore";
-import { courseAttendModal } from "../../redux/reducer/userReducer";
 
 type Props = {};
 
-const CourseAttend = (props: Props) => {
+const CourseAttend: React.FC = (props: Props) => {
   // Get User's attended courses
   const courseAttend: courseAttendModal[] = useSelector(
     (state: RootState) =>

@@ -1,17 +1,14 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Resolver, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationLoginSchema } from "./ValidationSchema";
 import { userLoginApi } from "../../redux/reducer/userReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, RootState } from "../../redux/configStore";
+import { FormValuesLogin } from "../../interfaces/user/UserType";
 
 type Props = {};
 //Set value in form
-export type FormValues = {
-  taiKhoan: string;
-  matKhau: string;
-};
 
 const LoginForm = (props: Props) => {
   // Setup useForm
@@ -19,12 +16,12 @@ const LoginForm = (props: Props) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<FormValuesLogin>({
     resolver: yupResolver(validationLoginSchema),
   });
   // Setup onSubmit event
   const dispatch: DispatchType = useDispatch();
-  const onSubmit = (values: FormValues) => {
+  const onSubmit = (values: FormValuesLogin) => {
     const loginAsync = userLoginApi(values);
     dispatch(loginAsync);
   };
