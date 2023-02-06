@@ -1,6 +1,7 @@
 import {
   Space,
   TableColumnGroupType,
+  TableColumnsType,
   TableColumnType,
   TablePaginationConfig,
   Tag,
@@ -19,17 +20,24 @@ import {
   openType,
   showModal,
 } from "../../redux/reducer/modalReducer";
+import { setUserEditing } from "../../redux/reducer/userManageReducer";
 
 // Handle event
 const handleEditClick = (values: userInfoModal) => {
   console.log(values);
   store.dispatch(setEditType(false));
+  store.dispatch(setUserEditing(values));
   store.dispatch(openType("ADD_EDIT_USER"));
   store.dispatch(showModal());
 };
 
-// Columns config
+// Columns config - USER LIST TABLE
 export const columns: any = [
+  {
+    title: "#",
+    dataIndex: "key",
+    key: "key",
+  },
   {
     title: "Username",
     dataIndex: "taiKhoan",
@@ -42,8 +50,8 @@ export const columns: any = [
   },
   {
     title: "Phone",
-    dataIndex: "soDt",
-    key: "soDt",
+    dataIndex: "soDT",
+    key: "soDT",
   },
   {
     title: "Email",
@@ -64,6 +72,28 @@ export const columns: any = [
         })()}
       </>
     ),
+    // sorter: (a: userInfoAdminModal, b: userInfoAdminModal) => {
+    //   if (a.maLoaiNguoiDung && b.maLoaiNguoiDung) {
+    //     return a.maLoaiNguoiDung.localeCompare(b.maLoaiNguoiDung);
+    //   }
+    //   return 0;
+    // },
+    filters: [
+      {
+        text: "HV",
+        value: "HV",
+      },
+      {
+        text: "GV",
+        value: "GV",
+      },
+    ],
+    onFilter: (value: string, record: userInfoAdminModal) => {
+      if (record.maLoaiNguoiDung) {
+        return record.maLoaiNguoiDung.indexOf(value) === 0;
+      }
+      return 0;
+    },
   },
 
   ,
@@ -92,6 +122,7 @@ export const columns: any = [
         </button>
       </Space>
     ),
+    className: "text-center",
   },
 ];
 

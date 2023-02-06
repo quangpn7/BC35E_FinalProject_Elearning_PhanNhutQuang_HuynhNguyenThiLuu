@@ -1,10 +1,20 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
+import { Modal } from "antd";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { FormValuesRegister } from "../../interfaces/user/UserType";
+import {
+  addEditUserModal,
+  FormValuesRegister,
+} from "../../interfaces/user/UserType";
 import { DispatchType, RootState } from "../../redux/configStore";
 import { setEditType, hideModal } from "../../redux/reducer/modalReducer";
+import {
+  addNewUserApi,
+  editUserApi,
+  setForm,
+  setUserEditing,
+} from "../../redux/reducer/userManageReducer";
 import RegisterForm from "./RegisterForm";
 import { ValidationRegisSchemaAd } from "./ValidationSchema";
 
@@ -12,40 +22,84 @@ type Props = {};
 
 const AddEditForm = (props: Props) => {
   const { editType } = useSelector((state: RootState) => state.modalReducer);
-
+  const { userEditing } = useSelector(
+    (state: RootState) => state.userManageReducer
+  );
+  const [passVisibility, setPassVisibility] = useState<boolean>(false);
   // setup dispatch
   const dispatch: DispatchType = useDispatch();
   // config useForm
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
     reset,
-  } = useForm<FormValuesRegister>({
+  } = useForm<addEditUserModal>({
+    defaultValues: {
+      taiKhoan: userEditing?.taiKhoan || "",
+      matKhau: "",
+      hoTen: userEditing?.hoTen || "",
+      soDT: userEditing?.soDT || "",
+      email: userEditing?.email || "",
+      maNhom: "GP01", // This is dummy, user can't change GROUP, unknown reason
+      maLoaiNguoiDung: userEditing?.maLoaiNguoiDung || "",
+    },
     resolver: yupResolver(ValidationRegisSchemaAd),
   });
+
+  // reset Form
+  const resetForm = () => {
+    reset({
+      taiKhoan: userEditing?.taiKhoan || "",
+      matKhau: "",
+      hoTen: userEditing?.hoTen || "",
+      soDT: userEditing?.soDT || "",
+      email: userEditing?.email || "",
+      maLoaiNguoiDung: userEditing?.maLoaiNguoiDung || "",
+    });
+  };
   // setup onSubmit-discard- reset
-  const onSubmit = (values: FormValuesRegister) => {
-    console.log(values);
+  const onSubmit = (values: addEditUserModal) => {
+    Modal.confirm({
+      // Confirm edit
+      onOk: () => {
+        // ADD MODE
+        if (editType) {
+          // true-> add
+          const addNewUserAction = addNewUserApi(values);
+          dispatch(addNewUserAction);
+        } else {
+          //other -> edit
+          const editUserAction = editUserApi(values);
+          dispatch(editUserAction);
+        }
+      },
+      title: editType
+        ? "New user will be added. Confirm your submit!"
+        : "Changes data will be save. Confirm your changes!",
+    });
   };
 
   const handleDiscard = () => {
     dispatch(hideModal());
     dispatch(setEditType(true));
-    reset();
+    dispatch(setForm());
   };
+  useEffect(() => {
+    resetForm();
+  }, [userEditing, reset]);
   // render add - save button
-  const renderBtn = (value: boolean) => {
+  const renderBtn = (editType: boolean) => {
     //true -> edit, false -> save
-    if (value) {
+    if (editType) {
       return (
-        <button type="submit" className="btn btn-primary mx-1">
+        <button type="submit" className="btn btn-primary" disabled={!isDirty}>
           ADD
         </button>
       );
     }
     return (
-      <button type="submit" className="btn btn-warning mx-1">
+      <button type="submit" className="btn btn-warning" disabled={!isDirty}>
         SAVE
       </button>
     );
@@ -72,9 +126,18 @@ const AddEditForm = (props: Props) => {
           </div>
           {/* password */}
           <div className="mb-2 col-6">
-            <label className="form-label">Password</label>
+            <div className="d-flex me-2 align-items-center">
+              <label className="form-label mb-0 ">Password</label>
+              <input
+                type="checkbox"
+                className="ms-2"
+                onClick={() => {
+                  setPassVisibility((prev) => !prev);
+                }}
+              />{" "}
+            </div>
             <input
-              type="password"
+              type={passVisibility ? "text" : "password"}
               className="form-control"
               {...register("matKhau")}
             />
@@ -134,11 +197,14 @@ const AddEditForm = (props: Props) => {
           </div>
           {/* group */}
           <div className="mb-2 col-6">
-            <label className="form-label">Group</label>
+            <label hidden={!editType} className="form-label">
+              Group
+            </label>
             <select
               className="form-select"
               defaultValue={""}
               {...register("maNhom")}
+              hidden={!editType}
             >
               <option value="" disabled>
                 Select your group
@@ -161,9 +227,12 @@ const AddEditForm = (props: Props) => {
         </div>
         <div className="text-end">
           <>
+            <button type="button" className="btn" onClick={() => reset()}>
+              <i className="fas fa-sync    "></i>
+            </button>
             <button
               type="button"
-              className="btn btn-secondary"
+              className="btn btn-secondary  mx-2"
               onClick={handleDiscard}
             >
               Discard

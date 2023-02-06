@@ -1,10 +1,10 @@
 import { Input, Select } from "antd";
 import Search from "antd/es/input/Search";
 import { Option } from "antd/es/mentions";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { CLIENT_RENEG_LIMIT } from "tls";
-import { DispatchType } from "../../redux/configStore";
+import { DispatchType, RootState } from "../../redux/configStore";
 import { openType, showModal } from "../../redux/reducer/modalReducer";
 import { getAllUserInfoApi } from "../../redux/reducer/userManageReducer";
 
@@ -15,6 +15,8 @@ const UserSearch: React.FC = (props: Props) => {
   const dispatch: DispatchType = useDispatch();
   const [groupSelected, setGroupSelected] = useState<string | null>(null);
   const [keyword, setKeyword] = useState<string>("");
+  // handle refresh after edit
+  const { editType } = useSelector((state: RootState) => state.modalReducer);
   // handle group search change
   const handleGroupChange = (value: string, keyword: string) => {
     setGroupSelected(value);
@@ -29,6 +31,11 @@ const UserSearch: React.FC = (props: Props) => {
 
   // get Option antd
   const { Option } = Select;
+  // useEffect
+  useEffect(() => {
+    const refeshListAction = getAllUserInfoApi(groupSelected, keyword);
+    dispatch(refeshListAction);
+  }, [editType]);
   return (
     <>
       <div className="">
@@ -55,7 +62,7 @@ const UserSearch: React.FC = (props: Props) => {
           <Input.Search
             className="w-50"
             size="large"
-            placeholder="Enter username or Name"
+            placeholder="Enter name"
             enterButton="Search"
             onSearch={onSearch}
             onChange={(e) => {
