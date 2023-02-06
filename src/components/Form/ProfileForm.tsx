@@ -6,16 +6,8 @@ import { getStoreJson, USER_LOGIN } from "../../util/config";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DispatchType } from "../../redux/configStore";
 import { useDispatch } from "react-redux";
+import { FormValuesProfile } from "../../interfaces/user/UserType";
 type Props = {};
-type infoValues = {
-  taiKhoan: string;
-  matKhau: string;
-  hoTen: string;
-  email: string;
-  soDT: string;
-  maNhom: string;
-  maLoaiNguoiDung: string;
-};
 
 const ProfileForm = (props: Props) => {
   const dispatch: DispatchType = useDispatch();
@@ -29,7 +21,7 @@ const ProfileForm = (props: Props) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<infoValues>({
+  } = useForm<FormValuesProfile>({
     defaultValues: {
       matKhau: "",
       taiKhoan: userInfo?.taiKhoan || "Null",
@@ -41,7 +33,7 @@ const ProfileForm = (props: Props) => {
     },
     resolver: yupResolver(ValidationProfileSchema),
   });
-  const onSubmit = (values: infoValues) => {
+  const onSubmit = (values: FormValuesProfile) => {
     const updateAction = userUpdateApi(values);
     dispatch(updateAction).then(() => {
       setIsEdit(false);

@@ -27,6 +27,7 @@ import CourseManagement from "./pages/CourseManagement/CourseManagement";
 import EditUser from "./pages/EditUser/EditUser";
 import EditCourse from "./pages/EditCourse/EditCourse";
 import { Toaster } from "react-hot-toast";
+import ModalHOC from "./hoc/ModalHOC/ModalHOC";
 // V-DOM react
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -39,6 +40,7 @@ root.render(
     <HistoryRouter history={history}>
       {/* USER UI */}
       <Toaster />
+      <ModalHOC />
       <Routes>
         <Route path="" element={<HomeTemplate />}>
           <Route index element={<Home />} />

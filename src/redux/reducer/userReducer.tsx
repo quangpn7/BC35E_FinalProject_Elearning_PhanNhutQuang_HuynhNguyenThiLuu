@@ -4,6 +4,11 @@ import { toast } from "react-hot-toast";
 
 import { history } from "../..";
 import {
+  FormValuesLogin,
+  FormValuesRegister,
+  userInfoModal,
+} from "../../interfaces/user/UserType";
+import {
   ACCESS_TOKEN,
   getStoreJson,
   http,
@@ -13,43 +18,13 @@ import {
   USER_LOGIN,
 } from "../../util/config";
 import { DispatchType } from "../configStore";
+import { hideModal } from "./modalReducer";
 
-export interface userInfoModal {
-  taiKhoan: string;
-  email: string;
-  soDT: string;
-  maNhom: string;
-  maLoaiNguoiDung: string;
-  hoTen: string;
-  accessToken?: string;
-  chiTietKhoaHocGhiDanh?: courseAttendModal[];
-}
-export interface userLoginModal {
-  taiKhoan: string;
-  matKhau: string;
-}
-export interface userRegisterModal {
-  taiKhoan: string;
-  matKhau: string;
-  hoTen: string;
-  soDT: string;
-  maNhom: string;
-  email: string;
-}
 export interface userState {
   userInfo: userInfoModal;
   isLogin: boolean;
 }
-export interface courseAttendModal {
-  maKhoaHoc: string;
-  tenKhoaHoc: string;
-  biDanh: string;
-  moTa: string;
-  luotXem: number;
-  hinhAnh: string;
-  ngayTao: string;
-  danhGia: number;
-}
+
 const initialState: userState = {
   userInfo: getStoreJson(USER_LOGIN)
     ? getStoreJson(USER_LOGIN)
@@ -101,8 +76,9 @@ export const getUserInfoApi = () => {
       .catch((err) => history.push("/login"));
   };
 };
+const currentPath = window.location.pathname;
 // Login
-export const userLoginApi = (values: userLoginModal) => {
+export const userLoginApi = (values: FormValuesLogin) => {
   return async (dispatch: DispatchType) => {
     const result = await http
       .post("/QuanLyNguoiDung/DangNhap", values)
@@ -114,7 +90,11 @@ export const userLoginApi = (values: userLoginModal) => {
             res?.data
           );
           dispatch(action);
-          history.push("/");
+          if (currentPath === "/admin") {
+            dispatch(hideModal());
+          } else {
+            history.push("/");
+          }
           toast.success(`Welcome ${res?.data.taiKhoan}`);
         }
       })
@@ -125,7 +105,7 @@ export const userLoginApi = (values: userLoginModal) => {
   };
 };
 // Register
-export const userRegisterApi = (values: userRegisterModal) => {
+export const userRegisterApi = (values: FormValuesRegister) => {
   return async (dispatch: DispatchType) => {
     await http
       .post("/QuanLyNguoiDung/DangKy", values)

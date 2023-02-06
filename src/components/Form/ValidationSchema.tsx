@@ -19,6 +19,16 @@ export const ValidationRegisSchema = Yup.object().shape({
   email: Yup.string().required(`${prefixInsert}Email`).email("*Invalid email"),
   maNhom: Yup.string().required("*Choose your group"),
 });
+// Register Schema-Admin Page
+export const ValidationRegisSchemaAd = Yup.object().shape({
+  taiKhoan: Yup.string().required(`${prefixInsert}username or Email`),
+  matKhau: Yup.string().required(`${prefixInsert}password`),
+  hoTen: Yup.string().required(`${prefixInsert}name`),
+  soDT: Yup.string().required(`${prefixInsert}your phone number`),
+  email: Yup.string().required(`${prefixInsert}Email`).email("*Invalid email"),
+  maNhom: Yup.string().required("*Choose your group"),
+  maLoaiNguoiDung: Yup.string().required("*Choose your user type"),
+});
 
 // Edit profile Schema
 export const ValidationProfileSchema = Yup.object().shape({
