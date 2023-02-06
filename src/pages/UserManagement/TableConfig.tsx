@@ -97,7 +97,8 @@ export const columns: any = [
 
 // Pagination config
 export const paginationConfig: TablePaginationConfig = {
-  defaultPageSize: 5,
+  defaultPageSize: 10,
   showSizeChanger: true,
   pageSizeOptions: ["5", "10", "15", "20"],
+  hideOnSinglePage: true,
 };
