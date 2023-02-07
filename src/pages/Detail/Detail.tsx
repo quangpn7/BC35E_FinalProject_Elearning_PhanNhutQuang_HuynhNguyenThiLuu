@@ -1,8 +1,9 @@
 import { Breadcrumb, Tabs, TabsProps } from "antd";
 import BreadcrumbItem from "antd/es/breadcrumb/BreadcrumbItem";
 import React from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import Course from "../../components/Course/Course";
+import { RootState } from "../../redux/configStore";
 import Features from "./Componets/Features";
 import Lectures from "./Componets/Lectures";
 import Reviews from "./Componets/Reviews";
@@ -30,6 +31,8 @@ const items: TabsProps['items'] = [
 ];
 
 const Detail = (props: Props) => {
+
+  const { currentCourse, isLoading } = useSelector((state: RootState) => state.courseReducer);
 
   const onChange = (key: string) => {
     console.log(key);

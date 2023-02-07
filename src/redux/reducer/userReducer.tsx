@@ -4,6 +4,11 @@ import { toast } from "react-hot-toast";
 
 import { history } from "../..";
 import {
+  FormValuesLogin,
+  FormValuesRegister,
+  userInfoModal,
+} from "../../interfaces/user/UserType";
+import {
   ACCESS_TOKEN,
   getStoreJson,
   http,
@@ -13,28 +18,8 @@ import {
   USER_LOGIN,
 } from "../../util/config";
 import { DispatchType } from "../configStore";
+import { hideModal } from "./modalReducer";
 
-export interface userInfoModal {
-  taiKhoan: string;
-  email: string;
-  soDT: string;
-  maNhom: string;
-  maLoaiNguoiDung: string;
-  hoTen: string;
-  accessToken: string;
-}
-export interface userLoginModal {
-  taiKhoan: string;
-  matKhau: string;
-}
-export interface userRegisterModal {
-  taiKhoan: string;
-  matKhau: string;
-  hoTen: string;
-  soDT: string;
-  maNhom: string;
-  email: string;
-}
 export interface userState {
   userInfo: userInfoModal;
   isLogin: boolean;
@@ -63,15 +48,37 @@ const userReducer = createSlice({
       state.userInfo = action.payload;
       state.isLogin = true;
     },
+    getUserInfoAction: (state, action) => {
+      state.userInfo = action.payload;
+    },
+    updateUserAction: (state, action) => {
+      state.userInfo = action.payload;
+    },
   },
 });
 
-export const { userLoginAction } = userReducer.actions;
+export const { userLoginAction, getUserInfoAction, updateUserAction } =
+  userReducer.actions;
 
 export default userReducer.reducer;
 /* -----------ASYNC ACTION------------- */
+// Get user info
+export const getUserInfoApi = () => {
+  return async (dispatch: DispatchType) => {
+    await http
+      .post("/QuanLyNguoiDung/ThongTinTaiKhoan")
+      .then((res) => {
+        const action: PayloadAction<userInfoModal> = getUserInfoAction(
+          res?.data
+        );
+        dispatch(action);
+      })
+      .catch((err) => history.push("/login"));
+  };
+};
+const currentPath = window.location.pathname;
 // Login
-export const userLoginApi = (values: userLoginModal) => {
+export const userLoginApi = (values: FormValuesLogin) => {
   return async (dispatch: DispatchType) => {
     const result = await http
       .post("/QuanLyNguoiDung/DangNhap", values)
@@ -83,7 +90,11 @@ export const userLoginApi = (values: userLoginModal) => {
             res?.data
           );
           dispatch(action);
-          history.push("/");
+          if (currentPath === "/admin") {
+            dispatch(hideModal());
+          } else {
+            history.push("/");
+          }
           toast.success(`Welcome ${res?.data.taiKhoan}`);
         }
       })
@@ -93,7 +104,8 @@ export const userLoginApi = (values: userLoginModal) => {
       });
   };
 };
-export const userRegisterApi = (values: userRegisterModal) => {
+// Register
+export const userRegisterApi = (values: FormValuesRegister) => {
   return async (dispatch: DispatchType) => {
     await http
       .post("/QuanLyNguoiDung/DangKy", values)
@@ -106,7 +118,28 @@ export const userRegisterApi = (values: userRegisterModal) => {
         }
       })
       .catch(() => {
-        toast.error("Username or password was existed!");
+        toast.error("Username or Email was existed!");
       }); //API doesn't provide response for error?
+  };
+};
+//  Profile update
+export const userUpdateApi = (values: userInfoModal) => {
+  return async (dispatch: DispatchType) => {
+    await http
+      .put("/QuanLyNguoiDung/CapNhatThongTinNguoiDung", values)
+      .then((res) => {
+        if (res?.status === 200) {
+          toast.success("Updated successfully!");
+          let fixedRes = { ...res?.data, ["soDT"]: res?.data?.soDt };
+          delete fixedRes?.soDt;
+          setStoreJson(USER_LOGIN, fixedRes);
+          console.log(values);
+          console.log("received:", fixedRes);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Updated failed!");
+      });
   };
 };

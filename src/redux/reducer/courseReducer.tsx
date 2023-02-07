@@ -93,6 +93,9 @@ const courseReducer = createSlice({
         },
         setLoadingAction: (state, action) => {
             state.isLoading = action.payload;
+        },
+        getCourseDetailAction: (state, action) => {
+            state.currentCourse = action.payload;
         }
     }
 })
@@ -105,7 +108,8 @@ export const {
     getAllCategoryAction,
     getCoursesPaginationAction,
     setCurrentPageAction,
-    setLoadingAction
+    setLoadingAction,
+    getCourseDetailAction
 } = courseReducer.actions;
 export default courseReducer.reducer;
 
@@ -171,6 +175,24 @@ export const getCoursesPaginationApi = (courseName: string, currentPage: number,
             const res = await http.get("/QuanLyKhoaHoc/LayDanhSachKhoaHoc_PhanTrang" + (courseName ? `?tenKhoaHoc=${courseName}` : '?tenKhoaHoc=') + `&page=${currentPage}&pageSize=${pageSize}`);
             if (res.status === 200) {
                 const action: PayloadAction<CourseDetailModal[]> = getCoursesPaginationAction(
+                    res?.data
+                );
+                dispatch(action);
+                dispatch(setLoadingAction(false));
+            }
+        } catch (err) {
+
+        }
+    }
+}
+
+export const getCourseDetailApi = (courseCode: string) => {
+    return async (dispatch: DispatchType) => {
+        try {
+            dispatch(setLoadingAction(true));
+            const res = await http.get("/QuanLyKhoaHoc/LayThongTinKhoaHoc" + `?maKhoaHoc=${courseCode}`);
+            if (res.status === 200) {
+                const action: PayloadAction<CourseDetailModal[]> = getCourseDetailAction(
                     res?.data
                 );
                 dispatch(action);

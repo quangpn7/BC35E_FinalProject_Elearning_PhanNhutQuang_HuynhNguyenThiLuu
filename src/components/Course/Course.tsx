@@ -1,12 +1,15 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { CourseDetailModal } from '../../redux/reducer/courseReducer'
+import { DispatchType } from '../../redux/configStore'
+import { CourseDetailModal, getCourseDetailApi } from '../../redux/reducer/courseReducer'
 
 type CourseProps = {
     course: CourseDetailModal
 }
 
 function Course({ course }: CourseProps) {
+    const dispatch: DispatchType = useDispatch();
     return (
         <div className='course'>
             <div className='wrapper'>
@@ -23,7 +26,15 @@ function Course({ course }: CourseProps) {
                             height: '200px',
                             objectFit: 'cover'
                         }} />
-                    <NavLink to={`course/${course.maKhoaHoc}`}><i className="fa fa-link" aria-hidden="true"></i> </NavLink>
+                    <NavLink
+                        onClick={() => {
+                            const action = getCourseDetailApi(course.maKhoaHoc);
+                            dispatch(action);
+                        }}
+                        to={`/detail/${course.maKhoaHoc}`}
+                    >
+                        <i className="fa fa-link" aria-hidden="true"></i>
+                    </NavLink>
                 </div>
 
                 <div className='content-wrapper'>

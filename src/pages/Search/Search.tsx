@@ -115,8 +115,8 @@ const Search = (props: Props) => {
                 </div>
               }
               {!isLoading && allCourses?.map(course => (
-                <div className="col-4">
-                  <Course course={course} key={course.maKhoaHoc} />
+                <div className="col-4" key={course.maKhoaHoc}>
+                  <Course course={course} />
                 </div>
               ))}
             </div>
@@ -126,7 +126,7 @@ const Search = (props: Props) => {
               <ul className="pagitions">
                 {totalPage > 1 && Array.from({ length: totalPage }, (_, i) => i + 1).map(page => (
                   <li className={page === currentPage ? "active" : ""}
-                    key={page}
+                    key={`page-${page}`}
                     onClick={() => {
                       const action = setCurrentPageAction(page);
                       dispatch(action);

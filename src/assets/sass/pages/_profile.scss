@@ -1,0 +1,15 @@
+section.profile {
+  background-color: #afd5ff;
+  padding: 80px 0;
+
+  .profile__container {
+    width: 70%;
+    .profile__left {
+      .profile__img {
+        img {
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}
