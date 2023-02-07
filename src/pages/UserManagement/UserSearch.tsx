@@ -1,7 +1,7 @@
-import { Input, Select } from "antd";
+import { Input, InputRef, Select } from "antd";
 import Search from "antd/es/input/Search";
 import { Option } from "antd/es/mentions";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CLIENT_RENEG_LIMIT } from "tls";
 import { DispatchType, RootState } from "../../redux/configStore";
@@ -15,12 +15,14 @@ const UserSearch: React.FC = (props: Props) => {
   const dispatch: DispatchType = useDispatch();
   const [groupSelected, setGroupSelected] = useState<string | null>(null);
   const [keyword, setKeyword] = useState<string>("");
+
+  const keywordRef = useRef<string>("");
   // handle refresh after edit
   const { editType } = useSelector((state: RootState) => state.modalReducer);
   // handle group search change
   const handleGroupChange = (value: string, keyword: string) => {
     setGroupSelected(value);
-    const getAllUserByGroup = getAllUserInfoApi(value, keyword);
+    const getAllUserByGroup = getAllUserInfoApi(value, keywordRef.current);
     dispatch(getAllUserByGroup);
   };
   // on search event

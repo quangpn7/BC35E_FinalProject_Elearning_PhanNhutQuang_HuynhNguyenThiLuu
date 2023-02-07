@@ -23,7 +23,14 @@ const CourseAttend: React.FC = (props: Props) => {
           <div className="my-3 course__box p-3 bg-white rounded" key={index}>
             <div className="row">
               <div className="course__lef col-2">
-                <img src={item.hinhAnh} className="w-100 rounded" />
+                <img
+                  src={item.hinhAnh}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = "./img/coding.png";
+                  }}
+                  className="w-100 rounded"
+                />
               </div>
               <div className="course__right col-10">
                 <div
