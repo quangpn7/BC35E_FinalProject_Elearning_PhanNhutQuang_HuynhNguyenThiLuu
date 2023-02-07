@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import { CourseDetailModal } from '../../redux/reducer/courseReducer'
 
 type CourseProps = {
@@ -10,16 +11,23 @@ function Course({ course }: CourseProps) {
         <div className='course'>
             <div className='wrapper'>
                 <div className='img-wrapper'>
-                    <img src={`${course.hinhAnh}`} alt='img' style={{
-                        width: '100%',
-                        height: '150px',
-                        objectFit: 'cover'
-                    }} />
-                    <a href="#"><i className="fa fa-link" aria-hidden="true"></i></a>
+                    <img
+                        src={`${course.hinhAnh}`}
+                        alt='img'
+                        onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = './img/brand-1.jpg';
+                        }}
+                        style={{
+                            width: '100%',
+                            height: '200px',
+                            objectFit: 'cover'
+                        }} />
+                    <NavLink to={`course/${course.maKhoaHoc}`}><i className="fa fa-link" aria-hidden="true"></i> </NavLink>
                 </div>
 
                 <div className='content-wrapper'>
-                    <h3 className="item-title"><a href="#">{course.tenKhoaHoc}</a></h3>
+                    <h3 className="item-title">{course.tenKhoaHoc}</h3>
                     <div className="item-content" style={{
                         height: '40px',
                         textOverflow: 'ellipsis',

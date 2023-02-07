@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { http } from "../../util/config";
 import { DispatchType } from "../configStore";
 
+
 interface CourseCreator {
     taiKhoan: string,
     maLoaiNguoiDung: string,
@@ -63,7 +64,6 @@ const courseReducer = createSlice({
     initialState,
     reducers: {
         getAllCoursesAction: (state, action) => {
-            // state.allCourses = action.payload;
             state.totalPage = Math.ceil(action.payload.length / state.pageSize);
         },
         setCourseNameAction: (state, action) => {
@@ -84,11 +84,11 @@ const courseReducer = createSlice({
         },
         getCoursesPaginationAction: (state, action) => {
             state.allCourses = action.payload.items;
-            state.currentPage = action.payload.currentPage;
-            state.pageSize = action.payload.count;
+            // state.currentPage = action.payload.currentPage;
+            // state.pageSize = action.payload.count;
             state.totalPage = action.payload.totalPages;
         },
-        setCurrentPgaeAction: (state, action) => {
+        setCurrentPageAction: (state, action) => {
             state.currentPage = action.payload;
         },
         setLoadingAction: (state, action) => {
@@ -104,7 +104,7 @@ export const {
     getCoursesByCategotyAction,
     getAllCategoryAction,
     getCoursesPaginationAction,
-    setCurrentPgaeAction,
+    setCurrentPageAction,
     setLoadingAction
 } = courseReducer.actions;
 export default courseReducer.reducer;

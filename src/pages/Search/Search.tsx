@@ -4,44 +4,29 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useSearchParams } from "react-router-dom";
 import Course from "../../components/Course/Course";
+import Loading from "../../components/Loading/Loading";
 import { DispatchType, RootState } from "../../redux/configStore";
-import courseReducer, { getAllCourseApi, getCoursesByCategoryApi, getCoursesPaginationApi, setCategoryCodeAction, setCourseNameAction, setCurrentPgaeAction } from "../../redux/reducer/courseReducer";
-import Courses from "../Courses/Courses";
+import { getAllCourseApi, getCoursesByCategoryApi, getCoursesPaginationApi, setCategoryCodeAction, setCourseNameAction, setCurrentPageAction } from "../../redux/reducer/courseReducer";
 import FormSearchByName from "./Components/FormSearchByName";
 import SearchByCategory from "./Components/SearchByCategory";
+import { scrollToTop } from "../../util/common.js";
 
 type Props = {};
 
 const Search = (props: Props) => {
   const dispatch: DispatchType = useDispatch();
-  const { allCourses, courseName, categoryCode, currentPage, pageSize, totalPage, isLoading } = useSelector((state: RootState) => state.courseReducer)
+  const { allCourses, courseName, categoryCode, currentPage, totalPage, isLoading } = useSelector((state: RootState) => state.courseReducer)
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    const tenKhoaHoc = searchParams.get('tenKhoaHoc');
-    if (tenKhoaHoc) {
-      const action = setCourseNameAction(tenKhoaHoc);
-      dispatch(action);
-      //
-      const coursePaginationAction = getCoursesPaginationApi(tenKhoaHoc, 1);
+    if (!categoryCode) {
+      const coursePaginationAction = getCoursesPaginationApi(courseName, currentPage);
       dispatch(coursePaginationAction);
-    }
-
-    const maDanhMuc = searchParams.get('maDanhMuc');
-    if (maDanhMuc) {
-      const action = setCategoryCodeAction(maDanhMuc);
-      dispatch(action);
       //
-      const action1 = getCoursesByCategoryApi(maDanhMuc);
-      dispatch(action1);
+      scrollToTop();
     }
-
-    if (!tenKhoaHoc && !maDanhMuc) {
-      const action = getAllCourseApi();
-      dispatch(action);
-    }
-  }, [])
+  }, [currentPage])
 
   useEffect(() => {
     if (courseName) {
@@ -49,6 +34,8 @@ const Search = (props: Props) => {
       //
       const action = getAllCourseApi(courseName);
       dispatch(action);
+      //
+      scrollToTop();
     }
   }, [courseName])
 
@@ -58,15 +45,43 @@ const Search = (props: Props) => {
       //
       const action = getCoursesByCategoryApi(categoryCode);
       dispatch(action);
+      //
+      scrollToTop();
     }
   }, [categoryCode])
 
   useEffect(() => {
-    const coursePaginationAction = getCoursesPaginationApi(courseName, currentPage);
-    dispatch(coursePaginationAction);
-  }, [courseName, currentPage])
+    const tenKhoaHoc = searchParams.get('tenKhoaHoc') || undefined;
+    if (tenKhoaHoc) {
+      const call1 = async () => {
+        const action = setCourseNameAction(tenKhoaHoc);
+        dispatch(action);
+        //
+        const coursePaginationAction = getCoursesPaginationApi(tenKhoaHoc, 1);
+        await dispatch(coursePaginationAction);
+      }
 
-  console.log(isLoading)
+      call1();
+    }
+    else {
+      const maDanhMuc = searchParams.get('maDanhMuc');
+      if (maDanhMuc) {
+        const call2 = async () => {
+          const action = setCategoryCodeAction(maDanhMuc);
+          dispatch(action);
+          //
+          const action1 = getCoursesByCategoryApi(maDanhMuc);
+          await dispatch(action1);
+        }
+
+        call2();
+      }
+      if (!maDanhMuc) {
+        const action = getAllCourseApi(tenKhoaHoc);
+        dispatch(action);
+      }
+    }
+  }, [])
 
   return <div className="searchPage">
     <div className="banner">
@@ -94,7 +109,11 @@ const Search = (props: Props) => {
         <div className="col-9">
           <div className="courses">
             <div className="row">
-              {isLoading && "Loading..."}
+              {isLoading &&
+                <div className="col-12 d-flex justify-content-center aligns-item-center pt-5">
+                  <Loading />
+                </div>
+              }
               {!isLoading && allCourses?.map(course => (
                 <div className="col-4">
                   <Course course={course} key={course.maKhoaHoc} />
@@ -109,7 +128,7 @@ const Search = (props: Props) => {
                   <li className={page === currentPage ? "active" : ""}
                     key={page}
                     onClick={() => {
-                      const action = setCurrentPgaeAction(page);
+                      const action = setCurrentPageAction(page);
                       dispatch(action);
                     }}
                   >{page}</li>
