@@ -19,7 +19,7 @@ function Course({ course }: CourseProps) {
                         alt='img'
                         onError={(e) => {
                             e.currentTarget.onerror = null;
-                            e.currentTarget.src = './img/brand-1.jpg';
+                            e.currentTarget.src = '/img/brand-1.jpg';
                         }}
                         style={{
                             width: '100%',
