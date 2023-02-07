@@ -50,6 +50,17 @@ export type userInfoManageModal = {
 };
 export type userManagementReducerSate = {
   userList: userInfoManageModal[];
+  userEditing: addEditUserModal | null;
+};
+
+export type addEditUserModal = {
+  taiKhoan: string;
+  matKhau: string;
+  hoTen: string;
+  soDT: string;
+  email: string;
+  maLoaiNguoiDung: string;
+  maNhom: string;
 };
 /**-----------API RECEIVED--------- */
 export type userInfoAdminModal = {

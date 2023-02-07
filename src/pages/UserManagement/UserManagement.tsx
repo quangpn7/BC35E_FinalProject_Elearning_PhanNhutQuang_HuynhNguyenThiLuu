@@ -17,6 +17,7 @@ const UserManagement = (props: Props) => {
     <>
       <div className="user__title my-5 container">
         <h1>USER MANAGEMENT</h1>
+        <hr />
       </div>
       <div className="user__search container">
         <h2>User list</h2>
