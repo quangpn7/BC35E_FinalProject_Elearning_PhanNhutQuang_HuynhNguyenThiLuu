@@ -6,6 +6,7 @@ import AddEditForm from "../../components/Form/AddEditForm";
 import LoginForm from "../../components/Form/LoginForm";
 import { DispatchType, RootState } from "../../redux/configStore";
 import { setEditType, hideModal } from "../../redux/reducer/modalReducer";
+import { setForm, setUserEditing } from "../../redux/reducer/userManageReducer";
 
 type Props = {};
 
@@ -36,6 +37,7 @@ const ModalHOC: React.FC<Props> = () => {
   const handleCancel = () => {
     dispatch(hideModal());
     dispatch(setEditType(true));
+    dispatch(setForm());
   };
 
   return (

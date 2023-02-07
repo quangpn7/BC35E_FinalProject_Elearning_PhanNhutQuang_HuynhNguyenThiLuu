@@ -21,10 +21,6 @@ const UserTable: React.FC = (props: Props) => {
     (state: RootState) => state.userManageReducer.userList
   );
 
-  useEffect(() => {
-    const getAllUserAsync = getAllUserInfoApi();
-    dispatch(getAllUserAsync);
-  }, []);
   //  setup dispatch
 
   return (
@@ -35,6 +31,7 @@ const UserTable: React.FC = (props: Props) => {
           dataSource={userData}
           columns={columns}
           pagination={paginationConfig}
+          tableLayout="auto"
         />
       </div>
     </>
