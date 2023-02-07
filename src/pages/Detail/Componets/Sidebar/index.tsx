@@ -10,7 +10,7 @@ function Sidebar() {
                     <h3 className="title">Course Price</h3>
                     <div className="sidebar-course-price">
                         <span>$800.00</span>
-                        <a href="#" className="enroll-btn">Enroll THis Course</a>
+                        <a href="#" className="enroll-btn">Enroll This Course</a>
                         <a href="#" className="download-btn">Download PDF</a>
                     </div>
                 </div>
