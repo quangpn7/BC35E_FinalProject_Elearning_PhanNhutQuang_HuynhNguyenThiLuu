@@ -9,7 +9,7 @@ import Features from "./Componets/Features";
 import Lectures from "./Componets/Lectures";
 import Reviews from "./Componets/Reviews";
 import Sidebar from "./Componets/Sidebar";
-import { getCourseDetailApi } from "../../redux/reducer/courseReducer";
+import { getCourseDetailApi, getCoursesByCategoryApi } from "../../redux/reducer/courseReducer";
 import Loading from "../../components/Loading/Loading";
 import { scrollToTop } from "../../util/common";
 
@@ -47,13 +47,19 @@ const Detail = (props: Props) => {
 
   useEffect(() => {
     if (id) {
-      //
       const action = getCourseDetailApi(id);
       dispatch(action);
 
       scrollToTop();
     }
   }, [id])
+
+  useEffect(() => {
+    if (currentCourse?.danhMucKhoaHoc?.maDanhMucKhoaHoc) {
+      const action1 = getCoursesByCategoryApi(currentCourse?.danhMucKhoaHoc?.maDanhMucKhoaHoc);
+      dispatch(action1);
+    }
+  }, [currentCourse])
 
   return <div className="courseDetail">
     <div className="banner">
@@ -122,7 +128,7 @@ const Detail = (props: Props) => {
               <h3 className="title">Related courses</h3>
               <div className="courses">
                 <div className="row">
-                  {allCourses?.slice(0, 4).map(course => (
+                  {allCourses?.filter(item => item.maKhoaHoc !== currentCourse.maKhoaHoc).map(course => (
                     <div className="col-md-6 col-xl-3 col-lg-4 col-xs-12" key={course.maKhoaHoc}>
                       <Course course={course} />
                     </div>
