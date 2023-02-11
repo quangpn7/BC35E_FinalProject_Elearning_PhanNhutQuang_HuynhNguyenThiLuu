@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddEditForm from "../../components/Form/AddEditForm";
 import LoginForm from "../../components/Form/LoginForm";
+import Enrollment from "../../pages/UserManagement/Enrollment";
 import { DispatchType, RootState } from "../../redux/configStore";
 import { setEditType, hideModal } from "../../redux/reducer/modalReducer";
 import { setForm, setUserEditing } from "../../redux/reducer/userManageReducer";
@@ -30,6 +31,9 @@ const ModalHOC: React.FC<Props> = () => {
     case "ADD_EDIT_USER":
       Component = AddEditForm;
       break;
+    case "ENROLL_USER":
+      Component = Enrollment;
+      break;
     default:
       break;
   }
@@ -47,6 +51,7 @@ const ModalHOC: React.FC<Props> = () => {
         okButtonProps={{ hidden: true }}
         onCancel={handleCancel}
         cancelButtonProps={{ hidden: true }}
+        width={modalContent.Component === "ENROLL_USER" ? 1000 : 600}
       >
         <Component />
       </Modal>

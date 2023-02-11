@@ -8,7 +8,7 @@ import {
   showModal,
 } from "../../redux/reducer/modalReducer";
 import { getAllUserInfoApi } from "../../redux/reducer/userManageReducer";
-import { columns, paginationConfig } from "./TableConfig";
+import { columnsUserTable, paginationConfig } from "./TableConfig";
 
 type Props = {};
 
@@ -29,7 +29,7 @@ const UserTable: React.FC = (props: Props) => {
         <Table
           className="mt-4"
           dataSource={userData}
-          columns={columns}
+          columns={columnsUserTable}
           pagination={paginationConfig}
           tableLayout="auto"
         />

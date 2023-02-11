@@ -1,18 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "react-hot-toast";
-import { createKeywordTypeNode } from "typescript";
+
 import {
   addEditUserModal,
+  userCourseEnroll,
   userInfoAdminModal,
   userManagementReducerSate,
 } from "../../interfaces/user/UserType";
 import { http } from "../../util/config";
-import { DispatchType } from "../configStore";
+import { DispatchType, store } from "../configStore";
 import { hideModal } from "./modalReducer";
 
 const initialState: userManagementReducerSate = {
   userList: [],
   userEditing: null,
+  userSelected: null,
+  userWaitingCourses: [],
+  userRegisteredCourses: [],
+  isLoading: false,
 };
 
 const userManageReducer = createSlice({
@@ -33,14 +38,34 @@ const userManageReducer = createSlice({
         maNhom: "GP01",
       };
     },
+    setUserSelected: (state, action) => {
+      state.userSelected = action.payload;
+    },
     setUserEditing: (state, action) => {
       state.userEditing = action.payload;
     },
+    setUserWaitingCourses: (state, action) => {
+      state.userWaitingCourses = action.payload;
+    },
+    setUserRegisterdCourses: (state, action) => {
+      state.userRegisteredCourses = action.payload;
+    },
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
   },
 });
-export const { getAllUser, setUserEditing, setForm } =
-  userManageReducer.actions;
+export const {
+  getAllUser,
+  setUserEditing,
+  setForm,
+  setUserSelected,
+  setUserWaitingCourses,
+  setUserRegisterdCourses,
+  setIsLoading,
+} = userManageReducer.actions;
 /**----------ASYNC ACTION------------- */
+// GET ALL USER
 export const getAllUserInfoApi = (
   group?: string | null,
   keyword?: string | null
@@ -109,5 +134,71 @@ export const editUserApi = (values: addEditUserModal) => {
       });
   };
 };
+// DELETE USER
+export const deleteUserApi = (userName: string) => {
+  return async (dispatch: DispatchType) => {
+    await http
+      .delete(`/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${userName}`)
+      .then(() => {
+        toast.success(`Deleted user: ${userName}`);
+        // Refresh - direct mutate the state without api
 
+        const { userList } = store.getState().userManageReducer;
+        let refreshList = userList.filter(
+          (item: userInfoAdminModal) => item.taiKhoan !== userName
+        );
+        const action: PayloadAction<userInfoAdminModal[]> =
+          getAllUser(refreshList);
+        dispatch(action);
+      })
+      .catch(() => {
+        toast.error(
+          `The user: ${userName} has been registed, applied the course or created a course`
+        );
+      });
+  };
+};
+/**----------- */
+// GET USER'S WAITING COURSES
+export const getUserWaitingCourseApi = (userName: string | null) => {
+  return async (dispatch: DispatchType) => {
+    await http
+      .post("/QuanLyNguoiDung/LayDanhSachKhoaHocChoXetDuyet", {
+        taiKhoan: userName,
+      })
+      .then((res) => {
+        const data = res?.data.map((item: userCourseEnroll, index: number) => {
+          return { ...item, key: index, index: index + 1 };
+        });
+
+        const action: PayloadAction<userCourseEnroll[]> =
+          setUserWaitingCourses(data);
+        dispatch(action);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+// GET USER'S REGISTERED COURSES
+export const getUserRegisterdCourseApi = (userName: string | null) => {
+  return async (dispatch: DispatchType) => {
+    await http
+      .post("/QuanLyNguoiDung/LayDanhSachKhoaHocDaXetDuyet", {
+        taiKhoan: userName,
+      })
+      .then((res) => {
+        const data = res?.data.map((item: userCourseEnroll, index: number) => {
+          return { ...item, key: index, index: index + 1 };
+        });
+
+        const action: PayloadAction<userCourseEnroll[]> =
+          setUserRegisterdCourses(data);
+        dispatch(action);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
 export default userManageReducer.reducer;
