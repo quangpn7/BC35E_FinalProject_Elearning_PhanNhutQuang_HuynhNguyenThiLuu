@@ -1,7 +1,12 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../redux/configStore';
 import Progress from './Progress'
 
 function Sidebar() {
+    const { currentCourse } = useSelector((state: RootState) => state.courseReducer);
+    console.log(currentCourse);
+
     return (
         <div className='sidebar'>
             {/* enroll */}
@@ -10,8 +15,8 @@ function Sidebar() {
                     <h3 className="title">Course Price</h3>
                     <div className="sidebar-course-price">
                         <span>$800.00</span>
-                        <a href="#" className="enroll-btn">Enroll This Course</a>
-                        <a href="#" className="download-btn">Download PDF</a>
+                        <button className="enroll-btn">Enroll This Course</button>
+                        <button className="download-btn">Download PDF</button>
                     </div>
                 </div>
             </div>

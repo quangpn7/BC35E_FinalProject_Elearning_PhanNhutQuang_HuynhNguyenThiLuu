@@ -142,9 +142,15 @@ export const getAllCourseApi = (courseName?: string) => {
                 dispatch(action);
                 dispatch(setLoadingAction(false));
             }
+            else {
+                dispatch(getAllCoursesAction([]));
+                dispatch(setLoadingAction(false));
+            }
 
         } catch (err) {
-
+            console.log(err);
+            dispatch(getAllCoursesAction([]));
+            dispatch(setLoadingAction(false));
         }
     };
 };
@@ -161,9 +167,15 @@ export const getCoursesByCategoryApi = (categoryCode: string) => {
                 dispatch(action);
                 dispatch(setLoadingAction(false));
             }
+            else {
+                dispatch(getCoursesByCategotyAction([]));
+                dispatch(setLoadingAction(false));
+            }
 
         } catch (err) {
-
+            console.log(err);
+            dispatch(getCoursesByCategotyAction([]));
+            dispatch(setLoadingAction(false));
         }
     }
 }
@@ -180,8 +192,13 @@ export const getCoursesPaginationApi = (courseName: string, currentPage: number,
                 dispatch(action);
                 dispatch(setLoadingAction(false));
             }
+            else {
+                dispatch(setLoadingAction(false));
+            }
         } catch (err) {
-
+            console.log(err);
+            dispatch(getCoursesPaginationAction([]));
+            dispatch(setLoadingAction(false));
         }
     }
 }
@@ -198,8 +215,14 @@ export const getCourseDetailApi = (courseCode: string) => {
                 dispatch(action);
                 dispatch(setLoadingAction(false));
             }
+            else {
+                dispatch(getCourseDetailAction(null));
+                dispatch(setLoadingAction(false));
+            }
         } catch (err) {
-
+            console.log(err);
+            dispatch(getCourseDetailAction(null));
+            dispatch(setLoadingAction(false));
         }
     }
 }
