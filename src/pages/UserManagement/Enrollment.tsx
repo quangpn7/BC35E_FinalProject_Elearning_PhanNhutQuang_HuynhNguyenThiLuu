@@ -16,13 +16,15 @@ import {
 
 type Props = {};
 
-const Enrollment = (props: Props) => {
+const Enrollment: React.FC = (props: Props) => {
+  // GET DISPATCH
   const dispatch: DispatchType = useDispatch();
-  //   const [waitingCourses, setWaitingCourses] = useState(null);
-  //   const [registerdCourses, setRegisteredCourses] = useState(null);
+
+  // GET FROM REDUX STORE
   const { userSelected, userWaitingCourses, userRegisteredCourses } =
     useSelector((state: RootState) => state.userManageReducer);
 
+  // useEffect calling api
   useEffect(() => {
     const getUserCoursesAll = (userName: string | null) => {
       return (dispatch: DispatchType) => {
@@ -32,6 +34,8 @@ const Enrollment = (props: Props) => {
     };
     dispatch(getUserCoursesAll(userSelected));
   }, [userSelected]);
+
+  // Handling when user has not registerd any course
   if (userRegisteredCourses.length === 0 && userWaitingCourses.length === 0) {
     return (
       <>

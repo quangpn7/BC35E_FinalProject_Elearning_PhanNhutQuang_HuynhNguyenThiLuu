@@ -14,7 +14,7 @@ import { hideModal } from "./modalReducer";
 const initialState: userManagementReducerSate = {
   userList: [],
   userEditing: null,
-  userSelected: null,
+  userSelected: "",
   userWaitingCourses: [],
   userRegisteredCourses: [],
   isLoading: false,
@@ -201,4 +201,60 @@ export const getUserRegisterdCourseApi = (userName: string | null) => {
       });
   };
 };
+// REGISTER STUDENT (WAITING -> REGISTER)
+export const registerStudentApi = (courseId: string, userName: string) => {
+  return async (dispatch: DispatchType) => {
+    await http
+      .post("QuanLyKhoaHoc/GhiDanhKhoaHoc", {
+        maKhoaHoc: courseId,
+        taiKhoan: userName,
+      })
+      .then((res) => {
+        // Notification
+        toast.success("Register completed!");
+        // Quick refresh
+        const refreshData = store
+          .getState()
+          .userManageReducer.userWaitingCourses.filter(
+            (course) => courseId !== course.maKhoaHoc
+          );
+        // dispatch
+        const action: PayloadAction<userCourseEnroll> =
+          setUserWaitingCourses(refreshData);
+        dispatch(action);
+      })
+      .catch((err) => {
+        toast.error("This student is already in the class!");
+        console.log(err);
+      });
+  };
+};
+// DELETE USER'S ENROLLED COURSE
+export const deleteUsersCourseApi = (courseId: string, userName: string) => {
+  return async (dispatch: DispatchType) => {
+    await http
+      .post("/QuanLyKhoaHoc/HuyGhiDanh", {
+        maKhoaHoc: courseId,
+        taiKhoan: userName,
+      })
+      .then(() => {
+        // Noti
+        toast.success(`Deleted ${userName} from course successfully!`);
+        // Quick refresh data
+        const refreshData = store
+          .getState()
+          .userManageReducer.userRegisteredCourses.filter(
+            (course) => course.maKhoaHoc !== courseId
+          );
+        // dispatch
+        const action: PayloadAction<userCourseEnroll> =
+          setUserRegisterdCourses(refreshData);
+        dispatch(action);
+      })
+      .catch(() => {
+        toast.error("Delete failed!");
+      });
+  };
+};
+
 export default userManageReducer.reducer;
