@@ -1,4 +1,5 @@
 import {
+  Modal,
   Space,
   TableColumnGroupType,
   TableColumnsType,
@@ -22,9 +23,11 @@ import {
 } from "../../redux/reducer/modalReducer";
 import userManageReducer, {
   deleteUserApi,
+  deleteUsersCourseApi,
   getAllUserInfoApi,
   getUserRegisterdCourseApi,
   getUserWaitingCourseApi,
+  registerStudentApi,
   setUserEditing,
   setUserSelected,
 } from "../../redux/reducer/userManageReducer";
@@ -43,10 +46,33 @@ const handleEditClick = (values: userInfoModal) => {
   store.dispatch(openType("ADD_EDIT_USER"));
   store.dispatch(showModal());
 };
-// Hanlde delete
-
-const handleDeleteClick = async (userName: string) => {
-  await store.dispatch(deleteUserApi(userName));
+// Hanlde delete - delete user
+const handleDeleteClick = (userName: string) => {
+  store.dispatch(deleteUserApi(userName));
+};
+// Handle register click
+const handleRegisterClick = (courseId: string, userName: string) => {
+  const registerAction = registerStudentApi(courseId, userName);
+  store.dispatch(registerAction);
+};
+// Handl delete - user's course enroll
+const handleDeleteCourse = (courseId: string, userName: string) => {
+  Modal.confirm({
+    onOk: () => {
+      const deleteUsersCourseAction = deleteUsersCourseApi(courseId, userName);
+      store.dispatch(deleteUsersCourseAction);
+    },
+    // title: `Are you sure to delete ${(
+    //   <span className="text-danger">{userName}</span>
+    // )} from the course with ID: ${courseId}`,
+    title: (
+      <span>
+        Are you sure to delete user:
+        <span className="text-danger">{userName}</span> from the course with ID:{" "}
+        <span className="text-danger">{courseId}</span>
+      </span>
+    ),
+  });
 };
 
 // Columns config - USER LIST TABLE
@@ -149,12 +175,16 @@ export const columnsWaitingTable: any = [
   {
     title: "",
     key: "actionWait",
+
     render: (_: any, record: any) => (
       <Space size="middle">
         <button
           className="btn btn-primary"
           onClick={() => {
-            console.log(record);
+            // get 2nd parameter
+            const userName = store.getState().userManageReducer.userSelected;
+            // handle
+            handleRegisterClick(record.maKhoaHoc, userName);
           }}
         >
           Register
@@ -162,7 +192,9 @@ export const columnsWaitingTable: any = [
         <button
           className="btn btn-danger"
           onClick={() => {
-            console.log(record);
+            // get 2nd parameter
+            const userName = store.getState().userManageReducer.userSelected;
+            handleDeleteCourse(record.maKhoaHoc, userName);
           }}
         >
           Delete
@@ -184,7 +216,9 @@ export const columnsRegisteredTable: any = [
         <button
           className="btn btn-danger"
           onClick={() => {
-            console.log(record);
+            // get 2nd parameter
+            const userName = store.getState().userManageReducer.userSelected;
+            handleDeleteCourse(record.maKhoaHoc, userName);
           }}
         >
           Delete
@@ -206,6 +240,5 @@ export const paginationConfig: TablePaginationConfig = {
 export const paginationEnrollConfig: TablePaginationConfig = {
   defaultPageSize: 5,
   showSizeChanger: true,
-
   pageSizeOptions: ["5", "10"],
 };

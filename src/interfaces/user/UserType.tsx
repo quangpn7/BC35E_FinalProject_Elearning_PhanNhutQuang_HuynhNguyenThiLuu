@@ -51,7 +51,7 @@ export type userInfoManageModal = {
 export type userManagementReducerSate = {
   userList: userInfoManageModal[];
   userEditing: addEditUserModal | null;
-  userSelected: string | null;
+  userSelected: string;
   userWaitingCourses: userCourseEnroll[];
   userRegisteredCourses: userCourseEnroll[];
   isLoading: boolean;
