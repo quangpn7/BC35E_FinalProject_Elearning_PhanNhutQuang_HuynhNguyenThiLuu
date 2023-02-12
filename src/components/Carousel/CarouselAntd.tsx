@@ -1,17 +1,13 @@
 import { Carousel } from "antd";
 import React from "react";
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { RootState } from "../../redux/configStore";
+import { CourseDetailModal } from "../../redux/reducer/courseReducer";
 
 interface CarouselProps {
   renderType: string;
 }
-
-const contentStyle: React.CSSProperties = {
-  height: "160px",
-  color: "#fff",
-  lineHeight: "160px",
-  textAlign: "center",
-  background: "#364d79",
-};
 
 const NextArrow = ({ currentSlide, slideCount, ...props }: any) => (
   <div {...props}>
@@ -26,6 +22,34 @@ const PrevArrow = ({ currentSlide, slideCount, ...props }: any) => (
 );
 
 const CarouselAntd = (props: CarouselProps) => {
+  const { homeCourses } = useSelector(
+    (state: RootState) => state.courseReducer
+  );
+
+  const setCarouselContent = (coursesList: CourseDetailModal[]) => {
+    return coursesList?.slice(0, 3).map((course, index) => {
+      return (
+        <div key={index}>
+          <div className="carousel__content">
+            <div className="carousel__img">
+              <img src={`img/carou-${index + 1}.jpg`} className="w-100" />
+            </div>
+            <div className="carousel__text  text-center">
+              <h1 className="display-5">{course.tenKhoaHoc}</h1>
+              <p className="carousel__description">{course.moTa}</p>
+              <NavLink
+                to={`/detail/${course.maKhoaHoc}`}
+                className="btn-viewDetail"
+              >
+                Detail
+              </NavLink>
+            </div>
+          </div>
+        </div>
+      );
+    });
+  };
+
   if (props?.renderType === "welcome") {
     return (
       <>
@@ -38,60 +62,7 @@ const CarouselAntd = (props: CarouselProps) => {
           nextArrow={<NextArrow />}
           prevArrow={<PrevArrow />}
         >
-          <div>
-            <div className="carousel__content">
-              <div className="carousel__img">
-                <img src="img/carou-1.jpg" className="w-100" />
-              </div>
-              <div className="carousel__text  text-center">
-                <h1 className="display-5"> Front-End Developer</h1>
-                <p className="carousel__description">
-                  Emply dummy text of the printing and typesetting industry orem
-                  Ipsum has been the industry's standard dummy text ever
-                  sinceprinting and typesetting industry.
-                </p>
-                <a href="#" className="btn-viewDetail">
-                  Detail
-                </a>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div className="carousel__content">
-              <div className="carousel__img">
-                <img src="img/carou-2.jpg" className="w-100" />
-              </div>
-              <div className="carousel__text  text-center">
-                <h1 className="display-5"> Front-End Developer</h1>
-                <p className="carousel__description">
-                  Emply dummy text of the printing and typesetting industry orem
-                  Ipsum has been the industry's standard dummy text ever
-                  sinceprinting and typesetting industry.
-                </p>
-                <a href="#" className="btn-viewDetail">
-                  Detail
-                </a>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div className="carousel__content">
-              <div className="carousel__img">
-                <img src="img/carou-3.jpg" className="w-100" />
-              </div>
-              <div className="carousel__text  text-center">
-                <h1 className="display-5"> Front-End Developer</h1>
-                <p className="carousel__description">
-                  Emply dummy text of the printing and typesetting industry orem
-                  Ipsum has been the industry's standard dummy text ever
-                  sinceprinting and typesetting industry.
-                </p>
-                <a href="#" className="btn-viewDetail">
-                  Detail
-                </a>
-              </div>
-            </div>
-          </div>
+          {setCarouselContent(homeCourses)}
         </Carousel>
       </>
     );
