@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { http } from "../../util/config";
 import { DispatchType } from "../configStore";
+import { toast } from "react-hot-toast";
+import { history } from "../..";
 
 
 interface CourseCreator {
@@ -15,7 +17,7 @@ interface CourseCategory {
     tenDanhMucKhoaHoc: string
 }
 
-interface Category {
+export interface Category {
     maDanhMuc: string,
     tenDanhMuc: string
 }
@@ -44,6 +46,7 @@ interface CourseState {
     currentPage: number,
     pageSize: number,
     isLoading: boolean,
+    courseForm: any
 }
 
 const initialState: CourseState = {
@@ -55,7 +58,8 @@ const initialState: CourseState = {
     totalPage: -1,
     currentPage: 1,
     pageSize: 9,
-    isLoading: false
+    isLoading: false,
+    courseForm: null,
 }
 
 
@@ -96,6 +100,21 @@ const courseReducer = createSlice({
         },
         getCourseDetailAction: (state, action) => {
             state.currentCourse = action.payload;
+        },
+        deleteCourseAction: (state, action) => {
+            state.allCourses = state.allCourses?.filter(course => course.maKhoaHoc !== action.payload) || [];
+        },
+        resetCourseFormAction: (state, action) => {
+            state.courseForm = {
+                maKhoaHoc: "",
+                biDanh: "",
+                tenKhoaHoc: "",
+                maDanhMucKhoaHoc: null,
+                moTa: ""
+            }
+        },
+        setCourseFormAction: (state, action) => {
+            state.courseForm = action.payload;
         }
     }
 })
@@ -109,7 +128,10 @@ export const {
     getCoursesPaginationAction,
     setCurrentPageAction,
     setLoadingAction,
-    getCourseDetailAction
+    getCourseDetailAction,
+    deleteCourseAction,
+    resetCourseFormAction,
+    setCourseFormAction
 } = courseReducer.actions;
 export default courseReducer.reducer;
 
@@ -227,3 +249,64 @@ export const getCourseDetailApi = (courseCode: string) => {
     }
 }
 
+export const deleteCourseApi = (courseCode: string) => {
+    return async (dispatch: DispatchType) => {
+        try {
+            const res = await http.delete("/QuanLyKhoaHoc/XoaKhoaHoc" + `?MaKhoaHoc=${courseCode}`);
+            console.log(res.data);
+            if (res.status === 200) {
+                const action = deleteCourseAction(courseCode);
+                dispatch(action);
+                toast.success('Delete course success');
+            }
+            else {
+                toast.error('Delete course fail!');
+            }
+
+        } catch (err: any) {
+            toast.error(err.message);
+        }
+    }
+}
+
+export const addCourseApi = (newCourse: any) => {
+    return async () => {
+        try {
+            const res = await http.post('/QuanLyKhoaHoc/ThemKhoaHoc', newCourse);
+            if (res.status === 200) {
+                toast.success("Add course success");
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            }
+            else {
+                toast.error("Add course fail!");
+            }
+        } catch (err: any) {
+            console.log(err);
+            toast.error(err.message);
+        }
+    }
+}
+
+export const updateCourseApi = (updateCourse: any) => {
+    return async () => {
+        try {
+            const res = await http.put('/QuanLyKhoaHoc/CapNhatKhoaHoc', updateCourse);
+            if (res.status === 200) {
+                toast.success("Update course success");
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            }
+            else {
+                toast.error("Update course fail!");
+            }
+        } catch (err: any) {
+            console.log(err);
+            toast.error(err.message);
+        }
+    }
+}
