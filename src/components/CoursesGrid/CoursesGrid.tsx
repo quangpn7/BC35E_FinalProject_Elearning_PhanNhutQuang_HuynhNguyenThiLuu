@@ -1,80 +1,38 @@
-import React from "react";
+import { getAllCourseApi } from "../../redux/reducer/courseReducer";
+import React, { useEffect } from "react";
+import { DispatchType, RootState } from "../../redux/configStore";
+import { useDispatch, useSelector } from "react-redux";
+import CourseCard from "./CourseCard";
+import { NavLink } from "react-router-dom";
 
 type Props = {};
 
 const CoursesGrid = (props: Props) => {
+  const dispatch: DispatchType = useDispatch();
+  const { homeCourses } = useSelector(
+    (state: RootState) => state.courseReducer
+  );
+
+  // Calling course API
+  useEffect(() => {
+    const getAllCourseAction = getAllCourseApi();
+    dispatch(getAllCourseAction);
+  }, []);
   return (
     <>
       <div className="courses__content container">
-        <h1>Featured Courses</h1>
+        <h1 className="mb-0">Featured Courses</h1>
+        <hr className="text-white mt-0 mb-4" />
         <div className="courses__grid">
           <div className="row align-items-center">
-            <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12">
-              <div className="card courses__item">
-                <div className="card-img-top" id="coursesTop">
-                  <img src="https://i.pravatar.cc" />
-                </div>
-                <div className="card-body">
-                  <h4>Course name</h4>
-                  <p>
-                    Rmply dummy printing ypesetting industry it’s free demo.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
-              <div className="card courses__item">
-                <div className="card-img-top">
-                  <img src="https://i.pravatar.cc" />
-                </div>
-                <div className="card-body">
-                  <h4>Course name</h4>
-                  <p>
-                    Rmply dummy printing ypesetting industry it’s free demo.
-                  </p>
-                </div>
-              </div>
-              <div className="card courses__item">
-                <div className="card-img-top">
-                  <img src="https://i.pravatar.cc" />
-                </div>
-                <div className="card-body">
-                  <h4>Course name</h4>
-                  <p>
-                    Rmply dummy printing ypesetting industry it’s free demo.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
-              <div className="card courses__item">
-                <div className="card-img-top">
-                  <img src="https://i.pravatar.cc" />
-                </div>
-                <div className="card-body">
-                  <h4>Course name</h4>
-                  <p>
-                    Rmply dummy printing ypesetting industry it’s free demo.
-                  </p>
-                </div>
-              </div>
-              <div className="card courses__item">
-                <div className="card-img-top">
-                  <img src="https://i.pravatar.cc" />
-                </div>
-                <div className="card-body">
-                  <h4>Course name</h4>
-                  <p>
-                    Rmply dummy printing ypesetting industry it’s free demo.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <CourseCard courseList={homeCourses} />
           </div>
         </div>
       </div>
       <div className="text-center my-4">
-        <a className="btn-viewAll text-decoration-none">VIEW ALL COURSES</a>
+        <NavLink to={"/search"} className="btn-viewAll text-decoration-none">
+          VIEW ALL COURSES
+        </NavLink>
       </div>
     </>
   );

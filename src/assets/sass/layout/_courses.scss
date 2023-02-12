@@ -12,6 +12,7 @@ main {
       }
       .courses__grid {
         .card.courses__item {
+          height: 500px;
           overflow: hidden;
           margin-bottom: 30px;
           .card-img-top {
@@ -19,9 +20,24 @@ main {
             position: relative;
             overflow: hidden;
             img {
+              height: 270px;
               width: 100%;
-
               display: block;
+            }
+          }
+          .card-body {
+            display: grid;
+            flex-direction: column;
+            .card-body-title {
+              @include styleText($fs-3, $fw-3, $color-primary-blue);
+              transition: $trans-linear-fast;
+              &:hover {
+                color: $color-primary-yellow;
+              }
+            }
+            .btn-viewDetail {
+              align-self: flex-end;
+              justify-self: flex-end;
             }
           }
         }
