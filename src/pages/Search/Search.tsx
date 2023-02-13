@@ -29,7 +29,7 @@ const Search = (props: Props) => {
   }, [currentPage])
 
   useEffect(() => {
-    if (!categoryCode) {
+    if (courseName) {
       setSearchParams({ tenKhoaHoc: courseName });
       //
       const action = getAllCourseApi(courseName);
