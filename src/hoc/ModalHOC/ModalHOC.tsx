@@ -1,13 +1,13 @@
 import { Modal } from "antd";
-import { ModalFunc } from "antd/es/modal/confirm";
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddEditForm from "../../components/Form/AddEditForm";
+import CourseForm from "../../components/Form/CourseForm";
 import LoginForm from "../../components/Form/LoginForm";
 import Enrollment from "../../pages/UserManagement/Enrollment";
 import { DispatchType, RootState } from "../../redux/configStore";
 import { setEditType, hideModal } from "../../redux/reducer/modalReducer";
-import { setForm, setUserEditing } from "../../redux/reducer/userManageReducer";
+import { setForm } from "../../redux/reducer/userManageReducer";
 
 type Props = {};
 
@@ -30,6 +30,9 @@ const ModalHOC: React.FC<Props> = () => {
       break;
     case "ADD_EDIT_USER":
       Component = AddEditForm;
+      break;
+    case "ADD_EDIT_COURSE":
+      Component = CourseForm;
       break;
     case "ENROLL_USER":
       Component = Enrollment;

@@ -39,3 +39,11 @@ export const ValidationProfileSchema = Yup.object().shape({
   email: Yup.string().required(`${prefixInsert}Email`).email("*Invalid email"),
   maNhom: Yup.string().required("*Choose your group"),
 });
+
+export const ValidationCourseSchema = Yup.object().shape({
+  maKhoaHoc: Yup.string().required('Please insert course code'),
+  biDanh: Yup.string(),
+  tenKhoaHoc: Yup.string().required('Please insert course name'),
+  maDanhMucKhoaHoc: Yup.string().required('Please choose course category'),
+  moTa: Yup.string()
+})
