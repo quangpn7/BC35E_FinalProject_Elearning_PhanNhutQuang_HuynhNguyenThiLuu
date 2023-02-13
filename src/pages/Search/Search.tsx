@@ -29,11 +29,14 @@ const Search = (props: Props) => {
   }, [currentPage])
 
   useEffect(() => {
-    if (courseName) {
+    if (!categoryCode) {
       setSearchParams({ tenKhoaHoc: courseName });
       //
       const action = getAllCourseApi(courseName);
       dispatch(action);
+
+      const action1 = setCurrentPageAction(1);
+      dispatch(action1);
       //
       scrollToTop();
     }

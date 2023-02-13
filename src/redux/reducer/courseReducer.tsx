@@ -75,8 +75,8 @@ const courseReducer = createSlice({
             state.totalPage = Math.ceil(action.payload.length / state.pageSize);
         },
         setCourseNameAction: (state, action) => {
-            state.courseName = action.payload;
             state.categoryCode = ''
+            state.courseName = action.payload;
         },
         setCategoryCodeAction: (state, action) => {
             state.categoryCode = action.payload;
