@@ -107,7 +107,7 @@ const AddEditForm = (props: Props) => {
 
   return (
     <>
-      <h4>{editType ? "ADD NEW USER" : "EDIT USER"}</h4>
+      <h2>{editType ? "ADD NEW USER" : "EDIT USER"}</h2>
 
       <hr />
       <form onSubmit={handleSubmit(onSubmit)}>

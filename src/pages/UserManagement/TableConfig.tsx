@@ -1,4 +1,5 @@
 import {
+  Modal,
   Space,
   TableColumnGroupType,
   TableColumnsType,
@@ -9,30 +10,73 @@ import {
 import { ColumnGroupType, ColumnProps, ColumnType } from "antd/es/table";
 import { ColumnGroupProps } from "antd/es/table/ColumnGroup";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   userInfoAdminModal,
   userInfoModal,
 } from "../../interfaces/user/UserType";
-import { store } from "../../redux/configStore";
+import { RootState, store } from "../../redux/configStore";
 import {
   setEditType,
   openType,
   showModal,
 } from "../../redux/reducer/modalReducer";
-import { setUserEditing } from "../../redux/reducer/userManageReducer";
+import userManageReducer, {
+  deleteUserApi,
+  deleteUsersCourseApi,
+  getAllUserInfoApi,
+  getUserRegisterdCourseApi,
+  getUserWaitingCourseApi,
+  registerStudentApi,
+  setUserEditing,
+  setUserSelected,
+} from "../../redux/reducer/userManageReducer";
 
-// Handle event
+/* ------Handle event ------*/
+// Handle enroll
+const handleEnrollClick = (userName: string) => {
+  store.dispatch(setUserSelected(userName));
+  store.dispatch(openType("ENROLL_USER"));
+  store.dispatch(showModal());
+};
+// Handle edit
 const handleEditClick = (values: userInfoModal) => {
-  console.log(values);
   store.dispatch(setEditType(false));
   store.dispatch(setUserEditing(values));
   store.dispatch(openType("ADD_EDIT_USER"));
   store.dispatch(showModal());
 };
+// Hanlde delete - delete user
+const handleDeleteClick = (userName: string) => {
+  store.dispatch(deleteUserApi(userName));
+};
+// Handle register click
+const handleRegisterClick = (courseId: string, userName: string) => {
+  const registerAction = registerStudentApi(courseId, userName);
+  store.dispatch(registerAction);
+};
+// Handl delete - user's course enroll
+const handleDeleteCourse = (courseId: string, userName: string) => {
+  Modal.confirm({
+    onOk: () => {
+      const deleteUsersCourseAction = deleteUsersCourseApi(courseId, userName);
+      store.dispatch(deleteUsersCourseAction);
+    },
+    // title: `Are you sure to delete ${(
+    //   <span className="text-danger">{userName}</span>
+    // )} from the course with ID: ${courseId}`,
+    title: (
+      <span>
+        Are you sure to delete user:
+        <span className="text-danger">{userName}</span> from the course with ID:{" "}
+        <span className="text-danger">{courseId}</span>
+      </span>
+    ),
+  });
+};
 
 // Columns config - USER LIST TABLE
-export const columns: any = [
+export const columnsUserTable: any = [
   {
     title: "#",
     dataIndex: "key",
@@ -58,7 +102,6 @@ export const columns: any = [
     dataIndex: "email",
     key: "email",
   },
-
   {
     title: "Type",
     dataIndex: "maLoaiNguoiDung",
@@ -72,12 +115,6 @@ export const columns: any = [
         })()}
       </>
     ),
-    // sorter: (a: userInfoAdminModal, b: userInfoAdminModal) => {
-    //   if (a.maLoaiNguoiDung && b.maLoaiNguoiDung) {
-    //     return a.maLoaiNguoiDung.localeCompare(b.maLoaiNguoiDung);
-    //   }
-    //   return 0;
-    // },
     filters: [
       {
         text: "HV",
@@ -95,14 +132,20 @@ export const columns: any = [
       return 0;
     },
   },
-
   ,
   {
     title: "Action",
     key: "action",
     render: (_: any, record: any) => (
       <Space size="middle">
-        <button className="btn btn-primary">Enroll</button>
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            handleEnrollClick(record.taiKhoan);
+          }}
+        >
+          Enroll
+        </button>
         <button
           className="btn btn-success"
           onClick={() => {
@@ -115,7 +158,7 @@ export const columns: any = [
         <button
           className="btn btn-danger"
           onClick={() => {
-            console.log(record);
+            handleDeleteClick(record.taiKhoan);
           }}
         >
           Delete
@@ -125,6 +168,66 @@ export const columns: any = [
     className: "text-center",
   },
 ];
+// Columns config - USER WAITING ASSIGN TABLE
+export const columnsWaitingTable: any = [
+  { title: "#", key: "keyWait", dataIndex: "index", width: "5%" },
+  { title: "Course", key: "courseWait", dataIndex: "tenKhoaHoc", width: "70%" },
+  {
+    title: "",
+    key: "actionWait",
+
+    render: (_: any, record: any) => (
+      <Space size="middle">
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            // get 2nd parameter
+            const userName = store.getState().userManageReducer.userSelected;
+            // handle
+            handleRegisterClick(record.maKhoaHoc, userName);
+          }}
+        >
+          Register
+        </button>
+        <button
+          className="btn btn-danger"
+          onClick={() => {
+            // get 2nd parameter
+            const userName = store.getState().userManageReducer.userSelected;
+            handleDeleteCourse(record.maKhoaHoc, userName);
+          }}
+        >
+          Delete
+        </button>
+      </Space>
+    ),
+    className: "text-end",
+  },
+];
+// Columns config - USER REGISTERED TABLE
+export const columnsRegisteredTable: any = [
+  { title: "#", key: "keyReg", dataIndex: "index", width: "5%" },
+  { title: "Course", key: "courseReg", dataIndex: "tenKhoaHoc", width: "70%" },
+  {
+    title: "",
+    key: "actionRes",
+    render: (_: any, record: any) => (
+      <Space size="middle">
+        <button
+          className="btn btn-danger"
+          onClick={() => {
+            // get 2nd parameter
+            const userName = store.getState().userManageReducer.userSelected;
+            handleDeleteCourse(record.maKhoaHoc, userName);
+          }}
+        >
+          Delete
+        </button>
+      </Space>
+    ),
+    className: "text-end",
+  },
+];
 
 // Pagination config
 export const paginationConfig: TablePaginationConfig = {
@@ -132,4 +235,10 @@ export const paginationConfig: TablePaginationConfig = {
   showSizeChanger: true,
   pageSizeOptions: ["5", "10", "15", "20"],
   hideOnSinglePage: true,
+};
+
+export const paginationEnrollConfig: TablePaginationConfig = {
+  defaultPageSize: 5,
+  showSizeChanger: true,
+  pageSizeOptions: ["5", "10"],
 };

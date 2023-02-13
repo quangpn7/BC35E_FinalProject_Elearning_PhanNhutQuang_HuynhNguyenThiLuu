@@ -41,7 +41,7 @@ const CourseAttend: React.FC = (props: Props) => {
                     <h3>{item.tenKhoaHoc}</h3>
                     <p className="text-secondary">{item.moTa}</p>
                   </div>
-                  <div className="course__info-stat fst-italic text-secondary d-flex align-items-center justify-content-between">
+                  <div className="course__info-stat fst-italic text-secondary d-flex align-items-end justify-content-between">
                     <div className="info__left">
                       <span className="course__viewCount ">
                         <i className="fas fa-eye"></i>: {item.luotXem}
@@ -54,8 +54,8 @@ const CourseAttend: React.FC = (props: Props) => {
                       </span>
                     </div>
                     <NavLink
-                      to={"#"}
-                      className="btn btn-primary fst-normal info__right"
+                      to={`/detail/${item.maKhoaHoc}`}
+                      className="btn-viewDetail info__right"
                     >
                       View detail
                     </NavLink>

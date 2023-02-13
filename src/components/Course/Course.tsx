@@ -38,7 +38,12 @@ function Course({ course }: CourseProps) {
                 </div>
 
                 <div className='content-wrapper'>
-                    <h3 className="item-title">{course.tenKhoaHoc}</h3>
+                    <h3 className="item-title" style={{
+                        height: '40px',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                    }}>{course.tenKhoaHoc}</h3>
                     <div className="item-content" style={{
                         height: '40px',
                         textOverflow: 'ellipsis',

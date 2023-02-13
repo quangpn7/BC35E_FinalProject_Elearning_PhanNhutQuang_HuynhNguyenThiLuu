@@ -7,9 +7,11 @@ import CourseTable from "./CourseTable";
 type Props = {};
 
 const CourseManagement = (props: Props) => {
-  const searchResultLength = useSelector(
-    (state: RootState) => state.courseReducer.allCourses?.length || 0
+  const { allCourses, keySearch } = useSelector(
+    (state: RootState) => state.courseReducer
   );
+  const searchResultLength = keySearch ? allCourses.filter(item => item.tenKhoaHoc.includes(keySearch))?.length : allCourses.length;
+
   return <>
     <div className="user__title my-5 container">
       <h1>COURSE MANAGEMENT</h1>

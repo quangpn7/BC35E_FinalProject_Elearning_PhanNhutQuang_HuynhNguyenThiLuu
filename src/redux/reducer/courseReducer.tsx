@@ -38,7 +38,7 @@ export interface CourseDetailModal {
 
 interface CourseState {
     currentCourse: CourseDetailModal | null,
-    allCourses: CourseDetailModal[] | null,
+    allCourses: CourseDetailModal[]
     courseName: string,
     categoryCode: string,
     allCategory: Category[] | null,
@@ -46,12 +46,14 @@ interface CourseState {
     currentPage: number,
     pageSize: number,
     isLoading: boolean,
-    courseForm: any
+    courseForm: any,
+    homeCourses: CourseDetailModal[],
+    keySearch: string
 }
 
 const initialState: CourseState = {
     currentCourse: null,
-    allCourses: null,
+    allCourses: [],
     courseName: '',
     categoryCode: '',
     allCategory: null,
@@ -60,6 +62,8 @@ const initialState: CourseState = {
     pageSize: 9,
     isLoading: false,
     courseForm: null,
+    homeCourses: [],
+    keySearch: ''
 }
 
 
@@ -115,6 +119,12 @@ const courseReducer = createSlice({
         },
         setCourseFormAction: (state, action) => {
             state.courseForm = action.payload;
+        },
+        setHomeCoursesAction: (state, action) => {
+            state.homeCourses = action.payload;
+        },
+        setKeySearchAction: (state, action) => {
+            state.keySearch = action.payload;
         }
     }
 })
@@ -131,7 +141,9 @@ export const {
     getCourseDetailAction,
     deleteCourseAction,
     resetCourseFormAction,
-    setCourseFormAction
+    setCourseFormAction,
+    setHomeCoursesAction,
+    setKeySearchAction
 } = courseReducer.actions;
 export default courseReducer.reducer;
 
@@ -158,6 +170,15 @@ export const getAllCourseApi = (courseName?: string) => {
             dispatch(setLoadingAction(true));
             const res = await http.get("/QuanLyKhoaHoc/LayDanhSachKhoaHoc" + (courseName ? `?tenKhoaHoc=${courseName}` : ''));
             if (res.status === 200) {
+                if (window.location.pathname === "/" || "/#") {
+                    const getGridItemAction: PayloadAction<CourseDetailModal[]> =
+                        setHomeCoursesAction(res?.data.slice(0, 8));
+                    dispatch(getGridItemAction);
+                    dispatch(setLoadingAction(false));
+
+                    return;
+                }
+
                 const action: PayloadAction<CourseDetailModal[]> = getAllCoursesAction(
                     res?.data
                 );

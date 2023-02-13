@@ -14,7 +14,7 @@ import Home from "./pages/Home/Home";
 import HomeTemplate from "./templates/HomeTemplate";
 import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
-import Courses from "./pages/Courses/Courses";
+
 import Search from "./pages/Search/Search";
 import Detail from "./pages/Detail/Detail";
 import Profile from "./pages/Profile/Profile";
@@ -44,7 +44,7 @@ root.render(
       <Routes>
         <Route path="" element={<HomeTemplate />}>
           <Route index element={<Home />} />
-          <Route path="courses" element={<Courses />} />
+
           <Route path="search" element={<Search />} />
           <Route path="detail">
             <Route path=":id" element={<Detail />} />

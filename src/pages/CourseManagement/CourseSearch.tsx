@@ -1,22 +1,21 @@
-import { Input, InputRef, Select } from "antd";
-import Search from "antd/es/input/Search";
-import { Option } from "antd/es/mentions";
-import React, { useEffect, useRef, useState } from "react";
+import { Input, Select } from "antd";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, RootState } from "../../redux/configStore";
-import { setCategoryCodeAction, getAllCategoryApi, getAllCourseApi, getCoursesPaginationApi, resetCourseFormAction, getCoursesByCategoryApi } from "../../redux/reducer/courseReducer";
+import { setCategoryCodeAction, getAllCategoryApi, getAllCourseApi, getCoursesPaginationApi, resetCourseFormAction, getCoursesByCategoryApi, setKeySearchAction } from "../../redux/reducer/courseReducer";
 import { openType, showModal } from "../../redux/reducer/modalReducer";
 
 type Props = {};
 
 const CourseSearch: React.FC = (props: Props) => {
 
-  const { allCategory, allCourses } = useSelector((state: RootState) => state.courseReducer);
+  const { allCategory } = useSelector((state: RootState) => state.courseReducer);
   const dispatch: DispatchType = useDispatch();
 
   // handle refresh after edit
   const { editType } = useSelector((state: RootState) => state.modalReducer);
-  // handle group search change
+
+  const [keySearch, setKeySearch] = useState("");
 
   const handleGroupChange = (value: string, keyword: string) => {
     //
@@ -31,10 +30,11 @@ const CourseSearch: React.FC = (props: Props) => {
       const action2 = getCoursesPaginationApi('', 1, 1000000);
       dispatch(action2);
     }
+
   };
   // on search event
   const onSearch = (values: string) => {
-
+    dispatch(setKeySearchAction(values));
   };
 
   // get Option antd
@@ -79,6 +79,7 @@ const CourseSearch: React.FC = (props: Props) => {
             enterButton="Search"
             onSearch={onSearch}
             onChange={(e) => {
+              setKeySearch(e.target.value);
             }}
           />
         </Input.Group>
@@ -89,6 +90,10 @@ const CourseSearch: React.FC = (props: Props) => {
             dispatch(resetCourseFormAction(null));
             dispatch(openType("ADD_EDIT_COURSE"));
             dispatch(showModal());
+          }}
+          style={{
+            border: 'none',
+            padding: '.5rem'
           }}
         >
           Add new course
