@@ -54,11 +54,18 @@ const userReducer = createSlice({
     updateUserAction: (state, action) => {
       state.userInfo = action.payload;
     },
+    setUserAttendCourse: (state, action) => {
+      state.userInfo.chiTietKhoaHocGhiDanh = action.payload;
+    },
   },
 });
 
-export const { userLoginAction, getUserInfoAction, updateUserAction } =
-  userReducer.actions;
+export const {
+  userLoginAction,
+  getUserInfoAction,
+  updateUserAction,
+  setUserAttendCourse,
+} = userReducer.actions;
 
 export default userReducer.reducer;
 /* -----------ASYNC ACTION------------- */

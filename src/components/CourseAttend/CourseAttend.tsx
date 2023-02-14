@@ -6,36 +6,36 @@ import { NavLink } from "react-router-dom";
 import { courseAttendModal } from "../../interfaces/course/CourseType";
 import { DispatchType, RootState, store } from "../../redux/configStore";
 import { deleteUsersCourseApi } from "../../redux/reducer/userManageReducer";
-import { getUserInfoApi } from "../../redux/reducer/userReducer";
+import {
+  getUserInfoApi,
+  setUserAttendCourse,
+} from "../../redux/reducer/userReducer";
 
 type Props = {};
 
 const CourseAttend: React.FC = (props: Props) => {
-  // setup render condition
-  const [triggerRender, setTriggerRender] = useState<boolean>(false);
-  // Get User's attended courses
-  const courseAttend: courseAttendModal[] = useSelector(
-    (state: RootState) =>
-      state.userReducer.userInfo?.chiTietKhoaHocGhiDanh || []
-  ); //-> alway return an array as declare
   const { taiKhoan } = useSelector(
     (state: RootState) => state.userReducer.userInfo
   );
-  // dispatch
+  const courseAttend: courseAttendModal[] = useSelector(
+    (state: RootState) => state.userReducer.userInfo.chiTietKhoaHocGhiDanh || []
+  );
 
+  const dispatch: DispatchType = useDispatch();
   // handle un-register
   const handleUnRegister = (courseId: string, userName: string) => {
     store.dispatch(deleteUsersCourseApi(courseId, userName));
-    const getUserInfoAsync = getUserInfoApi();
-    store.dispatch(getUserInfoAsync);
-    // re-render
-    setTriggerRender(!triggerRender);
+    const refreshList = courseAttend.filter(
+      (item) => item.maKhoaHoc !== courseId
+    );
+    const action = setUserAttendCourse(refreshList);
+    dispatch(action);
   };
 
   // render function
-  const renderCouresAttend = (courses: courseAttendModal[]) => {
+  const renderCouresAttend = (courses: any) => {
     if (courses.length !== 0) {
-      return courses?.map((item: courseAttendModal, index) => {
+      return courses?.map((item: courseAttendModal, index: number) => {
         return (
           <div className="my-3 course__box p-3 bg-white rounded" key={index}>
             <div className="row">
