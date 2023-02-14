@@ -56,10 +56,18 @@ const handleRegisterClick = (courseId: string, userName: string) => {
   store.dispatch(registerAction);
 };
 // Handl delete - user's course enroll
-const handleDeleteCourse = (courseId: string, userName: string) => {
+const handleDeleteCourse = (
+  courseId: string,
+  userName: string,
+  isWaiting: boolean
+) => {
   Modal.confirm({
     onOk: () => {
-      const deleteUsersCourseAction = deleteUsersCourseApi(courseId, userName);
+      const deleteUsersCourseAction = deleteUsersCourseApi(
+        courseId,
+        userName,
+        isWaiting
+      );
       store.dispatch(deleteUsersCourseAction);
     },
     // title: `Are you sure to delete ${(
@@ -194,7 +202,7 @@ export const columnsWaitingTable: any = [
           onClick={() => {
             // get 2nd parameter
             const userName = store.getState().userManageReducer.userSelected;
-            handleDeleteCourse(record.maKhoaHoc, userName);
+            handleDeleteCourse(record.maKhoaHoc, userName, true);
           }}
         >
           Delete
@@ -218,7 +226,7 @@ export const columnsRegisteredTable: any = [
           onClick={() => {
             // get 2nd parameter
             const userName = store.getState().userManageReducer.userSelected;
-            handleDeleteCourse(record.maKhoaHoc, userName);
+            handleDeleteCourse(record.maKhoaHoc, userName, false);
           }}
         >
           Delete
