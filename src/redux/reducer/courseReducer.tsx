@@ -69,6 +69,7 @@ const initialState: CourseState = {
 };
 
 const courseReducer = createSlice({
+
   name: "courseReducer",
   initialState,
   reducers: {
@@ -135,6 +136,7 @@ const courseReducer = createSlice({
     },
   },
 });
+
 
 export const {
   getAllCoursesAction,
