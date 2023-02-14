@@ -176,7 +176,7 @@ const Header = (props: Props) => {
                           </a>
                         </li>
                         {
-                          allCategory?.map(category => (<>
+                          allCategory?.map(category => (<React.Fragment key={category.maDanhMuc}>
                             <li>
                               <hr className="dropdown-divider bg-white" />
                             </li>
@@ -190,7 +190,7 @@ const Header = (props: Props) => {
                                 {category.tenDanhMuc}
                               </a>
                             </li>
-                          </>))
+                          </React.Fragment>))
                         }
                       </ul>
                     </li>

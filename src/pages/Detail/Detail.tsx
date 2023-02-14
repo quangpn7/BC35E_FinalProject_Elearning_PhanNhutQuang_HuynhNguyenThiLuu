@@ -95,7 +95,7 @@ const Detail = (props: Props) => {
           </div>}
         {!isLoading && currentCourse &&
           <div className="row">
-            <div className="col-xl-9 col-lg-9 col-md-8 col-sm-12" >
+            <div className=" col-lg-9 col-sm-12" >
               <div className="courseDetail__inner">
                 <h2 className="title title--after">
                   {currentCourse?.tenKhoaHoc}
@@ -121,7 +121,7 @@ const Detail = (props: Props) => {
                 </div>
               </div>
             </div>
-            <div className="col-xl-3 col-lg-3 col-md-4 col-sm-12">
+            <div className="col-lg-3 col-sm-12">
               <Sidebar />
             </div>
             <div style={{ padding: '1rem' }}>
@@ -129,7 +129,7 @@ const Detail = (props: Props) => {
               <div className="courses">
                 <div className="row">
                   {allCourses?.filter(item => item.maKhoaHoc !== currentCourse.maKhoaHoc).map(course => (
-                    <div className="col-md-6 col-xl-3 col-lg-4 col-xs-12" key={course.maKhoaHoc}>
+                    <div className="col-md-6 col-lg-4 col-xl-3 col-xs-12" key={course.maKhoaHoc}>
                       <Course course={course} />
                     </div>
                   ))}

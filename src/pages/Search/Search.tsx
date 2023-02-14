@@ -105,11 +105,11 @@ const Search = (props: Props) => {
     </div>
     <div className="container">
       <div className="row" style={{ padding: '1rem 0' }}>
-        <div className="col-3">
+        <div className="col-xs-12 col-lg-3">
           <FormSearchByName />
           <SearchByCategory />
         </div>
-        <div className="col-9">
+        <div className="col-xs-12 col-lg-9">
           <div className="courses">
             <div className="row">
               {isLoading &&
@@ -118,7 +118,7 @@ const Search = (props: Props) => {
                 </div>
               }
               {!isLoading && allCourses?.map(course => (
-                <div className="col-4" key={course.maKhoaHoc}>
+                <div className="col-xs-12 col-md-6 col-lg-4" key={course.maKhoaHoc}>
                   <Course course={course} />
                 </div>
               ))}
