@@ -1,21 +1,38 @@
 import { Rate } from "antd";
-import React, { ReactElement, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { JsxElement } from "typescript";
-import { number } from "yup";
+
 import { courseAttendModal } from "../../interfaces/course/CourseType";
-import { RootState } from "../../redux/configStore";
+import { DispatchType, RootState, store } from "../../redux/configStore";
+import { deleteUsersCourseApi } from "../../redux/reducer/userManageReducer";
+import { getUserInfoApi } from "../../redux/reducer/userReducer";
 
 type Props = {};
 
 const CourseAttend: React.FC = (props: Props) => {
+  // setup render condition
+  const [triggerRender, setTriggerRender] = useState<boolean>(false);
   // Get User's attended courses
   const courseAttend: courseAttendModal[] = useSelector(
     (state: RootState) =>
       state.userReducer.userInfo?.chiTietKhoaHocGhiDanh || []
   ); //-> alway return an array as declare
+  const { taiKhoan } = useSelector(
+    (state: RootState) => state.userReducer.userInfo
+  );
+  // dispatch
 
+  // handle un-register
+  const handleUnRegister = (courseId: string, userName: string) => {
+    store.dispatch(deleteUsersCourseApi(courseId, userName));
+    const getUserInfoAsync = getUserInfoApi();
+    store.dispatch(getUserInfoAsync);
+    // re-render
+    setTriggerRender(!triggerRender);
+  };
+
+  // render function
   const renderCouresAttend = (courses: courseAttendModal[]) => {
     if (courses.length !== 0) {
       return courses?.map((item: courseAttendModal, index) => {
@@ -53,12 +70,23 @@ const CourseAttend: React.FC = (props: Props) => {
                         Rate: <Rate disabled defaultValue={item.danhGia} />
                       </span>
                     </div>
-                    <NavLink
-                      to={`/detail/${item.maKhoaHoc}`}
-                      className="btn-viewDetail info__right"
-                    >
-                      View detail
-                    </NavLink>
+                    <div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleUnRegister(item.maKhoaHoc, taiKhoan);
+                        }}
+                        className="btn-removeAttend info__right me-2"
+                      >
+                        Un-register
+                      </button>
+                      <NavLink
+                        to={`/detail/${item.maKhoaHoc}`}
+                        className="btn-viewDetail info__right"
+                      >
+                        View detail
+                      </NavLink>
+                    </div>
                   </div>
                 </div>
               </div>

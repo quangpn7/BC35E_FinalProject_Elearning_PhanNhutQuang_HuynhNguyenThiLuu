@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import CourseAttend from "../../components/CourseAttend/CourseAttend";
 import ProfileForm from "../../components/Form/ProfileForm";
-import { ValidationProfileSchema } from "../../components/Form/ValidationSchema";
-import { DispatchType, RootState } from "../../redux/configStore";
-import { getUserInfoApi, userUpdateApi } from "../../redux/reducer/userReducer";
-import { getStoreJson, USER_LOGIN } from "../../util/config";
+
+import { DispatchType } from "../../redux/configStore";
+import { getUserInfoApi } from "../../redux/reducer/userReducer";
 
 type Props = {};
 

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import LoginForm from "../../components/Form/LoginForm";
+
 import { stateModalReducer } from "../../interfaces/others/ModalType";
 
 const initialState: stateModalReducer = {

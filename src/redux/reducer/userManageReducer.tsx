@@ -9,7 +9,6 @@ import {
 } from "../../interfaces/user/UserType";
 import { http } from "../../util/config";
 import { DispatchType, store } from "../configStore";
-import { hideModal } from "./modalReducer";
 
 const initialState: userManagementReducerSate = {
   userList: [],
@@ -159,6 +158,7 @@ export const deleteUserApi = (userName: string) => {
   };
 };
 /**----------- */
+
 // GET USER'S WAITING COURSES
 export const getUserWaitingCourseApi = (userName: string | null) => {
   return async (dispatch: DispatchType) => {
@@ -213,15 +213,27 @@ export const registerStudentApi = (courseId: string, userName: string) => {
         // Notification
         toast.success("Register completed!");
         // Quick refresh
-        const refreshData = store
+        const coursesWaiting =
+          store.getState().userManageReducer.userWaitingCourses;
+        const waitingCoursesLeft = coursesWaiting.filter(
+          (course) => courseId !== course.maKhoaHoc
+        );
+        const courseRegistered = coursesWaiting.filter(
+          (course) => courseId === course.maKhoaHoc
+        );
+        const coursesReigsterUpdate = store
           .getState()
-          .userManageReducer.userWaitingCourses.filter(
-            (course) => courseId !== course.maKhoaHoc
-          );
+          .userManageReducer.userRegisteredCourses.concat(courseRegistered);
+
         // dispatch
-        const action: PayloadAction<userCourseEnroll> =
-          setUserWaitingCourses(refreshData);
-        dispatch(action);
+        // ----waiting course
+        const actionRefreshWaiting: PayloadAction<userCourseEnroll> =
+          setUserWaitingCourses(waitingCoursesLeft);
+        dispatch(actionRefreshWaiting);
+        //----register course
+        const actionRefreshRegister: PayloadAction<userCourseEnroll> =
+          setUserRegisterdCourses(coursesReigsterUpdate);
+        dispatch(actionRefreshRegister);
       })
       .catch((err) => {
         toast.error("This student is already in the class!");
@@ -230,7 +242,11 @@ export const registerStudentApi = (courseId: string, userName: string) => {
   };
 };
 // DELETE USER'S ENROLLED COURSE
-export const deleteUsersCourseApi = (courseId: string, userName: string) => {
+export const deleteUsersCourseApi = (
+  courseId: string,
+  userName: string,
+  isWaiting?: boolean
+) => {
   return async (dispatch: DispatchType) => {
     await http
       .post("/QuanLyKhoaHoc/HuyGhiDanh", {
@@ -240,16 +256,36 @@ export const deleteUsersCourseApi = (courseId: string, userName: string) => {
       .then(() => {
         // Noti
         toast.success(`Deleted ${userName} from course successfully!`);
-        // Quick refresh data
-        const refreshData = store
-          .getState()
-          .userManageReducer.userRegisteredCourses.filter(
+        // If not admin page -> break
+        if (window.location.pathname === "/profile") {
+          return;
+        }
+
+        // If delete at waiting list
+        if (isWaiting) {
+          const waitingCourses =
+            store.getState().userManageReducer.userWaitingCourses;
+          const coursesLeft = waitingCourses.filter(
             (course) => course.maKhoaHoc !== courseId
           );
+          const actionRefreshWaiting: PayloadAction<userCourseEnroll> =
+            setUserWaitingCourses(coursesLeft);
+          dispatch(actionRefreshWaiting);
+          return;
+        }
+
+        // If delete at registered list
+        const registeredCourses =
+          store.getState().userManageReducer.userRegisteredCourses;
+
+        const courseLeft = registeredCourses.filter(
+          (course) => course.maKhoaHoc !== courseId
+        );
+
         // dispatch
-        const action: PayloadAction<userCourseEnroll> =
-          setUserRegisterdCourses(refreshData);
-        dispatch(action);
+        const actionRefreshRegister: PayloadAction<userCourseEnroll> =
+          setUserRegisterdCourses(courseLeft);
+        dispatch(actionRefreshRegister);
       })
       .catch(() => {
         toast.error("Delete failed!");
