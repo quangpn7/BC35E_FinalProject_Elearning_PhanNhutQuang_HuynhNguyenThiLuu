@@ -1,8 +1,9 @@
 import React, { ReactElement, useEffect } from "react";
 import { toast } from "react-hot-toast";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { RootState } from "../../redux/configStore";
+import { DispatchType, RootState } from "../../redux/configStore";
+import { getAllCategoryApi, setCategoryCodeAction, getCoursesPaginationApi, getAllCourseApi } from "../../redux/reducer/courseReducer";
 
 import {
   ACCESS_TOKEN,
@@ -12,6 +13,8 @@ import {
   USER_LOGIN,
 } from "../../util/config";
 
+import { history } from "../../";
+
 type Props = {};
 
 const Header = (props: Props) => {
@@ -19,6 +22,10 @@ const Header = (props: Props) => {
   const { isLogin, userInfo } = useSelector(
     (state: RootState) => state.userReducer
   );
+
+  const dispatch: DispatchType = useDispatch();
+  const { allCategory } = useSelector((state: RootState) => state.courseReducer);
+
   // Logout method
   const logOut = (): void => {
     delStore(USER_LOGIN);
@@ -65,6 +72,11 @@ const Header = (props: Props) => {
     }
     return <NavLink to={"login"}>Login</NavLink>;
   };
+
+  useEffect(() => {
+    const action = getAllCategoryApi();
+    dispatch(action);
+  }, [])
 
   return (
     <>
@@ -125,7 +137,9 @@ const Header = (props: Props) => {
                   id="navbarSupportedContent"
                 >
                   <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li className="nav-item">
+                    <li className="nav-item" onClick={() => {
+                      history.push('/')
+                    }}>
                       <a
                         className="nav-link active"
                         aria-current="page"
@@ -145,27 +159,39 @@ const Header = (props: Props) => {
                         COURSES
                       </a>
                       <ul className="dropdown-menu">
-                        <li>
+                        <li onClick={() => {
+                          const action = setCategoryCodeAction('');
+                          dispatch(action);
+
+                          const action1 = getAllCourseApi();
+                          dispatch(action1);
+
+                          const action2 = getCoursesPaginationApi('', 1);
+                          dispatch(action2);
+
+                          history.push('/search');
+                        }}>
                           <a className="dropdown-item" href="#">
-                            Action
+                            Tất cả khóa học
                           </a>
                         </li>
-                        <li>
-                          <hr className="dropdown-divider bg-white" />
-                        </li>
-                        <li>
-                          <a className="dropdown-item" href="#">
-                            Another action
-                          </a>
-                        </li>
-                        <li>
-                          <hr className="dropdown-divider bg-white" />
-                        </li>
-                        <li>
-                          <a className="dropdown-item" href="#">
-                            Something else here
-                          </a>
-                        </li>
+                        {
+                          allCategory?.map(category => (<>
+                            <li>
+                              <hr className="dropdown-divider bg-white" />
+                            </li>
+                            <li onClick={() => {
+                              const action = setCategoryCodeAction(category.maDanhMuc);
+                              dispatch(action);
+
+                              history.push('/search');
+                            }}>
+                              <a className="dropdown-item" href="#">
+                                {category.tenDanhMuc}
+                              </a>
+                            </li>
+                          </>))
+                        }
                       </ul>
                     </li>
                     <li className="nav-item">

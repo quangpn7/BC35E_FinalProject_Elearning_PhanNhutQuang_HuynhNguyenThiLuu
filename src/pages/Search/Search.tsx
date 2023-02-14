@@ -34,6 +34,9 @@ const Search = (props: Props) => {
       //
       const action = getAllCourseApi(courseName);
       dispatch(action);
+
+      const action1 = setCurrentPageAction(1);
+      dispatch(action1);
       //
       scrollToTop();
     }
