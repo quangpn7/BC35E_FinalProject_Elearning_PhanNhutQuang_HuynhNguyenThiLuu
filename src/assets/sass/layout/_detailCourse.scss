@@ -184,6 +184,10 @@
             margin-bottom: 10px;
             display: flex;
 
+            .row>* {
+                padding: 0;
+            }
+
             .img {
                 flex: 3;
             }
@@ -233,6 +237,7 @@
 
             .details {
                 flex: 2;
+                width: 100%;
 
                 .btn {
                     text-align: center;
@@ -246,6 +251,7 @@
                     border: 2px solid #fdc800;
                     transition: all 0.5s ease-out;
                     border-radius: 0;
+                    width: 100%;
 
                     &:hover {
                         background: #fdc800;
