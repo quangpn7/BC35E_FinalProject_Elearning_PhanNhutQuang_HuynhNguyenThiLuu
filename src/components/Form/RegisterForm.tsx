@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { FormValuesRegister } from "../../interfaces/user/UserType";
 import { DispatchType } from "../../redux/configStore";
 import { userRegisterApi } from "../../redux/reducer/userReducer";
-import { ValidationRegisSchema } from "./ValidationSchema";
+import { ValidationRegisSchema } from "./Validation/ValidationSchema";
 
 type Props = {};
 // Set value in form
@@ -47,9 +47,7 @@ const RegisterForm = (props: Props) => {
           <input
             type="password"
             {...register("matKhau")}
-            className={`form-control ${
-              errors.matKhau ? "border border-danger" : ""
-            }`}
+            className="form-control"
           />
           <div className="form-feedback mt-2 fst-italic text-danger">
             {errors.matKhau?.message}

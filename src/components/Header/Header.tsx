@@ -3,7 +3,12 @@ import { toast } from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { DispatchType, RootState } from "../../redux/configStore";
-import { getAllCategoryApi, setCategoryCodeAction, getCoursesPaginationApi, getAllCourseApi } from "../../redux/reducer/courseReducer";
+import {
+  getAllCategoryApi,
+  setCategoryCodeAction,
+  getCoursesPaginationApi,
+  getAllCourseApi,
+} from "../../redux/reducer/courseReducer";
 
 import {
   ACCESS_TOKEN,
@@ -24,7 +29,9 @@ const Header = (props: Props) => {
   );
 
   const dispatch: DispatchType = useDispatch();
-  const { allCategory } = useSelector((state: RootState) => state.courseReducer);
+  const { allCategory } = useSelector(
+    (state: RootState) => state.courseReducer
+  );
 
   // Logout method
   const logOut = (): void => {
@@ -76,7 +83,7 @@ const Header = (props: Props) => {
   useEffect(() => {
     const action = getAllCategoryApi();
     dispatch(action);
-  }, [])
+  }, []);
 
   return (
     <>
@@ -137,9 +144,12 @@ const Header = (props: Props) => {
                   id="navbarSupportedContent"
                 >
                   <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li className="nav-item" onClick={() => {
-                      history.push('/')
-                    }}>
+                    <li
+                      className="nav-item"
+                      onClick={() => {
+                        history.push("/");
+                      }}
+                    >
                       <a
                         className="nav-link active"
                         aria-current="page"
@@ -159,39 +169,45 @@ const Header = (props: Props) => {
                         COURSES
                       </a>
                       <ul className="dropdown-menu">
-                        <li onClick={() => {
-                          const action = setCategoryCodeAction('');
-                          dispatch(action);
+                        <li
+                          onClick={() => {
+                            const action = setCategoryCodeAction("");
+                            dispatch(action);
 
-                          const action1 = getAllCourseApi();
-                          dispatch(action1);
+                            const action1 = getAllCourseApi();
+                            dispatch(action1);
 
-                          const action2 = getCoursesPaginationApi('', 1);
-                          dispatch(action2);
+                            const action2 = getCoursesPaginationApi("", 1);
+                            dispatch(action2);
 
-                          history.push('/search');
-                        }}>
+                            history.push("/search");
+                          }}
+                        >
                           <a className="dropdown-item" href="#">
                             Tất cả khóa học
                           </a>
                         </li>
-                        {
-                          allCategory?.map(category => (<React.Fragment key={category.maDanhMuc}>
+                        {allCategory?.map((category) => (
+                          <React.Fragment key={category.maDanhMuc}>
                             <li>
                               <hr className="dropdown-divider bg-white" />
                             </li>
-                            <li onClick={() => {
-                              const action = setCategoryCodeAction(category.maDanhMuc);
-                              dispatch(action);
+                            <li
+                              onClick={() => {
+                                const action = setCategoryCodeAction(
+                                  category.maDanhMuc
+                                );
+                                dispatch(action);
 
-                              history.push('/search');
-                            }}>
+                                history.push("/search");
+                              }}
+                            >
                               <a className="dropdown-item" href="#">
                                 {category.tenDanhMuc}
                               </a>
                             </li>
-                          </React.Fragment>))
-                        }
+                          </React.Fragment>
+                        ))}
                       </ul>
                     </li>
                     <li className="nav-item">
@@ -215,9 +231,9 @@ const Header = (props: Props) => {
                       </a>
                     </li>
                     <li className="nav-item nav-search">
-                      <a className="nav-link" href="#">
+                      <NavLink className="nav-link" to="/search">
                         <i className="fas fa-search" />
-                      </a>
+                      </NavLink>
                     </li>
                   </ul>
                 </div>

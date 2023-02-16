@@ -60,7 +60,7 @@ root.render(
         {/* ADMIN UI */}
         <Route path="admin" element={<AdminTemplate />}>
           <Route index element={<UserManagement />} />
-          <Route path="edit-user" element={<EditUser />} />
+
           <Route path="course-management" element={<CourseManagement />} />
           <Route
             path="course-management/edit-course"

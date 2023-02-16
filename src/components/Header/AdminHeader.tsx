@@ -99,7 +99,7 @@ const AdminHeader = (props: Props) => {
                 >
                   <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
                     <li className="nav-item">
-                      <NavLink className="nav-link " to={"/admin"}>
+                      <NavLink className="nav-link " to={"/admin"} end>
                         USER MANAGEMENT
                       </NavLink>
                     </li>

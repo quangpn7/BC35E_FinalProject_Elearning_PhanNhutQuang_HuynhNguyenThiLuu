@@ -5,10 +5,14 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
 import { DispatchType, RootState } from "../../redux/configStore";
-import { addCourseApi, Category, updateCourseApi } from "../../redux/reducer/courseReducer";
+import {
+  addCourseApi,
+  Category,
+  updateCourseApi,
+} from "../../redux/reducer/courseReducer";
 import { setEditType, hideModal } from "../../redux/reducer/modalReducer";
 
-import { ValidationCourseSchema } from "./ValidationSchema";
+import { ValidationCourseSchema } from "./Validation/ValidationSchema";
 
 type Props = {};
 
@@ -19,11 +23,11 @@ const CourseForm = (props: Props) => {
   );
 
   interface CourseFormModal {
-    maKhoaHoc: string,
-    biDanh: string,
-    tenKhoaHoc: string,
-    maDanhMucKhoaHoc: string,
-    moTa: string
+    maKhoaHoc: string;
+    biDanh: string;
+    tenKhoaHoc: string;
+    maDanhMucKhoaHoc: string;
+    moTa: string;
   }
   const { userInfo } = useSelector((state: RootState) => state.userReducer);
   console.log(courseForm);
@@ -42,7 +46,7 @@ const CourseForm = (props: Props) => {
       biDanh: courseForm.biDanh || "",
       tenKhoaHoc: courseForm.tenKhoaHoc || "",
       maDanhMucKhoaHoc: courseForm.danhMucKhoaHoc || null,
-      moTa: courseForm.moTa || ""
+      moTa: courseForm.moTa || "",
     },
     resolver: yupResolver(ValidationCourseSchema),
   });
@@ -54,7 +58,7 @@ const CourseForm = (props: Props) => {
       biDanh: courseForm.biDanh || "",
       tenKhoaHoc: courseForm.tenKhoaHoc || "",
       maDanhMucKhoaHoc: courseForm.danhMucKhoaHoc || null,
-      moTa: courseForm.moTa || ""
+      moTa: courseForm.moTa || "",
     });
   };
   // setup onSubmit-discard- reset
@@ -69,17 +73,25 @@ const CourseForm = (props: Props) => {
             ...values,
             luotXem: 0,
             danhGia: 0,
-            hinhAnh: "https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2022/3/19/1025110/BTS-Jimin-1.jpg",
+            hinhAnh:
+              "https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2022/3/19/1025110/BTS-Jimin-1.jpg",
             maNhom: "GP01",
-            ngayTao: (new Date()).toUTCString(),
-            taiKhoanNguoiTao: userInfo.taiKhoan
-          }
+            ngayTao: new Date().toUTCString(),
+            taiKhoanNguoiTao: userInfo.taiKhoan,
+          };
 
           const addCourseAction = addCourseApi(newCourse);
           dispatch(addCourseAction);
         } else {
           //other -> edit
-          const { luotXem, nguoiTao: { taiKhoan }, danhGia, hinhAnh, maNhom, ngayTao } = courseForm;
+          const {
+            luotXem,
+            nguoiTao: { taiKhoan },
+            danhGia,
+            hinhAnh,
+            maNhom,
+            ngayTao,
+          } = courseForm;
           const newCourse = {
             ...values,
             luotXem,
@@ -87,8 +99,8 @@ const CourseForm = (props: Props) => {
             danhGia: danhGia || 0,
             hinhAnh,
             maNhom,
-            ngayTao
-          }
+            ngayTao,
+          };
           const updateCourseAction = updateCourseApi(newCourse);
           dispatch(updateCourseAction);
         }
@@ -168,11 +180,7 @@ const CourseForm = (props: Props) => {
 
           <div className="mb-2 col-6">
             <label className="form-label">Course Description</label>
-            <input
-              type="text"
-              className="form-control"
-              {...register("moTa")}
-            />
+            <input type="text" className="form-control" {...register("moTa")} />
             <div className="form-feedback  fst-italic text-danger">
               {errors.moTa?.message}
             </div>
@@ -187,7 +195,11 @@ const CourseForm = (props: Props) => {
               <option value="" disabled>
                 Select category
               </option>
-              {allCategory?.map((category: Category) => <option value={category.maDanhMuc}>{category.tenDanhMuc}</option>)}
+              {allCategory?.map((category: Category) => (
+                <option value={category.maDanhMuc}>
+                  {category.tenDanhMuc}
+                </option>
+              ))}
             </select>
             <div className="form-feedback  fst-italic text-danger">
               {errors.maDanhMucKhoaHoc?.message}

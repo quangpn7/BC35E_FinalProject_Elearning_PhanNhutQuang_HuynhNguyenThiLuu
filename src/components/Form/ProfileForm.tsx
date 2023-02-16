@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { ValidationProfileSchema } from "../../components/Form/ValidationSchema";
+import { ValidationProfileSchema } from "./Validation/ValidationSchema";
 import { getUserInfoApi, userUpdateApi } from "../../redux/reducer/userReducer";
 import { getStoreJson, USER_LOGIN } from "../../util/config";
 import { yupResolver } from "@hookform/resolvers/yup";

@@ -16,7 +16,7 @@ import {
   setUserEditing,
 } from "../../redux/reducer/userManageReducer";
 import RegisterForm from "./RegisterForm";
-import { ValidationRegisSchemaAd } from "./ValidationSchema";
+import { ValidationRegisSchemaAd } from "./Validation/ValidationSchema";
 
 type Props = {};
 
