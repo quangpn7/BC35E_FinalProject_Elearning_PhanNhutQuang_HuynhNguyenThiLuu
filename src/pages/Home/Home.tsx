@@ -6,7 +6,7 @@ import Number from "../../components/Number/Number";
 
 type Props = {};
 
-const Home = (props: Props) => {
+const Home: React.FC<Props> = (props: Props) => {
   return (
     <>
       <main>

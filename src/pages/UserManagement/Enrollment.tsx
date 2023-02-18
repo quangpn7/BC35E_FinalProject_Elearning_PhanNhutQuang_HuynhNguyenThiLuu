@@ -1,5 +1,5 @@
 import { Table } from "antd";
-import { DisabledType } from "antd/es/config-provider/DisabledContext";
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, RootState } from "../../redux/configStore";
@@ -7,7 +7,6 @@ import { hideModal } from "../../redux/reducer/modalReducer";
 import {
   getUserRegisterdCourseApi,
   getUserWaitingCourseApi,
-  setIsLoading,
 } from "../../redux/reducer/userManageReducer";
 import {
   columnsRegisteredTable,
@@ -17,7 +16,7 @@ import {
 
 type Props = {};
 
-const Enrollment: React.FC = (props: Props) => {
+const Enrollment: React.FC<Props> = (props: Props) => {
   // GET DISPATCH
   const dispatch: DispatchType = useDispatch();
 
@@ -26,7 +25,7 @@ const Enrollment: React.FC = (props: Props) => {
     useSelector((state: RootState) => state.userManageReducer);
 
   // Handle discard
-  const handleDiscard = () => {
+  const handleDiscard = (): void => {
     dispatch(hideModal());
   };
   // useEffect calling api

@@ -1,32 +1,19 @@
-import {
-  Modal,
-  Space,
-  TableColumnGroupType,
-  TableColumnsType,
-  TableColumnType,
-  TablePaginationConfig,
-  Tag,
-} from "antd";
-import { ColumnGroupType, ColumnProps, ColumnType } from "antd/es/table";
-import { ColumnGroupProps } from "antd/es/table/ColumnGroup";
+import { Modal, Space, TablePaginationConfig, Tag } from "antd";
+import { ReactElement } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
 import {
   userInfoAdminModal,
   userInfoModal,
 } from "../../interfaces/user/UserType";
-import { RootState, store } from "../../redux/configStore";
+import { store } from "../../redux/configStore";
 import {
   setEditType,
   openType,
   showModal,
 } from "../../redux/reducer/modalReducer";
-import userManageReducer, {
+import {
   deleteUserApi,
   deleteUsersCourseApi,
-  getAllUserInfoApi,
-  getUserRegisterdCourseApi,
-  getUserWaitingCourseApi,
   registerStudentApi,
   setUserEditing,
   setUserSelected,
@@ -34,24 +21,24 @@ import userManageReducer, {
 
 /* ------Handle event ------*/
 // Handle enroll
-const handleEnrollClick = (userName: string) => {
+const handleEnrollClick = (userName: string): void => {
   store.dispatch(setUserSelected(userName));
   store.dispatch(openType("ENROLL_USER"));
   store.dispatch(showModal());
 };
 // Handle edit
-const handleEditClick = (values: userInfoModal) => {
+const handleEditClick = (values: userInfoModal): void => {
   store.dispatch(setEditType(false));
   store.dispatch(setUserEditing(values));
   store.dispatch(openType("ADD_EDIT_USER"));
   store.dispatch(showModal());
 };
 // Hanlde delete - delete user
-const handleDeleteClick = (userName: string) => {
+const handleDeleteClick = (userName: string): void => {
   store.dispatch(deleteUserApi(userName));
 };
 // Handle register click
-const handleRegisterClick = (courseId: string, userName: string) => {
+const handleRegisterClick = (courseId: string, userName: string): void => {
   const registerAction = registerStudentApi(courseId, userName);
   store.dispatch(registerAction);
 };
@@ -60,9 +47,9 @@ const handleDeleteCourse = (
   courseId: string,
   userName: string,
   isWaiting: boolean
-) => {
+): void => {
   Modal.confirm({
-    onOk: () => {
+    onOk: (): void => {
       const deleteUsersCourseAction = deleteUsersCourseApi(
         courseId,
         userName,
@@ -117,7 +104,7 @@ export const columnsUserTable: any = [
 
     render: (_: any, record: any) => (
       <>
-        {(() => {
+        {((): ReactElement => {
           const color = record?.maLoaiNguoiDung === "HV" ? "blue" : "red";
           return <Tag color={color}>{record?.maLoaiNguoiDung}</Tag>;
         })()}
@@ -133,7 +120,7 @@ export const columnsUserTable: any = [
         value: "GV",
       },
     ],
-    onFilter: (value: string, record: userInfoAdminModal) => {
+    onFilter: (value: string, record: userInfoAdminModal): boolean | number => {
       if (record.maLoaiNguoiDung) {
         return record.maLoaiNguoiDung.indexOf(value) === 0;
       }
@@ -144,11 +131,11 @@ export const columnsUserTable: any = [
   {
     title: "Action",
     key: "action",
-    render: (_: any, record: any) => (
+    render: (_: any, record: any): ReactElement => (
       <Space size="middle">
         <button
           className="btn btn-primary"
-          onClick={() => {
+          onClick={(): void => {
             handleEnrollClick(record.taiKhoan);
           }}
         >
@@ -156,7 +143,7 @@ export const columnsUserTable: any = [
         </button>
         <button
           className="btn btn-success"
-          onClick={() => {
+          onClick={(): void => {
             handleEditClick(record);
           }}
         >
@@ -165,7 +152,7 @@ export const columnsUserTable: any = [
 
         <button
           className="btn btn-danger"
-          onClick={() => {
+          onClick={(): void => {
             handleDeleteClick(record.taiKhoan);
           }}
         >
@@ -184,11 +171,11 @@ export const columnsWaitingTable: any = [
     title: "",
     key: "actionWait",
 
-    render: (_: any, record: any) => (
+    render: (_: any, record: any): ReactElement => (
       <Space size="middle">
         <button
           className="btn btn-primary"
-          onClick={() => {
+          onClick={(): void => {
             // get 2nd parameter
             const userName = store.getState().userManageReducer.userSelected;
             // handle
@@ -199,7 +186,7 @@ export const columnsWaitingTable: any = [
         </button>
         <button
           className="btn btn-danger"
-          onClick={() => {
+          onClick={(): void => {
             // get 2nd parameter
             const userName = store.getState().userManageReducer.userSelected;
             handleDeleteCourse(record.maKhoaHoc, userName, true);
@@ -219,11 +206,11 @@ export const columnsRegisteredTable: any = [
   {
     title: "",
     key: "actionRes",
-    render: (_: any, record: any) => (
+    render: (_: any, record: any): ReactElement => (
       <Space size="middle">
         <button
           className="btn btn-danger"
-          onClick={() => {
+          onClick={(): void => {
             // get 2nd parameter
             const userName = store.getState().userManageReducer.userSelected;
             handleDeleteCourse(record.maKhoaHoc, userName, false);

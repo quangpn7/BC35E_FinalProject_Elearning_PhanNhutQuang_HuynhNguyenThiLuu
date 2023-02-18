@@ -1,13 +1,13 @@
-import React from "react";
 import { getStoreJson, http } from "../../../../util/config";
-import { useDispatch, useSelector } from "react-redux";
-import { DispatchType, RootState } from "../../../../redux/configStore";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../redux/configStore";
 
 import Progress from "./Progress";
 import { history } from "../../../..";
 import { toast } from "react-hot-toast";
+import { ReactElement } from "react";
 
-function Sidebar() {
+function Sidebar(): ReactElement {
   const { currentCourse } = useSelector(
     (state: RootState) => state.courseReducer
   );
@@ -16,7 +16,7 @@ function Sidebar() {
   const handleEnrollClick = (
     courseId: string | undefined,
     userName: string | undefined
-  ) => {
+  ): void => {
     if (!userName) {
       history.push("/login");
       return;
@@ -26,10 +26,10 @@ function Sidebar() {
         maKhoaHoc: courseId,
         taiKhoan: userName,
       })
-      .then(() => {
+      .then((): void => {
         toast.success("Register successfully!");
       })
-      .catch(() => {
+      .catch((): void => {
         toast.error("You have enrolled this course!");
       });
   };

@@ -1,16 +1,18 @@
 import * as Yup from "yup";
 import { nameRule, passwordRule, phoneRule } from "./ValidationRule";
-// Set rule
+
 const prefixInsert: string = "*Insert your ";
 
-// Login Schema
-export const validationLoginSchema = Yup.object().shape({
+// <-------------------LOGIN SCHEMA------------------->
+
+export const validationLoginSchema: Yup.AnyObjectSchema = Yup.object().shape({
   taiKhoan: Yup.string().required(`${prefixInsert}username`),
   matKhau: Yup.string().required(`${prefixInsert}password`),
 });
 
-// Register Schema
-export const ValidationRegisSchema = Yup.object().shape({
+// <-------------------REGISTER SCHEMA------------------->
+
+export const ValidationRegisSchema: Yup.AnyObjectSchema = Yup.object().shape({
   taiKhoan: Yup.string().required(`${prefixInsert}username or Email`),
   matKhau: Yup.string()
     .required(`${prefixInsert}password`)
@@ -32,8 +34,9 @@ export const ValidationRegisSchema = Yup.object().shape({
   email: Yup.string().required(`${prefixInsert}Email`).email("*Invalid email"),
   maNhom: Yup.string().required("*Choose your group"),
 });
-// Register Schema-Admin Page
-export const ValidationRegisSchemaAd = Yup.object().shape({
+// <-------------------REGISTER SCHEMA-ADMIN PAGE------------------->
+
+export const ValidationRegisSchemaAd: Yup.AnyObjectSchema = Yup.object().shape({
   taiKhoan: Yup.string().required(`${prefixInsert}username or Email`),
   matKhau: Yup.string()
     .required(`${prefixInsert}password`)
@@ -53,8 +56,9 @@ export const ValidationRegisSchemaAd = Yup.object().shape({
   maLoaiNguoiDung: Yup.string().required("*Choose your user type"),
 });
 
-// Edit profile Schema
-export const ValidationProfileSchema = Yup.object().shape({
+// <-------------------EDIT PROFILE SCHEMA------------------->
+
+export const ValidationProfileSchema: Yup.AnyObjectSchema = Yup.object().shape({
   taiKhoan: Yup.string().required(`${prefixInsert}username or Email`),
   matKhau: Yup.string()
     .required(`${prefixInsert}password`)
@@ -72,8 +76,9 @@ export const ValidationProfileSchema = Yup.object().shape({
   email: Yup.string().required(`${prefixInsert}Email`).email("*Invalid email"),
   maNhom: Yup.string().required("*Choose your group"),
 });
+// <-------------------COURSE SCHEMA------------------->
 
-export const ValidationCourseSchema = Yup.object().shape({
+export const ValidationCourseSchema: Yup.AnyObjectSchema = Yup.object().shape({
   maKhoaHoc: Yup.string().required("Please insert course code"),
   biDanh: Yup.string(),
   tenKhoaHoc: Yup.string().required("Please insert course name"),

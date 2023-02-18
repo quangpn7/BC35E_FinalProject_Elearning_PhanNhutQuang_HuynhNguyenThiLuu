@@ -1,13 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Modal } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { Category, CourseFormModal } from "../../interfaces/course/CourseType";
 
 import { DispatchType, RootState } from "../../redux/configStore";
 import {
   addCourseApi,
-  Category,
   updateCourseApi,
 } from "../../redux/reducer/courseReducer";
 import { setEditType, hideModal } from "../../redux/reducer/modalReducer";
@@ -16,19 +16,12 @@ import { ValidationCourseSchema } from "./Validation/ValidationSchema";
 
 type Props = {};
 
-const CourseForm = (props: Props) => {
+const CourseForm: React.FC<Props> = (props: Props) => {
   const { editType } = useSelector((state: RootState) => state.modalReducer);
   const { courseForm, allCategory } = useSelector(
     (state: RootState) => state.courseReducer
   );
 
-  interface CourseFormModal {
-    maKhoaHoc: string;
-    biDanh: string;
-    tenKhoaHoc: string;
-    maDanhMucKhoaHoc: string;
-    moTa: string;
-  }
   const { userInfo } = useSelector((state: RootState) => state.userReducer);
   console.log(courseForm);
 
@@ -52,7 +45,7 @@ const CourseForm = (props: Props) => {
   });
 
   // reset Form
-  const resetForm = () => {
+  const resetForm = (): void => {
     reset({
       maKhoaHoc: courseForm.maKhoaHoc || "",
       biDanh: courseForm.biDanh || "",
@@ -62,10 +55,10 @@ const CourseForm = (props: Props) => {
     });
   };
   // setup onSubmit-discard- reset
-  const onSubmit = (values: any) => {
+  const onSubmit = (values: any): void => {
     Modal.confirm({
       // Confirm edit
-      onOk: () => {
+      onOk: (): void => {
         // ADD MODE
         if (editType) {
           // true-> add
@@ -111,7 +104,7 @@ const CourseForm = (props: Props) => {
     });
   };
 
-  const handleDiscard = () => {
+  const handleDiscard = (): void => {
     dispatch(hideModal());
     dispatch(setEditType(true));
   };
@@ -119,7 +112,7 @@ const CourseForm = (props: Props) => {
     resetForm();
   }, [courseForm, reset]);
   // render add - save button
-  const renderBtn = (editType: boolean) => {
+  const renderBtn = (editType: boolean): ReactElement => {
     //true -> edit, false -> save
     if (editType) {
       return (

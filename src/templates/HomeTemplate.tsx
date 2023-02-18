@@ -5,7 +5,7 @@ import Header from "../components/Header/Header";
 
 type Props = {};
 
-const HomeTemplate = (props: Props) => {
+const HomeTemplate: React.FC<Props> = (props: Props) => {
   return (
     <>
       <Header />

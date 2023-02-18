@@ -14,7 +14,6 @@ import {
   ACCESS_TOKEN,
   delCookie,
   delStore,
-  getStoreJson,
   USER_LOGIN,
 } from "../../util/config";
 
@@ -22,7 +21,7 @@ import { history } from "../../";
 
 type Props = {};
 
-const Header = (props: Props) => {
+const Header: React.FC<Props> = () => {
   // Get store Redux
   const { isLogin, userInfo } = useSelector(
     (state: RootState) => state.userReducer

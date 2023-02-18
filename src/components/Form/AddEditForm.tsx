@@ -1,26 +1,21 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Modal } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addEditUserModal,
-  FormValuesRegister,
-} from "../../interfaces/user/UserType";
+import { addEditUserModal } from "../../interfaces/user/UserType";
 import { DispatchType, RootState } from "../../redux/configStore";
 import { setEditType, hideModal } from "../../redux/reducer/modalReducer";
 import {
   addNewUserApi,
   editUserApi,
   setForm,
-  setUserEditing,
 } from "../../redux/reducer/userManageReducer";
-import RegisterForm from "./RegisterForm";
 import { ValidationRegisSchemaAd } from "./Validation/ValidationSchema";
 
 type Props = {};
 
-const AddEditForm = (props: Props) => {
+const AddEditForm: React.FC<Props> = () => {
   const { editType } = useSelector((state: RootState) => state.modalReducer);
   const { userEditing } = useSelector(
     (state: RootState) => state.userManageReducer
@@ -59,10 +54,10 @@ const AddEditForm = (props: Props) => {
     });
   };
   // setup onSubmit-discard- reset
-  const onSubmit = (values: addEditUserModal) => {
+  const onSubmit = (values: addEditUserModal): void => {
     Modal.confirm({
       // Confirm edit
-      onOk: () => {
+      onOk: (): void => {
         // ADD MODE
         if (editType) {
           // true-> add
@@ -80,7 +75,7 @@ const AddEditForm = (props: Props) => {
     });
   };
 
-  const handleDiscard = () => {
+  const handleDiscard = (): void => {
     dispatch(hideModal());
     dispatch(setEditType(true));
     dispatch(setForm());
@@ -88,8 +83,9 @@ const AddEditForm = (props: Props) => {
   useEffect(() => {
     resetForm();
   }, [userEditing, reset]);
+
   // render add - save button
-  const renderBtn = (editType: boolean) => {
+  const renderBtn = (editType: boolean): ReactNode => {
     //true -> edit, false -> save
     if (editType) {
       return (

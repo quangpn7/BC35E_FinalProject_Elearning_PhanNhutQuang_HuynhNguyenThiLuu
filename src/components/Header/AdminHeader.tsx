@@ -1,4 +1,3 @@
-import { Modal } from "antd";
 import React, { ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -14,7 +13,7 @@ import LoginForm from "../Form/LoginForm";
 
 type Props = {};
 
-const AdminHeader = (props: Props) => {
+const AdminHeader: React.FC<Props> = () => {
   document.title = "Admin";
   const dispatch: DispatchType = useDispatch();
   const { isLogin, userInfo } = useSelector(

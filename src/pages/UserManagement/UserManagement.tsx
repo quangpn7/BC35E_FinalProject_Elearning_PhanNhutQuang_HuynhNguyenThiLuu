@@ -1,15 +1,12 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import LoginForm from "../../components/Form/LoginForm";
-import ModalHOC from "../../hoc/ModalHOC/ModalHOC";
-import { DispatchType, RootState } from "../../redux/configStore";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/configStore";
 import UserSearch from "./UserSearch";
 import UserTable from "./UserTable";
 
 type Props = {};
 
-const UserManagement = (props: Props) => {
+const UserManagement: React.FC<Props> = () => {
   const searchResultLength = useSelector(
     (state: RootState) => state.userManageReducer.userList.length
   );

@@ -1,17 +1,16 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { RootState } from "../../redux/configStore";
-import { CourseDetailModal } from "../../redux/reducer/courseReducer";
+import { CourseDetailModal } from "../../interfaces/course/CourseType";
 
 type Props = {
   courseList: CourseDetailModal[];
 };
 
-const CourseCard = (props: Props) => {
+const CourseCard: React.FC<Props> = (props: Props) => {
   return (
     <>
       {props?.courseList.map((course, index) => {
+        //return ReactNode[]
         return (
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12" key={index}>
             <div className="card courses__item">

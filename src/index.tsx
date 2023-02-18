@@ -1,9 +1,7 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import "./assets/sass/main.scss";
 import {
   // eslint-disable-next-line
-  BrowserRouter,
   Routes,
   Route,
   unstable_HistoryRouter as HistoryRouter,
@@ -12,7 +10,6 @@ import {
 import { createBrowserHistory } from "history";
 import Home from "./pages/Home/Home";
 import HomeTemplate from "./templates/HomeTemplate";
-import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 
 import Search from "./pages/Search/Search";
@@ -24,8 +21,6 @@ import { store } from "./redux/configStore";
 import AdminTemplate from "./templates/AdminTemplate";
 import UserManagement from "./pages/UserManagement/UserManagement";
 import CourseManagement from "./pages/CourseManagement/CourseManagement";
-import EditUser from "./pages/EditUser/EditUser";
-import EditCourse from "./pages/EditCourse/EditCourse";
 import { Toaster } from "react-hot-toast";
 import ModalHOC from "./hoc/ModalHOC/ModalHOC";
 // V-DOM react
@@ -62,10 +57,6 @@ root.render(
           <Route index element={<UserManagement />} />
 
           <Route path="course-management" element={<CourseManagement />} />
-          <Route
-            path="course-management/edit-course"
-            element={<EditCourse />}
-          />
         </Route>
       </Routes>
     </HistoryRouter>

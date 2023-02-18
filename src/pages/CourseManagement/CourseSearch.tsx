@@ -2,14 +2,23 @@ import { Input, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, RootState } from "../../redux/configStore";
-import { setCategoryCodeAction, getAllCategoryApi, getAllCourseApi, getCoursesPaginationApi, resetCourseFormAction, getCoursesByCategoryApi, setKeySearchAction } from "../../redux/reducer/courseReducer";
+import {
+  setCategoryCodeAction,
+  getAllCategoryApi,
+  getAllCourseApi,
+  getCoursesPaginationApi,
+  resetCourseFormAction,
+  getCoursesByCategoryApi,
+  setKeySearchAction,
+} from "../../redux/reducer/courseReducer";
 import { openType, showModal } from "../../redux/reducer/modalReducer";
 
 type Props = {};
 
-const CourseSearch: React.FC = (props: Props) => {
-
-  const { allCategory } = useSelector((state: RootState) => state.courseReducer);
+const CourseSearch: React.FC<Props> = () => {
+  const { allCategory } = useSelector(
+    (state: RootState) => state.courseReducer
+  );
   const dispatch: DispatchType = useDispatch();
 
   // handle refresh after edit
@@ -25,24 +34,20 @@ const CourseSearch: React.FC = (props: Props) => {
     if (value) {
       const action1 = getCoursesByCategoryApi(value);
       dispatch(action1);
-    }
-    else {
-      const action2 = getCoursesPaginationApi('', 1, 1000000);
+    } else {
+      const action2 = getCoursesPaginationApi("", 1, 1000000);
       dispatch(action2);
     }
-
   };
   // on search event
-  const onSearch = (values: string) => {
+  const onSearch = (values: string): void => {
     dispatch(setKeySearchAction(values));
   };
 
   // get Option antd
   const { Option } = Select;
   // useEffect
-  useEffect(() => {
-
-  }, [editType]);
+  useEffect(() => {}, [editType]);
 
   useEffect(() => {
     const action = getAllCategoryApi();
@@ -51,11 +56,9 @@ const CourseSearch: React.FC = (props: Props) => {
     const action1 = getAllCourseApi();
     dispatch(action1);
 
-
-    const action2 = getCoursesPaginationApi('', 1, 1000000);
+    const action2 = getCoursesPaginationApi("", 1, 1000000);
     dispatch(action2);
-
-  }, [])
+  }, []);
 
   return (
     <>
@@ -65,12 +68,16 @@ const CourseSearch: React.FC = (props: Props) => {
             size="large"
             defaultValue={"ALL"}
             onChange={(value: string) => {
-              handleGroupChange(value, '');
+              handleGroupChange(value, "");
             }}
             style={{ width: 200 }}
           >
             <Option value="">ALL</Option>
-            {allCategory?.map(category => <Option key={category.maDanhMuc} value={category.maDanhMuc}>{category.tenDanhMuc}</Option>)}
+            {allCategory?.map((category) => (
+              <Option key={category.maDanhMuc} value={category.maDanhMuc}>
+                {category.tenDanhMuc}
+              </Option>
+            ))}
           </Select>
           <Input.Search
             className="w-50"
@@ -92,8 +99,8 @@ const CourseSearch: React.FC = (props: Props) => {
             dispatch(showModal());
           }}
           style={{
-            border: 'none',
-            padding: '.5rem'
+            border: "none",
+            padding: ".5rem",
           }}
         >
           Add new course

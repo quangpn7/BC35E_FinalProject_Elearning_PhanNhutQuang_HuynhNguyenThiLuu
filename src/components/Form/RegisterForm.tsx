@@ -10,7 +10,7 @@ import { ValidationRegisSchema } from "./Validation/ValidationSchema";
 type Props = {};
 // Set value in form
 
-const RegisterForm = (props: Props) => {
+const RegisterForm: React.FC<Props> = () => {
   const dispatch: DispatchType = useDispatch();
   // Setup useForm
   const {
@@ -21,7 +21,7 @@ const RegisterForm = (props: Props) => {
     resolver: yupResolver(ValidationRegisSchema),
   });
   // Setup onSubmit event
-  const onSubmit = (values: FormValuesRegister) => {
+  const onSubmit = (values: FormValuesRegister): void => {
     const { ["confirmMatKhau"]: remove, ...userData } = values; // remove in-needed data
     // dispatch
     const registerAsync = userRegisterApi(userData);

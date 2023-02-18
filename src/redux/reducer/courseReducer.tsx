@@ -1,56 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getStore, getStoreJson, http } from "../../util/config";
-import { DispatchType, store } from "../configStore";
+import { http } from "../../util/config";
+import { DispatchType } from "../configStore";
 import { toast } from "react-hot-toast";
-import { history } from "../..";
-import { getUserWaitingCourseApi } from "./userManageReducer";
-
-interface CourseCreator {
-  taiKhoan: string;
-  maLoaiNguoiDung: string;
-  tenLoaiNguoiDung: string;
-  hoTen: string;
-}
-
-interface CourseCategory {
-  maDanhMucKhoaHoc: string;
-  tenDanhMucKhoaHoc: string;
-}
-
-export interface Category {
-  maDanhMuc: string;
-  tenDanhMuc: string;
-}
-
-export interface CourseDetailModal {
-  maKhoaHoc: string;
-  biDanh: string;
-  tenKhoaHoc: string;
-  moTa: string;
-  luotXem: number;
-  hinhAnh: string;
-  maNhom: string;
-  ngayTao: Date;
-  soLuongHocVien: number;
-  nguoiTao: CourseCreator;
-  danhMucKhoaHoc: CourseCategory;
-}
-
-interface CourseState {
-  currentCourse: CourseDetailModal | null;
-  allCourses: CourseDetailModal[];
-  coursesEnrolled: [];
-  courseName: string;
-  categoryCode: string;
-  allCategory: Category[] | null;
-  totalPage: number;
-  currentPage: number;
-  pageSize: number;
-  isLoading: boolean;
-  courseForm: any;
-  homeCourses: CourseDetailModal[];
-  keySearch: string;
-}
+import {
+  CourseCategory,
+  CourseDetailModal,
+  CourseState,
+} from "../../interfaces/course/CourseType";
 
 const initialState: CourseState = {
   currentCourse: null,

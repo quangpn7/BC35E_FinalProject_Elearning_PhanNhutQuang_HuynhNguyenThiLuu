@@ -1,22 +1,26 @@
 import { Carousel } from "antd";
-import React, { CSSProperties, FC } from "react";
+import React, { ReactNode } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { Style } from "util";
+import { CourseDetailModal } from "../../interfaces/course/CourseType";
+import { CarouselProps } from "../../interfaces/others/CarouselType";
 import { RootState } from "../../redux/configStore";
-import { CourseDetailModal } from "../../redux/reducer/courseReducer";
 
-interface CarouselProps {
-  renderType: string;
-}
-
-const NextArrow = ({ currentSlide, slideCount, ...props }: any) => (
+const NextArrow: React.ElementType = ({
+  currentSlide,
+  slideCount,
+  ...props
+}: any) => (
   <div {...props}>
     <i className="fas fa-arrow-circle-right"></i>
   </div>
 );
 
-const PrevArrow = ({ currentSlide, slideCount, ...props }: any) => (
+const PrevArrow: React.ElementType = ({
+  currentSlide,
+  slideCount,
+  ...props
+}: any) => (
   <div {...props}>
     <i className="fas fa-arrow-circle-left"></i>
   </div>
@@ -27,7 +31,9 @@ const CarouselAntd: React.FC<CarouselProps> = (props: CarouselProps) => {
     (state: RootState) => state.courseReducer
   );
 
-  const setCarouselContent = (coursesList: CourseDetailModal[]) => {
+  const setCarouselContent = (
+    coursesList: CourseDetailModal[]
+  ): ReactNode[] => {
     return coursesList?.slice(0, 3).map((course, index) => {
       return (
         <div>
