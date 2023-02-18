@@ -9,7 +9,7 @@ const Footer = (props: Props) => {
         <section className="footer-wrap">
           <div className="container">
             <div className="row">
-              <div className="col-12 col-md-6 col-lg-4 footer-col-1">
+              <div className="col-12 col-md-6 col-lg-4 footer-col-1 mb-sm-4 mb-md-4">
                 <h3 className="fw-bold">ACADEMICS</h3>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet

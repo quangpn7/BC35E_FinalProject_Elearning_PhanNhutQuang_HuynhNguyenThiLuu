@@ -29,21 +29,19 @@ const CarouselAntd = (props: CarouselProps) => {
   const setCarouselContent = (coursesList: CourseDetailModal[]) => {
     return coursesList?.slice(0, 3).map((course, index) => {
       return (
-        <div key={index}>
-          <div className="carousel__content">
-            <div className="carousel__img">
-              <img src={`img/carou-${index + 1}.jpg`} className="w-100" />
-            </div>
-            <div className="carousel__text  text-center">
-              <h1 className="display-5">{course.tenKhoaHoc}</h1>
-              <p className="carousel__description">{course.moTa}</p>
-              <NavLink
-                to={`/detail/${course.maKhoaHoc}`}
-                className="btn-viewDetail"
-              >
-                Detail
-              </NavLink>
-            </div>
+        <div className="carousel__content" key={index}>
+          <div className="carousel__img">
+            <img src={`img/carou-${index + 1}.jpg`} className="w-100 d-block" />
+          </div>
+          <div className="carousel__text  text-center">
+            <h1 className="display-5">{course.tenKhoaHoc}</h1>
+            <p className="carousel__description">{course.moTa}</p>
+            <NavLink
+              to={`/detail/${course.maKhoaHoc}`}
+              className="btn-viewDetail"
+            >
+              Detail
+            </NavLink>
           </div>
         </div>
       );

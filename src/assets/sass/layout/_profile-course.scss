@@ -1,0 +1,31 @@
+// ----RESPONSIVE----
+@include responsive("large") {
+  .course__attend {
+    .course__box {
+      .course__left {
+        display: none;
+      }
+      .course__right {
+        .course__info {
+          .info__left {
+            .course__rate {
+              display: block;
+            }
+          }
+          &-stat {
+            .info__right {
+              text-align: end;
+              .btn-removeAttend,
+              .btn-viewDetail {
+                text-align: center;
+                margin: 0 !important;
+                margin-left: 10px !important;
+                padding: 5px 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
