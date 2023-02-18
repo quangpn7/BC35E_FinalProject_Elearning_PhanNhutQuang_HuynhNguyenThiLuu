@@ -58,3 +58,9 @@ main {
     }
   }
 }
+
+@include responsive("medium") {
+  section.courses {
+    padding: 40px 0 !important;
+  }
+}

@@ -21,8 +21,8 @@ const CoursesGrid = (props: Props) => {
   return (
     <>
       <div className="courses__content container">
-        <h1 className="mb-0">Featured Courses</h1>
-        <hr className="text-white mt-0 mb-4" />
+        <h1 className="mb-2 text-center">Featured Courses</h1>
+        <hr className="text-white mt-0 mb-4 w-50 mx-auto" />
         <div className="courses__grid">
           <div className="row align-items-center">
             <CourseCard courseList={homeCourses} />

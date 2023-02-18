@@ -1,24 +1,45 @@
-.carousel__content {
-  position: relative;
-  .carousel__img {
-    img {
-      filter: brightness(38%);
-      -webkit-filter: brightness(38%);
-      -moz-filter: brightness(38%);
-    }
+// setup background
+.carousel-courses {
+  div[data-index="0"] {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+      url("/assets/img/carou-1.jpg");
   }
+  div[data-index="1"] {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+      url("/assets/img/carou-2.jpg");
+  }
+  div[data-index="2"] {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+      url("/assets/img/carou-3.jpg");
+  }
+  div[data-index="3"] {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+      url("/assets/img/carou-1.jpg");
+  }
+}
+.carousel-courses {
+  .slick-slide {
+    background-size: cover !important;
+    background-position: center !important;
+  }
+}
+
+.carousel__content {
+  margin: 0;
+  height: 500px;
+  text-align: center;
+  position: relative;
+
   .carousel__text {
     color: $color-white;
+    max-width: 500px;
+    width: 75%;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    h1 {
-      max-width: 850px;
-    }
-    p {
-      max-width: 700px;
-      margin: 0 auto;
+    .btn-viewDetail {
+      margin-top: 0;
     }
   }
 }
@@ -51,4 +72,11 @@
 }
 .slick-arrow::before {
   display: none;
+}
+// -----RESPONSIVE----
+
+@include responsive("medium") {
+  .carousel__content {
+    height: 350px;
+  }
 }

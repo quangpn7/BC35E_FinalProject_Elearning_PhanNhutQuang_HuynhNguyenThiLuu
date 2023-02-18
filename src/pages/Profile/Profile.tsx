@@ -10,7 +10,7 @@ type Props = {};
 
 const Profile = (props: Props) => {
   const dispatch: DispatchType = useDispatch();
-  const { taiKhoan, maLoaiNguoiDung } = useSelector(
+  const { hoTen, maLoaiNguoiDung } = useSelector(
     (state: RootState) => state.userReducer.userInfo
   );
   // UseEffect
@@ -23,7 +23,7 @@ const Profile = (props: Props) => {
     <>
       <section className="profile">
         <div className="d-flex justify-content-center align-items-center">
-          <h1 className="me-2">Profile</h1>
+          <h1 className="me-2 ">Profile</h1>
         </div>
         <div className="profile__container container mx-auto ">
           <div className="row align-items-start">
@@ -31,7 +31,7 @@ const Profile = (props: Props) => {
               <div className="profile__img text-center">
                 <img src="https://i.pravatar.cc" className="w-50" />
                 <div className="profile__name">
-                  <h3 className="mt-2">Nhut Quang Phan</h3>
+                  <h3 className="mt-2">{hoTen}</h3>
 
                   <h5 className="mt-2 text-secondary">
                     {maLoaiNguoiDung === "GV" ? "Ministry" : "Student"}

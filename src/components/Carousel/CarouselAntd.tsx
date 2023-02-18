@@ -1,7 +1,8 @@
 import { Carousel } from "antd";
-import React from "react";
+import React, { CSSProperties, FC } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { Style } from "util";
 import { RootState } from "../../redux/configStore";
 import { CourseDetailModal } from "../../redux/reducer/courseReducer";
 
@@ -21,7 +22,7 @@ const PrevArrow = ({ currentSlide, slideCount, ...props }: any) => (
   </div>
 );
 
-const CarouselAntd = (props: CarouselProps) => {
+const CarouselAntd: React.FC<CarouselProps> = (props: CarouselProps) => {
   const { homeCourses } = useSelector(
     (state: RootState) => state.courseReducer
   );
@@ -29,19 +30,25 @@ const CarouselAntd = (props: CarouselProps) => {
   const setCarouselContent = (coursesList: CourseDetailModal[]) => {
     return coursesList?.slice(0, 3).map((course, index) => {
       return (
-        <div className="carousel__content" key={index}>
-          <div className="carousel__img">
-            <img src={`img/carou-${index + 1}.jpg`} className="w-100 d-block" />
-          </div>
-          <div className="carousel__text  text-center">
-            <h1 className="display-5">{course.tenKhoaHoc}</h1>
-            <p className="carousel__description">{course.moTa}</p>
-            <NavLink
-              to={`/detail/${course.maKhoaHoc}`}
-              className="btn-viewDetail"
-            >
-              Detail
-            </NavLink>
+        <div>
+          <div className="carousel__content" key={index}>
+            {/* <div className="carousel__img">
+              <img src={`img/carou-${index + 1}.jpg`} className="" />
+            </div> */}
+            <div className="carousel__text  text-center">
+              <h1 className="display-6">{course.tenKhoaHoc}</h1>
+              <p className="carousel__description">
+                {course.moTa.length > 150
+                  ? course.moTa.slice(0, 150) + "..."
+                  : course.moTa}
+              </p>
+              <NavLink
+                to={`/detail/${course.maKhoaHoc}`}
+                className="btn-viewDetail"
+              >
+                Detail
+              </NavLink>
+            </div>
           </div>
         </div>
       );
@@ -53,7 +60,7 @@ const CarouselAntd = (props: CarouselProps) => {
       <>
         <Carousel
           draggable={true}
-          autoplay={false}
+          autoplay={true}
           dots={true}
           pauseOnDotsHover={true}
           arrows={true}
@@ -104,7 +111,7 @@ const CarouselAntd = (props: CarouselProps) => {
             <img src="img/brand-4.jpg" alt="Education" className="mx-auto" />
           </div>
           <div className="brandCoop__item">
-            <img src="img/brand-1.jpg" alt="Education" className="mx-auto" />
+            <img src="img/brand-2.jpg" alt="Education" className="mx-auto" />
           </div>
         </Carousel>
       </>

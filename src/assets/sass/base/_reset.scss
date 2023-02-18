@@ -35,7 +35,6 @@ button:focus {
 
 a {
   text-decoration: none;
-
 }
 
 ul {
@@ -50,6 +49,7 @@ p {
 }
 
 img {
+  -webkit-user-drag: none;
   max-width: 100%;
   height: auto;
 }
@@ -83,7 +83,7 @@ li {
 }
 
 .banner {
-  background: url('https://www.radiustheme.com/demo/html/academics/academics/img/banner/5.jpg');
+  background: url("https://www.radiustheme.com/demo/html/academics/academics/img/banner/5.jpg");
   background-position: center;
   background-size: cover;
   min-height: 300px;
@@ -139,7 +139,7 @@ li {
 .sidebar {
   .sidebar-box {
     margin-bottom: 30px;
-    background: #FFFFFF;
+    background: #ffffff;
     border: 1px solid #e0e0e0;
 
     .sidebar-box-inner {
@@ -166,7 +166,7 @@ li {
           border: 2px solid #fdc800;
           text-align: center;
           margin-bottom: 30px;
-          transition: all .5s ease-out;
+          transition: all 0.5s ease-out;
 
           &:hover {
             background: transparent;
@@ -187,12 +187,12 @@ li {
           width: 100%;
           border: 1px solid #002147;
           text-align: center;
-          transition: all .5s ease-out;
+          transition: all 0.5s ease-out;
 
           &:hover {
             border: 1px solid #fdc800;
             background: #fdc800;
-            color: #FFFFFF;
+            color: #ffffff;
           }
         }
       }
@@ -249,7 +249,6 @@ li {
           }
         }
       }
-
     }
   }
 }

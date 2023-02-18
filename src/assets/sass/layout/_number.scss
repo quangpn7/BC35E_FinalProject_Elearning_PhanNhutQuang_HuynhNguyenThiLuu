@@ -31,21 +31,17 @@
 // -----RESPONSIVE-----
 @include responsive("small") {
   .number {
-    padding: 50px;
+    padding: 50px 0 !important;
     .number__content {
       .row {
         gap: 20px;
-      }
-      p {
-        margin-bottom: 0;
-        margin-left: 15px;
       }
     }
   }
 }
 @include responsive("large") {
   .number {
-    padding: 50px 0;
+    padding: 50px 0 !important;
     .number__content {
       p {
         margin-top: 20px;
@@ -62,6 +58,7 @@
       margin: 0 auto;
       p {
         margin-top: 20px;
+        font-size: 20px;
       }
     }
   }
