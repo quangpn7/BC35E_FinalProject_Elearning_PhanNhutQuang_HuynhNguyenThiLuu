@@ -1,11 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { CourseDetailModal } from "../../interfaces/course/CourseType";
 import { DispatchType } from "../../redux/configStore";
-import {
-  CourseDetailModal,
-  getCourseDetailApi,
-} from "../../redux/reducer/courseReducer";
+import { getCourseDetailApi } from "../../redux/reducer/courseReducer";
 
 type CourseProps = {
   course: CourseDetailModal;

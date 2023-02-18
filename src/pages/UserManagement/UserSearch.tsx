@@ -1,16 +1,15 @@
-import { Input, InputRef, Select } from "antd";
-import Search from "antd/es/input/Search";
-import { Option } from "antd/es/mentions";
+import { Input, Select } from "antd";
+
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CLIENT_RENEG_LIMIT } from "tls";
+
 import { DispatchType, RootState } from "../../redux/configStore";
 import { openType, showModal } from "../../redux/reducer/modalReducer";
 import { getAllUserInfoApi } from "../../redux/reducer/userManageReducer";
 
 type Props = {};
 
-const UserSearch: React.FC = (props: Props) => {
+const UserSearch: React.FC<Props> = () => {
   // set up dispatch
   const dispatch: DispatchType = useDispatch();
   const [groupSelected, setGroupSelected] = useState<string | null>(null);
@@ -20,13 +19,13 @@ const UserSearch: React.FC = (props: Props) => {
   // handle refresh after edit
   const { editType } = useSelector((state: RootState) => state.modalReducer);
   // handle group search change
-  const handleGroupChange = (value: string, keyword: string) => {
+  const handleGroupChange = (value: string, keyword: string): void => {
     setGroupSelected(value);
     const getAllUserByGroup = getAllUserInfoApi(value, keywordRef.current);
     dispatch(getAllUserByGroup);
   };
   // on search event
-  const onSearch = (values: string) => {
+  const onSearch = (values: string): void => {
     const getAllUserByName = getAllUserInfoApi(groupSelected, values);
     dispatch(getAllUserByName);
   };
@@ -46,7 +45,7 @@ const UserSearch: React.FC = (props: Props) => {
             size="large"
             defaultValue={"ALL"}
             onChange={(value: string) => {
-              handleGroupChange(value, keyword);
+              handleGroupChange(value, keywordRef.current);
             }}
           >
             <Option value="">ALL</Option>

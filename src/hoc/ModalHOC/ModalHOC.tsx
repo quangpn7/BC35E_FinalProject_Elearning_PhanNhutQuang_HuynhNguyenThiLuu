@@ -17,11 +17,10 @@ const ModalHOC: React.FC<Props> = () => {
     (state: RootState) => state.modalReducer.visible
   );
 
-  // Setup dispatch - useSelector
   const dispatch: DispatchType = useDispatch();
   const modalContent = useSelector((state: RootState) => state.modalReducer);
 
-  // Setup which inner content of modal
+  // Init modal content
   let Component: React.FC = () => null;
 
   switch (modalContent.Component) {
@@ -41,7 +40,7 @@ const ModalHOC: React.FC<Props> = () => {
       break;
   }
 
-  const handleCancel = () => {
+  const handleCancel = (): void => {
     dispatch(hideModal());
     dispatch(setEditType(true));
     dispatch(setForm());

@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { error } from "console";
 import { toast } from "react-hot-toast";
-
 import { history } from "../..";
 import {
   FormValuesLogin,
@@ -13,7 +11,6 @@ import {
   getStoreJson,
   http,
   setCookie,
-  setStore,
   setStoreJson,
   USER_LOGIN,
 } from "../../util/config";

@@ -1,21 +1,18 @@
 import { Space, TablePaginationConfig } from "antd";
-import { useDispatch } from "react-redux";
 
-import { userInfoModal } from "../../interfaces/user/UserType";
-import { DispatchType, store } from "../../redux/configStore";
-import {
-  CourseDetailModal,
-  deleteCourseApi,
-} from "../../redux/reducer/courseReducer";
+import { store } from "../../redux/configStore";
+import { deleteCourseApi } from "../../redux/reducer/courseReducer";
 import {
   setEditType,
   openType,
   showModal,
 } from "../../redux/reducer/modalReducer";
 import { setCourseFormAction } from "../../redux/reducer/courseReducer";
+import { ReactElement } from "react";
+import { CourseDetailModal } from "../../interfaces/course/CourseType";
 
 // Handle event
-const handleEditClick = (values: any) => {
+const handleEditClick = (values: any): void => {
   store.dispatch(setEditType(false));
   store.dispatch(
     setCourseFormAction({
@@ -27,8 +24,7 @@ const handleEditClick = (values: any) => {
   store.dispatch(showModal());
 };
 
-const handleDelete = (value: CourseDetailModal) => {
-  console.log(value);
+const handleDelete = (value: CourseDetailModal): void => {
   store.dispatch(deleteCourseApi(value.maKhoaHoc));
 };
 
@@ -63,7 +59,7 @@ export const columns: any = [
     dataIndex: "hinhAnh",
     key: "hinhAnh",
 
-    render: (_: any, record: any) => (
+    render: (_: any, record: any): ReactElement => (
       <img
         src={record.hinhAnh}
         onError={(e) => {
@@ -83,7 +79,7 @@ export const columns: any = [
   {
     title: "Action",
     key: "action",
-    render: (_: any, record: any) => (
+    render: (_: any, record: any): ReactElement => (
       <Space size="middle">
         <button
           className="btn btn-success"

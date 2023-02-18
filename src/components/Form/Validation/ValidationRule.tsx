@@ -1,6 +1,4 @@
-import { InputRule } from "../../../interfaces/others/ValidationRuleType";
-
-export const userNameRule: InputRule = {
+export const userNameRule = {
   regex: /^[a-zA-Z0-9]+$/,
   errorRegex: "Username must not contain special character",
 };
@@ -27,4 +25,5 @@ export const phoneRule = {
   max: 15,
   regex: /^[0-9]+$/,
   error: "*Phone is not valid",
+  errorRegex: "*Phone is not valid",
 };

@@ -7,7 +7,7 @@ import { NavLink } from "react-router-dom";
 
 type Props = {};
 
-const CoursesGrid = (props: Props) => {
+const CoursesGrid: React.FC<Props> = () => {
   const dispatch: DispatchType = useDispatch();
   const { homeCourses } = useSelector(
     (state: RootState) => state.courseReducer

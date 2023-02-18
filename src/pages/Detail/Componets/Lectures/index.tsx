@@ -1,12 +1,12 @@
-import React from 'react'
-import Lecture from './Lecture'
+import { ReactElement } from "react";
+import Lecture from "./Lecture";
 
-function Lectures() {
-    return (
-        <ul>
-            <Lecture />
-        </ul>
-    )
+function Lectures(): ReactElement {
+  return (
+    <ul>
+      <Lecture />
+    </ul>
+  );
 }
 
-export default Lectures
+export default Lectures;

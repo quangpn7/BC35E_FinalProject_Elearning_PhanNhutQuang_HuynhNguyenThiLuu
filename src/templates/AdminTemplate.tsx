@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
-import { history } from "..";
+
 import AdminFooter from "../components/Footer/AdminFooter";
 import AdminHeader from "../components/Header/AdminHeader";
 import { RootState } from "../redux/configStore";
 
 type Props = {};
 
-const AdminTemplate = (props: Props) => {
+const AdminTemplate: React.FC<Props> = () => {
   const isLogin = useSelector((state: RootState) => state.userReducer.isLogin);
 
   return (

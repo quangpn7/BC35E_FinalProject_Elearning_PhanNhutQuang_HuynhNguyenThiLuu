@@ -1,14 +1,13 @@
 import React from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import LoginForm from "../../components/Form/LoginForm";
 import RegisterForm from "../../components/Form/RegisterForm";
-import Register from "../Register/Register";
 
 type Props = {
   formType: string;
 };
 
-const Login = (props: Props) => {
+const Login: React.FC<Props> = (props: Props) => {
   return (
     <section className="login">
       <div className="container">

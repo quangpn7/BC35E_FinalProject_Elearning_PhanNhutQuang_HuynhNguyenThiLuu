@@ -1,19 +1,16 @@
 import { Rate } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, ReactNode } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 import { courseAttendModal } from "../../interfaces/course/CourseType";
 import { DispatchType, RootState, store } from "../../redux/configStore";
 import { deleteUsersCourseApi } from "../../redux/reducer/userManageReducer";
-import {
-  getUserInfoApi,
-  setUserAttendCourse,
-} from "../../redux/reducer/userReducer";
+import { setUserAttendCourse } from "../../redux/reducer/userReducer";
 
 type Props = {};
 
-const CourseAttend: React.FC = (props: Props) => {
+const CourseAttend: React.FC<Props> = () => {
   const { taiKhoan } = useSelector(
     (state: RootState) => state.userReducer.userInfo
   );
@@ -23,7 +20,7 @@ const CourseAttend: React.FC = (props: Props) => {
 
   const dispatch: DispatchType = useDispatch();
   // handle un-register
-  const handleUnRegister = (courseId: string, userName: string) => {
+  const handleUnRegister = (courseId: string, userName: string): void => {
     store.dispatch(deleteUsersCourseApi(courseId, userName));
     const refreshList = courseAttend.filter(
       (item) => item.maKhoaHoc !== courseId
@@ -33,7 +30,7 @@ const CourseAttend: React.FC = (props: Props) => {
   };
 
   // render function
-  const renderCouresAttend = (courses: any) => {
+  const renderCouresAttend = (courses: any): ReactNode[] | ReactElement => {
     if (courses.length !== 0) {
       return courses?.map((item: courseAttendModal, index: number) => {
         return (

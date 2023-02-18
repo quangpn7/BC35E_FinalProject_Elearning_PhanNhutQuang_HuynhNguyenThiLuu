@@ -8,7 +8,7 @@ import { getUserInfoApi } from "../../redux/reducer/userReducer";
 
 type Props = {};
 
-const Profile = (props: Props) => {
+const Profile: React.FC<Props> = () => {
   const dispatch: DispatchType = useDispatch();
   const { hoTen, maLoaiNguoiDung } = useSelector(
     (state: RootState) => state.userReducer.userInfo

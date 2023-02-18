@@ -3,7 +3,7 @@ import CountUp from "react-countup";
 
 type Props = {};
 
-const Number = (props: Props) => {
+const Number: React.FC<Props> = () => {
   return (
     <>
       <div className="number__content container">

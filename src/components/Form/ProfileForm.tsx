@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ValidationProfileSchema } from "./Validation/ValidationSchema";
-import { getUserInfoApi, userUpdateApi } from "../../redux/reducer/userReducer";
+import { userUpdateApi } from "../../redux/reducer/userReducer";
 import { getStoreJson, USER_LOGIN } from "../../util/config";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DispatchType } from "../../redux/configStore";
@@ -33,9 +33,9 @@ const ProfileForm = (props: Props) => {
     },
     resolver: yupResolver(ValidationProfileSchema),
   });
-  const onSubmit = (values: FormValuesProfile) => {
+  const onSubmit = (values: FormValuesProfile): void => {
     const updateAction = userUpdateApi(values);
-    dispatch(updateAction).then(() => {
+    dispatch(updateAction).then((): void => {
       setIsEdit(false);
     });
   };
