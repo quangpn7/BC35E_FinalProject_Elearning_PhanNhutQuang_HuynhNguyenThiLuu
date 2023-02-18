@@ -1,12 +1,12 @@
-import {
-  Space,
-  TablePaginationConfig,
-} from "antd";
+import { Space, TablePaginationConfig } from "antd";
 import { useDispatch } from "react-redux";
 
 import { userInfoModal } from "../../interfaces/user/UserType";
 import { DispatchType, store } from "../../redux/configStore";
-import { CourseDetailModal, deleteCourseApi } from "../../redux/reducer/courseReducer";
+import {
+  CourseDetailModal,
+  deleteCourseApi,
+} from "../../redux/reducer/courseReducer";
 import {
   setEditType,
   openType,
@@ -14,26 +14,30 @@ import {
 } from "../../redux/reducer/modalReducer";
 import { setCourseFormAction } from "../../redux/reducer/courseReducer";
 
-
 // Handle event
 const handleEditClick = (values: any) => {
-  console.log(values);
   store.dispatch(setEditType(false));
-  store.dispatch(setCourseFormAction({ ...values, danhMucKhoaHoc: values.danhMucKhoaHoc.maDanhMucKhoahoc }));
+  store.dispatch(
+    setCourseFormAction({
+      ...values,
+      danhMucKhoaHoc: values.danhMucKhoaHoc.maDanhMucKhoahoc,
+    })
+  );
   store.dispatch(openType("ADD_EDIT_COURSE"));
   store.dispatch(showModal());
 };
 
-
 const handleDelete = (value: CourseDetailModal) => {
   console.log(value);
   store.dispatch(deleteCourseApi(value.maKhoaHoc));
-}
-
-
+};
 
 // Columns config - COURSE LIST TABLE
 export const columns: any = [
+  {
+    dataIndex: "key",
+    key: "key",
+  },
   {
     title: "#",
     dataIndex: "maKhoaHoc",
@@ -64,17 +68,17 @@ export const columns: any = [
         src={record.hinhAnh}
         onError={(e) => {
           e.currentTarget.onerror = null;
-          e.currentTarget.src = '/img/brand-1.jpg';
+          e.currentTarget.src = "/img/brand-1.jpg";
         }}
-        alt='' />
-    )
+        alt=""
+      />
+    ),
   },
 
   {
     title: "Số lượng HV",
     dataIndex: "soLuongHocVien",
     key: "soLuongHocVien",
-
   },
   {
     title: "Action",

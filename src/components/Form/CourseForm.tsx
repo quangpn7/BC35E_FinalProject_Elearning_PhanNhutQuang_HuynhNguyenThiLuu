@@ -180,7 +180,7 @@ const CourseForm = (props: Props) => {
 
           <div className="mb-2 col-6">
             <label className="form-label">Course Description</label>
-            <input type="text" className="form-control" {...register("moTa")} />
+            <textarea className="form-control" {...register("moTa")} />
             <div className="form-feedback  fst-italic text-danger">
               {errors.moTa?.message}
             </div>

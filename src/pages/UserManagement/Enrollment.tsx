@@ -3,6 +3,7 @@ import { DisabledType } from "antd/es/config-provider/DisabledContext";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, RootState } from "../../redux/configStore";
+import { hideModal } from "../../redux/reducer/modalReducer";
 import {
   getUserRegisterdCourseApi,
   getUserWaitingCourseApi,
@@ -24,6 +25,10 @@ const Enrollment: React.FC = (props: Props) => {
   const { userSelected, userWaitingCourses, userRegisteredCourses } =
     useSelector((state: RootState) => state.userManageReducer);
 
+  // Handle discard
+  const handleDiscard = () => {
+    dispatch(hideModal());
+  };
   // useEffect calling api
   useEffect(() => {
     const getUserCoursesAll = (userName: string | null) => {
@@ -41,7 +46,9 @@ const Enrollment: React.FC = (props: Props) => {
       <>
         <h4>THIS USER HAS NOT REGISTERED OR APPLIED ANY COURSE</h4>
         <div className="btnZone text-end mt-5">
-          <button className="btn btn-secondary">Discard</button>
+          <button onClick={handleDiscard} className="btn btn-secondary">
+            Discard
+          </button>
         </div>
       </>
     );
@@ -83,7 +90,9 @@ const Enrollment: React.FC = (props: Props) => {
         </div>
       </div>
       <div className="btnZone text-end mt-5">
-        <button className="btn btn-secondary">Discard</button>
+        <button className="btn btn-secondary" onClick={handleDiscard}>
+          Discard
+        </button>
       </div>
     </>
   );
