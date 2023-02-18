@@ -11,7 +11,7 @@ const Home = (props: Props) => {
     <>
       <main>
         <div>
-          <div className="carousel">
+          <div className="carousel carousel-courses">
             <CarouselAntd renderType="welcome" />
           </div>
           <section className="welcome">

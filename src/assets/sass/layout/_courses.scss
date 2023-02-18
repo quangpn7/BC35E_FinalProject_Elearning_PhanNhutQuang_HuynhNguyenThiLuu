@@ -46,3 +46,21 @@ main {
     }
   }
 }
+// -----RESPONSIVE----
+@include responsive("large") {
+  section.courses {
+    .courses__content {
+      .courses__grid {
+        .card.courses__item {
+          height: 400px !important;
+        }
+      }
+    }
+  }
+}
+
+@include responsive("medium") {
+  section.courses {
+    padding: 40px 0 !important;
+  }
+}

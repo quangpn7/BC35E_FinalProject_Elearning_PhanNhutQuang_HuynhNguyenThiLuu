@@ -39,3 +39,14 @@ section.welcome {
     }
   }
 }
+
+// -----RESPONSIVE----
+@include responsive("small") {
+  .welcome {
+    &__wrapper {
+      .welcome__item:nth-child(-n + 2) {
+        margin-bottom: 30px;
+      }
+    }
+  }
+}

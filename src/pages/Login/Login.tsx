@@ -16,11 +16,11 @@ const Login = (props: Props) => {
           ACADEMICS
         </NavLink>
         <div className="row align-items-center">
-          <div className="col-6 img-wrapper">
+          <div className="col-md-6 img-wrapper">
             <img src="/img/coding-login.png" className="w-100" />
           </div>
-          <div className="col-6">
-            <h1>Get's started</h1>
+          <div className="col-md-6">
+            <h1 className="login-title">Get's started</h1>
             {props.formType === "login" ? (
               <p className="text-secondary">
                 Have not got an account?{" "}

@@ -24,3 +24,40 @@ section.login {
     }
   }
 }
+// ----RESPONSIVE-----a
+
+@include responsive("small") {
+  section.login {
+    .img-wrapper {
+      display: block !important;
+      img {
+        display: block;
+        width: 50% !important;
+        margin: 0 auto;
+      }
+    }
+    width: 90%;
+    margin: 10px auto;
+    form {
+      label {
+        font-size: 16px !important;
+      }
+    }
+  }
+}
+@include responsive("medium") {
+  section.login {
+    .container {
+      padding: 20px;
+    }
+    .img-wrapper {
+      display: none;
+    }
+    .login-title {
+      margin-top: 10px;
+      font-size: 24px;
+    }
+    width: 90%;
+    margin: 10px auto;
+  }
+}

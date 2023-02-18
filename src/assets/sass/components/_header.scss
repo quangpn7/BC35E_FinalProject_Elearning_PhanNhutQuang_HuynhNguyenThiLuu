@@ -154,3 +154,82 @@ header.admin {
     }
   }
 }
+// -----RESPONSIVE-----
+@include responsive("small") {
+  header {
+    section.header-wrap {
+      .header__upper {
+        &-left {
+          display: none !important;
+        }
+        &-right {
+          display: flex;
+          flex-direction: row-reverse;
+          align-items: center;
+          width: 100%;
+          justify-content: space-between;
+
+          a.applyBtn {
+            margin: 0 !important;
+          }
+        }
+      }
+    }
+  }
+  // admin
+  header.admin {
+    .navbar-brand {
+      font-size: 24px !important;
+    }
+    .nav-item.dropdown {
+      margin-top: 5px !important;
+    }
+    ul.navbar-nav {
+      li {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+    }
+  }
+}
+
+@include responsive("medium") {
+  header {
+    section.header-wrap {
+      .header__upper-content {
+        width: 100%;
+        padding-left: 0;
+      }
+      .header__upper {
+        &-left {
+          display: none !important;
+        }
+        &-right {
+          display: flex;
+          flex-direction: row-reverse;
+          align-items: center;
+          width: 100%;
+          justify-content: space-between;
+
+          a.applyBtn {
+            margin: 0 !important;
+          }
+        }
+      }
+    }
+    li.nav-search {
+      display: flex;
+
+      align-items: center;
+      padding-left: 0 !important;
+      border: none !important;
+      &::after {
+        pointer-events: all;
+        content: "Search";
+        margin-left: 10px;
+        @include styleText(18px, $fw-3, $color-primary-blue);
+        transition: $trans-linear-fast;
+      }
+    }
+  }
+}

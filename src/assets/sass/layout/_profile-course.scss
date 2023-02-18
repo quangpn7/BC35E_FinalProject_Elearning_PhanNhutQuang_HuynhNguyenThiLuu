@@ -1,0 +1,111 @@
+// ----RESPONSIVE----
+@include responsive("small") {
+  .course__attend {
+    .course__box {
+      .info__left {
+        font-size: 14px;
+        width: 80%;
+        .course__dateCreated {
+          display: none;
+        }
+        .course__rate {
+          margin-left: 0 !important;
+        }
+      }
+      .info__right {
+        .btn-removeAttend,
+        .btn-viewDetail {
+          margin-top: 8px !important;
+        }
+        .btn-removeAttend {
+          margin: 0 0 0 0 !important;
+        }
+      }
+    }
+  }
+}
+@include responsive("medium") {
+  .course__attend {
+    .course__box {
+      .info__left {
+        font-size: 14px;
+        width: 80%;
+        .course__rate {
+          display: inline-block !important;
+          margin-left: 20px;
+        }
+        .course__dateCreated {
+          display: none;
+        }
+      }
+      .info__right {
+        .btn-removeAttend,
+        .btn-viewDetail {
+          margin-top: 8px !important;
+        }
+        .btn-removeAttend {
+          margin: 0 0 0 0 !important;
+        }
+      }
+    }
+  }
+}
+
+@include responsive("large") {
+  .course__attend {
+    .course__box {
+      .course__left {
+        display: none;
+      }
+      .course__right {
+        .course__info {
+          .info__left {
+            .course__rate {
+              display: block;
+            }
+          }
+          &-stat {
+            .info__right {
+              text-align: end;
+              .btn-removeAttend,
+              .btn-viewDetail {
+                text-align: center;
+                margin: 0;
+                margin-left: 10px !important;
+                padding: 5px 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@include responsive("extra-large") {
+  .course__attend {
+    .course__box {
+      .course__right {
+        .course__info {
+          .info__left {
+            .course__rate {
+              display: block;
+              margin-top: 5px;
+            }
+          }
+          &-stat {
+            .info__right {
+              text-align: end;
+              .btn-removeAttend,
+              .btn-viewDetail {
+                text-align: center;
+                margin: 0;
+                margin-left: 10px !important;
+                padding: 5px 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

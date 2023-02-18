@@ -21,6 +21,7 @@
 .btn-viewDetail {
   display: inline-block;
   margin-top: 30px;
+  font-style: normal;
   @include styleBtn(
     $color-white,
     $color-primary-blue,

@@ -2,6 +2,9 @@
   padding: 150px 0;
   position: relative;
   background-image: url("/assets/img/bg-number.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+
   &::before {
     content: "";
     height: 100%;
@@ -22,6 +25,41 @@
     p {
       margin-left: 10px;
       @include styleText($fs-3, $fw-2, $color-white);
+    }
+  }
+}
+// -----RESPONSIVE-----
+@include responsive("small") {
+  .number {
+    padding: 50px 0 !important;
+    .number__content {
+      .row {
+        gap: 20px;
+      }
+    }
+  }
+}
+@include responsive("large") {
+  .number {
+    padding: 50px 0 !important;
+    .number__content {
+      p {
+        margin-top: 20px;
+      }
+    }
+  }
+}
+@include responsive("extra-large") {
+  .number {
+    padding: 100px 0;
+    .number__content {
+      width: 95% !important;
+      max-width: none;
+      margin: 0 auto;
+      p {
+        margin-top: 20px;
+        font-size: 20px;
+      }
     }
   }
 }

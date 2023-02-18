@@ -13,3 +13,21 @@ section.profile {
     }
   }
 }
+
+// ----RESPONSIVE-----
+@include responsive("small") {
+  section.profile {
+    padding: 30px 0;
+    .profile__container {
+      width: 95%;
+    }
+  }
+}
+@include responsive("medium") {
+  section.profile {
+    padding: 30px 0;
+    .profile__container {
+      width: 95%;
+    }
+  }
+}

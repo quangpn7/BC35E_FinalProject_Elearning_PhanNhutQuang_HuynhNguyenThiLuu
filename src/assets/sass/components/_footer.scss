@@ -12,7 +12,7 @@ footer {
       }
       .footer-col-1 {
         p {
-          @include styleText($fs-2, $fw-2, $color-white);
+          @include styleText(18px, $fw-2, $color-white);
           margin: 20px 0 30px 0;
         }
         a {
@@ -77,4 +77,16 @@ footer {
 }
 footer.admin {
   background-color: $color-primary-blue;
+}
+//------------RESPONSIVE-----------
+@include responsive("small") {
+  section.footer-wrap {
+    .container {
+      .row {
+        .col-12:nth-child(1) {
+          margin-bottom: 20px;
+        }
+      }
+    }
+  }
 }

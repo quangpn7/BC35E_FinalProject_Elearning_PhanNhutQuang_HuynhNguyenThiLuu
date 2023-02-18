@@ -29,7 +29,7 @@ const AdminHeader = (props: Props) => {
   const renderUserLog = (): ReactElement => {
     if (isLogin) {
       return (
-        <li className="nav-item dropdown">
+        <li className="nav-item dropdown mt-sm-2">
           <a
             type="button"
             className="dropdown-toggle text-decoration-none"
@@ -58,7 +58,7 @@ const AdminHeader = (props: Props) => {
       );
     }
     return (
-      <li className="nav-item">
+      <li className="nav-item mt-sm-2">
         <button
           className="btn text-white"
           onClick={() => {
@@ -83,7 +83,7 @@ const AdminHeader = (props: Props) => {
                   ACADEMICS-ADMIN
                 </NavLink>
                 <button
-                  className="navbar-toggler"
+                  className="navbar-toggler  bg-light"
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#navbarSupportedContent"
@@ -97,7 +97,7 @@ const AdminHeader = (props: Props) => {
                   className="collapse navbar-collapse"
                   id="navbarSupportedContent"
                 >
-                  <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                  <ul className="navbar-nav ms-auto mb-2 mb-lg-0 mt-sm-2">
                     <li className="nav-item">
                       <NavLink className="nav-link " to={"/admin"} end>
                         USER MANAGEMENT
