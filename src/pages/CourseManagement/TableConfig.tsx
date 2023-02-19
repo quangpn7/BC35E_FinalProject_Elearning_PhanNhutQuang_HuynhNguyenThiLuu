@@ -53,6 +53,10 @@ export const columns: any = [
     title: "Mô tả",
     dataIndex: "moTa",
     key: "moTa",
+    render: (_: any, record: any): ReactElement => (
+      <p>{record.moTa.length > 255 ? record.moTa.slice(0, 255) + '...' : record.moTa}</p>
+
+    ),
   },
   {
     title: "Hình Ảnh",
