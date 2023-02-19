@@ -210,14 +210,12 @@ const Header: React.FC<Props> = () => {
                       </ul>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" href="#">
-                        BLOG
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="#">
-                        EVENTS
-                      </a>
+                      <NavLink
+                        className="nav-link"
+                        to={isLogin ? "/admin" : "/login"}
+                      >
+                        ADMIN
+                      </NavLink>
                     </li>
                     <li className="nav-item">
                       <a className="nav-link" href="#">

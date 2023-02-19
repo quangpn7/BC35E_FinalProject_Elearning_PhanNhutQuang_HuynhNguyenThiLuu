@@ -99,7 +99,7 @@ const AdminHeader: React.FC<Props> = () => {
                   <ul className="navbar-nav ms-auto mb-2 mb-lg-0 mt-sm-2">
                     <li className="nav-item">
                       <NavLink className="nav-link " to={"/admin"} end>
-                        USER MANAGEMENT
+                        USERS
                       </NavLink>
                     </li>
                     <li className="nav-item">
@@ -107,7 +107,12 @@ const AdminHeader: React.FC<Props> = () => {
                         className="nav-link"
                         to={"/admin/course-management"}
                       >
-                        COURSE MANAGEMENT
+                        COURSES
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink className="nav-link" to={"/"}>
+                        HOME PAGE
                       </NavLink>
                     </li>
                     {renderUserLog()}
