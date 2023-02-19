@@ -58,7 +58,7 @@ const ProfileForm = (props: Props) => {
             <input
               type="text"
               className="form-control"
-              disabled={isEdit ? false : true}
+              disabled={true}
               {...register("taiKhoan")}
             />
           </div>
