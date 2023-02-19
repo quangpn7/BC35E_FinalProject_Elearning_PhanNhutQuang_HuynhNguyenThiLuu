@@ -1,6 +1,14 @@
-import { Input, Select } from "antd";
+import { Input, InputProps, InputRef, Select } from "antd";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  EventHandler,
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { DispatchType, RootState } from "../../redux/configStore";
@@ -15,15 +23,23 @@ const UserSearch: React.FC<Props> = () => {
   const [groupSelected, setGroupSelected] = useState<string | null>(null);
   const [keyword, setKeyword] = useState<string>("");
 
-  const keywordRef = useRef<string>("");
   // handle refresh after edit
   const { editType } = useSelector((state: RootState) => state.modalReducer);
   // handle group search change
   const handleGroupChange = (value: string, keyword: string): void => {
     setGroupSelected(value);
-    const getAllUserByGroup = getAllUserInfoApi(value, keywordRef.current);
+    const getAllUserByGroup = getAllUserInfoApi(value, keyword);
     dispatch(getAllUserByGroup);
   };
+  // handle change keyword
+  const handleKeywordChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setKeyword(e.target.value);
+    },
+    []
+  );
+
+  console.log("Render");
   // on search event
   const onSearch = (values: string): void => {
     const getAllUserByName = getAllUserInfoApi(groupSelected, values);
@@ -37,6 +53,7 @@ const UserSearch: React.FC<Props> = () => {
     const refeshListAction = getAllUserInfoApi(groupSelected, keyword);
     dispatch(refeshListAction);
   }, [editType]);
+
   return (
     <>
       <div className="">
@@ -45,7 +62,7 @@ const UserSearch: React.FC<Props> = () => {
             size="large"
             defaultValue={"ALL"}
             onChange={(value: string) => {
-              handleGroupChange(value, keywordRef.current);
+              handleGroupChange(value, keyword);
             }}
           >
             <Option value="">ALL</Option>
@@ -66,9 +83,7 @@ const UserSearch: React.FC<Props> = () => {
             placeholder="Enter name"
             enterButton="Search"
             onSearch={onSearch}
-            onChange={(e) => {
-              setKeyword(e.target.value);
-            }}
+            onChange={handleKeywordChange}
           />
         </Input.Group>
 
