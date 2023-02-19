@@ -19,7 +19,7 @@ const CourseTable: React.FC<Props> = () => {
   useEffect(() => {
     if (keySearch) {
       setCourses(
-        allCourses.filter((item) => item.tenKhoaHoc.includes(keySearch))
+        allCourses.filter((item) => item.tenKhoaHoc.toLowerCase().includes(keySearch.toLowerCase()))
       );
     } else {
       setCourses([...allCourses]);

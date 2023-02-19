@@ -11,8 +11,8 @@ const CourseManagement: React.FC<Props> = () => {
     (state: RootState) => state.courseReducer
   );
   const searchResultLength = keySearch
-    ? allCourses.filter((item): boolean => item.tenKhoaHoc.includes(keySearch))
-        ?.length
+    ? allCourses.filter((item): boolean => item.tenKhoaHoc.toLowerCase().includes(keySearch.toLowerCase()))
+      ?.length
     : allCourses.length;
 
   return (
