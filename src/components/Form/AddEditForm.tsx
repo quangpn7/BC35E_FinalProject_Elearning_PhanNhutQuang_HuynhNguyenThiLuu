@@ -20,6 +20,7 @@ const AddEditForm: React.FC<Props> = () => {
   const { userEditing } = useSelector(
     (state: RootState) => state.userManageReducer
   );
+
   const [passVisibility, setPassVisibility] = useState<boolean>(false);
   // setup dispatch
   const dispatch: DispatchType = useDispatch();
@@ -115,6 +116,7 @@ const AddEditForm: React.FC<Props> = () => {
               type="text"
               className="form-control"
               {...register("taiKhoan")}
+              disabled={editType ? false : true}
             />
             <div className="form-feedback  fst-italic text-danger">
               {errors.taiKhoan?.message}
