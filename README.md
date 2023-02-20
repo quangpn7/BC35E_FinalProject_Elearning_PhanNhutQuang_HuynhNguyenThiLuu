@@ -6,8 +6,9 @@
 ---
 ### Link:
 - GitHub: *https://github.com/quangpn7/BC35E_FinalProject_Elearning_PhanNhutQuang_HuynhNguyenThiLuu*
-- Youtube:
-- Deploy:
+- Youtube: *https://www.youtube.com/watch?v=tMCTxlmszQM*
+- Deploy: *https://bc-35-e-final-project-elearning-group01.vercel.app/*
+- Task: *https://docs.google.com/spreadsheets/d/1_U5T4XvhimJlqpWXNCv7EKMoR-GLmObfS9We0SeL69E/edit?usp=sharing*
 ---
 ### Dependencies:
   - @hookform/resolvers": "^2.9.10
