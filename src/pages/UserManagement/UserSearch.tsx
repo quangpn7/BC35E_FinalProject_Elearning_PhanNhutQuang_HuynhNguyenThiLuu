@@ -9,6 +9,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
 import { DispatchType, RootState } from "../../redux/configStore";
@@ -22,6 +23,9 @@ const UserSearch: React.FC<Props> = () => {
   const dispatch: DispatchType = useDispatch();
   const [groupSelected, setGroupSelected] = useState<string | null>(null);
   const [keyword, setKeyword] = useState<string>("");
+  const { maLoaiNguoiDung } = useSelector(
+    (state: RootState) => state.userReducer.userInfo
+  );
 
   // handle refresh after edit
   const { editType } = useSelector((state: RootState) => state.modalReducer);
@@ -39,11 +43,19 @@ const UserSearch: React.FC<Props> = () => {
     []
   );
 
-  console.log("Render");
   // on search event
   const onSearch = (values: string): void => {
     const getAllUserByName = getAllUserInfoApi(groupSelected, values);
     dispatch(getAllUserByName);
+  };
+  // handle add new user
+  const handleAddUser = (auth: string): void => {
+    if (auth === "HV") {
+      toast.error("You don't have permission to perform this action!");
+      return;
+    }
+    dispatch(openType("ADD_EDIT_USER"));
+    dispatch(showModal());
   };
 
   // get Option antd
@@ -88,10 +100,12 @@ const UserSearch: React.FC<Props> = () => {
         </Input.Group>
 
         <a
-          className="mt-3 d-inline-block"
+          className={`mt-3 d-inline-block ${
+            maLoaiNguoiDung === "HV" ? "d-none" : ""
+          }`}
+          // className="mt-3 d-inline-block"
           onClick={() => {
-            dispatch(openType("ADD_EDIT_USER"));
-            dispatch(showModal());
+            handleAddUser(maLoaiNguoiDung);
           }}
         >
           Add new user

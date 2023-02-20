@@ -1,5 +1,6 @@
 import { Modal, Space, TablePaginationConfig, Tag } from "antd";
 import { ReactElement } from "react";
+import { toast } from "react-hot-toast";
 
 import {
   userInfoAdminModal,
@@ -20,8 +21,14 @@ import {
 } from "../../redux/reducer/userManageReducer";
 
 /* ------Handle event ------*/
+const { maLoaiNguoiDung } = store.getState().userReducer.userInfo;
+
 // Handle enroll
-const handleEnrollClick = (userName: string): void => {
+const handleEnrollClick = (userName: string, auth: string): void => {
+  if (auth === "HV") {
+    toast.error("You don't have permission to do this action");
+    return;
+  }
   store.dispatch(setUserSelected(userName));
   store.dispatch(openType("ENROLL_USER"));
   store.dispatch(showModal());
@@ -134,9 +141,13 @@ export const columnsUserTable: any = [
     render: (_: any, record: any): ReactElement => (
       <Space size="middle">
         <button
+          disabled={maLoaiNguoiDung === "HV" ? true : false}
           className="btn btn-primary"
           onClick={(): void => {
-            handleEnrollClick(record.taiKhoan);
+            handleEnrollClick(record.taiKhoan, maLoaiNguoiDung);
+          }}
+          style={{
+            display: maLoaiNguoiDung === "HV" ? "none" : "block",
           }}
         >
           Enroll
